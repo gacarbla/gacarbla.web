@@ -1,0 +1,53 @@
+<div class="lab" data-ref="caja">
+  <p class="cima">
+    <span data-i18n="lab.tiempo">Tiempo</span>
+    <strong data-ref="reloj">00:00</strong>
+    <span class="meta" data-i18n="lab.meta">El primero en lograr 5 puntos gana</span>
+  </p>
+  <div class="cuerpo">
+    <div class="mapa-col">
+      <div class="tablero" data-ref="tablero" role="grid" aria-label="Laberinto" data-i18n-aria-label="lab.tablero"></div>
+      <div class="tiro" data-ref="tiro" hidden>
+        <p class="pista-dado" data-ref="pistaDado" hidden><span data-i18n="lab.toca_dado">Toca el dado para tirar</span></p>
+        <div class="lanzar" data-ref="lanzar"><button type="button" class="dado3d" data-ref="dado3d" aria-label="Tirar dado" data-i18n-aria-label="lab.tirar"><span class="cubo" data-ref="cubo"></span></button></div>
+      </div>
+      <p class="mensaje" data-ref="mensaje" aria-live="polite"></p>
+      <div class="controles">
+        <button type="button" data-ref="seguir" hidden><span data-i18n="lab.seguir">Seguir</span> (<strong data-ref="seguirN">0</strong>)</button>
+        <button type="button" data-ref="pasar" data-i18n="lab.pasar" hidden>Pasar turno</button>
+        <x-pantalla para=".lab"></x-pantalla>
+      </div>
+      <section class="final" data-ref="final" hidden>
+        <p class="ganador"><span class="punto" data-ref="ganadorPunto"></span> <span data-i18n="lab.gana">gana la partida</span></p>
+        <p class="fila-final">
+          <button type="button" class="cta" data-ref="revancha" data-i18n="lab.revancha">Revancha</button>
+          <button type="button" data-ref="nueva" data-i18n="lab.nueva">Nueva partida</button>
+        </p>
+      </section>
+    </div>
+    <aside class="lado">
+      <div data-ref="ladoSetup">
+        <p class="lado-tit" data-i18n="lab.equipo">Equipo</p>
+        <div class="disponibles" data-ref="disponibles"></div>
+        <div class="puestos" data-ref="puestos"></div>
+        <p><button type="button" class="cta" data-ref="empezar" data-i18n="lab.empezar">Empezar</button></p>
+      </div>
+      <div data-ref="ladoPuntos" hidden>
+        <div class="marcador" data-ref="marcador"></div>
+      </div>
+      <div class="mando">
+        <div class="pad" data-ref="pad">
+          <button type="button" data-dir="0,-1" aria-label="Arriba" data-i18n-aria-label="lab.norte"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 L21 20 H3 Z"/></svg></button>
+          <button type="button" data-dir="-1,0" aria-label="Izquierda" data-i18n-aria-label="lab.oeste"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 L21 20 H3 Z"/></svg></button>
+          <button type="button" data-dir="1,0" aria-label="Derecha" data-i18n-aria-label="lab.este"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 L21 20 H3 Z"/></svg></button>
+          <button type="button" data-dir="0,1" aria-label="Abajo" data-i18n-aria-label="lab.sur"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 L21 20 H3 Z"/></svg></button>
+        </div>
+        <p class="quedan" data-ref="quedan" data-vacio="">×<strong data-ref="quedanN">0</strong></p>
+      </div>
+    </aside>
+  </div>
+  <div class="previa" data-ref="previa" hidden>
+    <p><span data-i18n="lab.memorice">Memoriza los muros</span> <strong data-ref="cuenta">10</strong></p>
+    <button type="button" data-ref="saltar" data-i18n="lab.saltar">Ocultar ya</button>
+  </div>
+</div>

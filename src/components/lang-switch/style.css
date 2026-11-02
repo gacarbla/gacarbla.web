@@ -1,0 +1,36 @@
+:host {
+  position: fixed;
+  left: 0.8rem;
+  bottom: 0.8rem;
+  z-index: 99;
+}
+
+.langs {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.3rem;
+  border: 1px solid var(--line, #e5ded2);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--paper, #faf8f4) 85%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.langs button {
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.35rem 0.7rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.langs button.on {
+  opacity: 1;
+  background: var(--ink, #17150f);
+  color: var(--paper, #faf8f4);
+}

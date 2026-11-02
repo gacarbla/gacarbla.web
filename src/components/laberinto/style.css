@@ -1,0 +1,730 @@
+:host {
+  display: block;
+}
+
+/* hidden manda sobre cualquier display del componente. / hidden beats any component display. */
+[hidden] {
+  display: none !important;
+}
+
+.lab {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 1.4rem;
+  display: grid;
+  gap: 1rem;
+}
+
+/* Contador de tiempo encima. / Time counter on top. */
+.cima {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin: 0;
+  font-family: ui-monospace, monospace;
+}
+
+.cima strong {
+  font-size: 1.5rem;
+  color: var(--accent);
+  min-width: 3.5rem;
+}
+
+.cima .meta {
+  margin-left: auto;
+  color: var(--muted);
+  font-family: system-ui, sans-serif;
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+/* Mapa a la izquierda, resumen a la derecha. / Map left, summary right. */
+.cuerpo {
+  display: flex;
+  gap: 1.4rem;
+  align-items: start;
+}
+
+.mapa-col {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 0.8rem;
+  justify-items: center;
+}
+
+.mapa-col .tablero {
+  width: 100%;
+}
+
+.mensaje,
+.controles {
+  width: 100%;
+}
+
+.lado {
+  width: 12rem;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-self: stretch;
+}
+
+/* Mando fijo abajo, igual con 1 que con 4 jugadores. / Controls pinned below, same with 1 or 4 players. */
+.mando {
+  margin-top: auto;
+  padding-top: 1.2rem;
+  display: grid;
+  gap: 0.7rem;
+  justify-items: center;
+}
+
+.lado-tit {
+  margin: 0 0 0.6rem;
+  font-weight: 700;
+}
+
+.disponibles {
+  display: grid;
+  grid-template-columns: repeat(2, 44px);
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+  justify-content: start;
+}
+
+/* Colores disponibles: translúcidos, con +. / Available colors: translucent, with +. */
+.disp {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  opacity: 0.45;
+  cursor: pointer;
+}
+
+.disp .mas {
+  position: absolute;
+  right: -4px;
+  top: -8px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-shadow: 0 0 4px var(--card);
+}
+
+.puestos {
+  display: grid;
+  gap: 0.4rem;
+  margin-bottom: 0.8rem;
+}
+
+.puesto {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 12px;
+  border: 2px solid var(--line);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.puesto[data-pend] {
+  border-color: var(--accent);
+  animation: espera 1s ease-in-out infinite;
+}
+
+@keyframes espera {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.punto {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgb(255 255 255 / 0.65);
+  flex: none;
+}
+
+.donde {
+  font-family: ui-monospace, monospace;
+}
+
+.cta {
+  padding: 0.8rem 1.8rem;
+  border-radius: 999px;
+  border: none;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.cta[disabled] {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Marcador. / Scoreboard. */
+.marcador {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.ficha {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
+  font-family: ui-monospace, monospace;
+}
+
+.ficha[data-actual] {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), 0 4px 14px rgb(0 0 0 / 0.25);
+}
+
+/* Rejilla uniforme: las líneas las da el gap; los muros son sombra
+   interior (no mueven la maquetación, haya muro o no).
+   Uniform grid: lines come from the gap; walls are inset shadow
+   (never shift layout, wall or not). */
+.tablero {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  gap: 0;
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  max-width: 34rem;
+  aspect-ratio: 1;
+  touch-action: none;
+}
+
+.cel {
+  position: relative;
+  box-sizing: border-box;
+  background: var(--card);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  min-height: 0;
+  box-shadow:
+    inset -3px 0 0 var(--we, transparent),
+    inset 0 -3px 0 var(--ws, transparent);
+  transition: box-shadow 0.35s ease;
+}
+
+/* Sin borde doble contra el marco exterior. / No double border against the outer frame. */
+.cel:nth-child(7n) {
+  border-right: none;
+}
+
+.cel:nth-child(n+43) {
+  border-bottom: none;
+}
+
+/* Pintura instantánea (nueva partida). / Instant painting (fresh match). */
+.tablero.sin .cel {
+  transition: none !important;
+}
+
+.tablero[data-mirando] .cel.me {
+  --we: var(--accent);
+}
+
+.tablero[data-mirando] .cel.ms {
+  --ws: var(--accent);
+}
+
+/* Último muro chocado, del color de quien chocó. / Last hit wall, in the hitter's color. */
+.tablero[data-golpe] .cel.golpe-e {
+  --we: var(--wc);
+}
+
+.tablero[data-golpe] .cel.golpe-s {
+  --ws: var(--wc);
+}
+
+/* Esquinas: marca tenue permanente. / Corners: faint permanent mark. */
+.cel.esq::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-left: 2px solid var(--muted);
+  border-top: 2px solid var(--muted);
+  border-top-left-radius: 4px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Base de esquina del jugador. / Player corner base. */
+.cel.base::before {
+  content: "";
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 4px;
+  background: var(--base);
+  opacity: 0.85;
+}
+
+/* Esquinas libres en modo elección. / Free corners in pick mode. */
+.tablero[data-elige] .cel.libre {
+  cursor: pointer;
+  outline: 2px dashed var(--accent);
+  outline-offset: -2px;
+}
+
+.dentro {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  pointer-events: none;
+}
+
+/* Capa de fichas móviles: se deslizan entre casillas. / Moving-token layer: slides between cells. */
+.capa {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ficha-movil {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgb(255 255 255 / 0.7);
+  transition: transform 0.18s ease-out, width 0.18s ease-out, height 0.18s ease-out;
+}
+
+.ficha-movil.sin {
+  transition: none;
+}
+
+.ficha-movil[data-actual] {
+  outline: 2px solid var(--ink);
+  outline-offset: 1px;
+}
+
+/* Muerte: estalla y se encoge. / Death: bursts and shrinks. */
+.ficha-movil[data-muriendo] {
+  animation: morir 0.38s ease-in forwards;
+}
+
+@keyframes morir {
+  30% {
+    scale: 1.3;
+    opacity: 1;
+  }
+
+  100% {
+    scale: 0;
+    opacity: 0;
+  }
+}
+
+/* Reaparición: brota con rebote. / Respawn: pops in with a bounce. */
+.ficha-movil[data-naciendo] {
+  animation: nacer 0.32s ease-out;
+}
+
+@keyframes nacer {
+  0% {
+    scale: 0;
+    opacity: 0;
+  }
+
+  60% {
+    scale: 1.25;
+    opacity: 1;
+  }
+
+  100% {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+/* Captura: latido. / Capture: thump. */
+.ficha-movil[data-caza] {
+  animation: caza 0.3s ease-out;
+}
+
+@keyframes caza {
+  40% {
+    scale: 1.45;
+  }
+}
+
+.punto-cel {
+  width: clamp(0.9rem, 4vw, 1.3rem);
+  height: clamp(0.9rem, 4vw, 1.3rem);
+  background: var(--accent);
+  transform: rotate(45deg);
+  animation: latido 1.2s ease-in-out infinite;
+}
+
+@keyframes latido {
+  50% {
+    transform: rotate(45deg) scale(0.72);
+  }
+}
+
+.mensaje {
+  margin: 0;
+  min-height: 1.6em;
+  color: var(--accent);
+  font-weight: 600;
+  text-align: center;
+}
+
+.controles {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.controles button {
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 12px;
+  border: 2px solid var(--line);
+  background: var(--card);
+  color: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.controles button[disabled] {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.pad {
+  --turno: var(--accent);
+  display: grid;
+  grid-template-columns: repeat(3, 3rem);
+  grid-template-rows: repeat(3, 3rem);
+  gap: 0.3rem;
+  justify-content: center;
+}
+
+.pad button {
+  border-color: var(--turno);
+  background: color-mix(in srgb, var(--turno) 16%, var(--card));
+}
+
+.pad button {
+  border-radius: 12px;
+  border: 2px solid var(--turno);
+  background: var(--turno);
+  color: var(--card);
+  cursor: pointer;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pad button svg {
+  width: 55%;
+  height: 55%;
+  fill: var(--card);
+}
+
+.pad button:nth-child(2) svg {
+  transform: rotate(-90deg);
+}
+
+.pad button:nth-child(3) svg {
+  transform: rotate(90deg);
+}
+
+.pad button:nth-child(4) svg {
+  transform: rotate(180deg);
+}
+
+.pad button:nth-child(1) {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.pad button:nth-child(2) {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.pad button:nth-child(3) {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.pad button:nth-child(4) {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.pad button[disabled] {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* Pasos restantes sobre el pad. / Remaining steps over the pad. */
+.quedan {
+  margin: 0;
+  text-align: center;
+  font-family: ui-monospace, monospace;
+  font-size: 1.1rem;
+  color: var(--accent);
+}
+
+.quedan[data-vacio] {
+  visibility: hidden;
+}
+
+/* Dado 3D clicable del color del turno. / Clickable 3D die in the turn color. */
+.dado3d {
+  --dd: 72px;
+  --dado: var(--accent);
+  appearance: none;
+  width: var(--dd);
+  height: var(--dd);
+  padding: 0;
+  border: none;
+  background: transparent;
+  perspective: 420px;
+  cursor: pointer;
+}
+
+.dado3d[disabled] {
+  cursor: default;
+}
+
+.dado3d:focus-visible {
+  outline: 2px solid var(--dado);
+  outline-offset: 4px;
+  border-radius: 14px;
+}
+
+/* Llamada: respira cuando toca tirar (en el botón, nunca en el cubo:
+   un filter en .cubo anularía su preserve-3d y colapsaría las caras).
+   Call to action: breathes when it's time to roll (on the button, never
+   on the cube: a filter on .cubo would void its preserve-3d and collapse
+   the faces). */
+.dado3d[data-listo] {
+  animation: aliento 1.6s ease-in-out infinite;
+}
+
+@keyframes aliento {
+  50% {
+    scale: 1.08;
+    filter: drop-shadow(0 0 10px var(--dado));
+  }
+}
+
+.cubo {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.cara {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  padding: 16%;
+  box-sizing: border-box;
+  background: color-mix(in srgb, var(--dado) 20%, var(--card));
+  border: 2px solid var(--dado);
+  border-radius: 14px;
+}
+
+.pipo {
+  width: 70%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--dado);
+  place-self: center;
+}
+
+/* Velo del dado sobre el tablero: aparece, muestra y se funde. / Die veil over the board: appears, shows and fades. */
+.tiro {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, 34rem);
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.tiro[data-on] {
+  opacity: 1;
+  animation: aparecer 0.35s ease;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+  }
+}
+
+.tiro .dado3d {
+  pointer-events: auto;
+}
+
+/* Capa que desliza el dado (el giro Z vive en su transform). / Layer sliding the die (Z spin lives in its transform). */
+.lanzar {
+  will-change: transform;
+}
+
+/* Pista flotante con fondo difuminado. / Floating hint with blurred backdrop. */
+.pista-dado {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.pista-dado span {
+  display: inline-block;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgb(255 255 255 / 0.18);
+  color: #f2ede3;
+}
+
+.previa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.previa p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.previa strong {
+  color: var(--accent);
+  font-size: 1.4rem;
+}
+
+.previa button {
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 12px;
+  border: 2px solid var(--line);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.ganador {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 700;
+  margin: 0 0 1rem;
+}
+
+.ganador .punto {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.fila-final {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+/* Pantalla completa: solo el juego. / Fullscreen: just the game. */
+.lab:fullscreen {
+  height: 100dvh;
+  overflow-y: auto;
+  border-radius: 0;
+  background: var(--paper);
+  align-content: center;
+}
+
+@media (max-width: 40rem) {
+  .cuerpo {
+    flex-direction: column;
+  }
+
+  .lado {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .punto-cel,
+  .puesto[data-pend] {
+    animation: none;
+  }
+
+  .ficha-movil {
+    transition: none;
+  }
+
+  .ficha-movil[data-muriendo],
+  .ficha-movil[data-naciendo],
+  .ficha-movil[data-caza],
+  .dado3d[data-listo] {
+    animation: none;
+  }
+
+  .cel {
+    transition: none;
+  }
+}

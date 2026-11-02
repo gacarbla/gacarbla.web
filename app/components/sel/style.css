@@ -1,0 +1,20 @@
+label {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.etiq {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+select {
+  font: inherit;
+  padding: 0.7rem 1rem;
+  border-radius: 12px;
+  border: 2px solid var(--line, #e5ded2);
+  background: var(--card, #ffffff);
+  color: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}

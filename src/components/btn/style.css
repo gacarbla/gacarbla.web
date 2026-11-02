@@ -1,0 +1,23 @@
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.8rem;
+  border-radius: 999px;
+  background: var(--ink, #17150f);
+  color: var(--paper, #faf8f4);
+  text-decoration: none;
+  font: inherit;
+  font-weight: 600;
+  border: 0;
+  cursor: pointer;
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--ink, #17150f);
+  border: 2px solid var(--line, #e5ded2);
+}
+
+.btn:focus-visible {
+  outline: 3px dashed var(--accent, #b3541e);
+  outline-offset: 2px;
+}

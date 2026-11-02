@@ -1,0 +1,16 @@
+<div class="tres" data-ref="caja">
+  <div class="modos" role="group" aria-label="Modo" data-i18n-aria-label="tres.modo">
+    <button type="button" data-ref="modoIa" data-i18n="tres.modo_ia">Contra la máquina</button>
+    <button type="button" data-ref="modoDuo" data-i18n="tres.modo_duo">Dos jugadores</button>
+  </div>
+  <div class="dificultad" data-ref="dificultad" data-vacio="" role="group" aria-label="Dificultad" data-i18n-aria-label="tres.dificultad">
+    <button type="button" data-ref="dif0" data-i18n="tres.facil">Fácil</button>
+    <button type="button" data-ref="dif1" data-i18n="tres.normal">Normal</button>
+    <button type="button" data-ref="dif2" data-i18n="tres.imposible">Imposible</button>
+  </div>
+  <p class="estado" data-ref="estado" data-vacio=""><span data-i18n="tres.turno">Turno</span> <strong data-ref="turnoMark">X</strong></p>
+  <div class="tablero" data-ref="tablero" role="grid" aria-label="Tres en raya" data-i18n-aria-label="tres.tablero"></div>
+  <p class="mensaje" data-ref="mensaje" aria-live="polite"></p>
+  <div class="marcador" data-ref="marcador"></div>
+  <p class="fila-final"><button type="button" class="cta" data-ref="reiniciar" data-i18n="tres.reiniciar">Reiniciar</button><x-pantalla para=".tres"></x-pantalla></p>
+</div>

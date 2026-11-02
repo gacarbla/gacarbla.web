@@ -1,0 +1,39 @@
+{
+  "cleanUrls": false,
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/experiencia", "destination": "/index.html" },
+    { "source": "/contacto", "destination": "/index.html" },
+    { "source": "/es", "destination": "/index.html" },
+    { "source": "/es/experiencia", "destination": "/index.html" },
+    { "source": "/es/contacto", "destination": "/index.html" },
+    { "source": "/en", "destination": "/index.html" },
+    { "source": "/en/experiencia", "destination": "/index.html" },
+    { "source": "/en/contacto", "destination": "/index.html" },
+    { "source": "/gl", "destination": "/index.html" },
+    { "source": "/gl/experiencia", "destination": "/index.html" },
+    { "source": "/gl/contacto", "destination": "/index.html" },
+    { "source": "/games", "destination": "/index.html" },
+    { "source": "/games/cubo", "destination": "/index.html" },
+    { "source": "/games/laberinto", "destination": "/index.html" },
+    { "source": "/games/tres-en-raya", "destination": "/index.html" },
+    { "source": "/es/games", "destination": "/index.html" },
+    { "source": "/es/games/cubo", "destination": "/index.html" },
+    { "source": "/es/games/laberinto", "destination": "/index.html" },
+    { "source": "/es/games/tres-en-raya", "destination": "/index.html" },
+    { "source": "/en/games", "destination": "/index.html" },
+    { "source": "/en/games/cubo", "destination": "/index.html" },
+    { "source": "/en/games/laberinto", "destination": "/index.html" },
+    { "source": "/en/games/tres-en-raya", "destination": "/index.html" },
+    { "source": "/gl/games", "destination": "/index.html" },
+    { "source": "/gl/games/cubo", "destination": "/index.html" },
+    { "source": "/gl/games/laberinto", "destination": "/index.html" },
+    { "source": "/gl/games/tres-en-raya", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "**",
+      "headers": [{ "key": "Cache-Control", "value": "no-store" }]
+    }
+  ]
+}
