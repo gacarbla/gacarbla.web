@@ -60,10 +60,11 @@ mount(Tabs, document.body, { items: [{ id: "a", titulo: "A" }] });
 ## Sin node (solo lectura)
 
 Node solo compila (`npm run build`: TS→`app/` + copia html/css al lado).
-La web servida son ficheros estáticos: cualquier servidor vale y `app/`
-puede versionarse para no necesitar node al desplegar. El cargador no
-distingue TS de JS: un componente puede escribirse en `index.js` plano
-y se monta igual (pierdes tipado, ganas cero herramientas).
+La web servida son ficheros estáticos: cualquier servidor vale. En este
+repo `app/` está ignorado y lo publica CI: cada push a `main` construye
+y sube `app/` a la raíz de la rama `web` (lista para servir).
+El cargador no distingue TS de JS: un componente puede escribirse en
+`index.js` plano y se monta igual (pierdes tipado, ganas cero herramientas).
 
 ## Rutas (router.ts)
 

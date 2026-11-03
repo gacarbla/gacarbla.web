@@ -1,5 +1,5 @@
 node_modules/
 # Telemetría local del editor, no se publica. / Local editor telemetry, not published.
 .VSCodeCounter/
-# app/ se versiona a propósito: es la web servida sin node (ver README "Sin node")
-# app/ is committed on purpose: it is the served site without node (see README)
+# Salida de compilación: la publica CI en la rama web. / Build output: published by CI to the web branch.
+app/
