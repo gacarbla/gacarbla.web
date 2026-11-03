@@ -126,6 +126,8 @@ nav[data-js] {
     padding: 5rem 1.4rem 2rem;
     background: var(--paper);
     overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
@@ -176,6 +178,39 @@ nav[data-js] {
   nav[data-js][data-open] #burger span:nth-child(3) {
     transform: translateY(-7px) rotate(-45deg);
   }
+}
+
+/* Scrollbar del menú móvil, a juego con el selector y la web.
+   Mobile menu scrollbar, matching the selector and the site palette. */
+@supports (-moz-appearance: none) {
+  nav[data-js] .links {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--ink) 28%, transparent) transparent;
+  }
+}
+
+nav[data-js] .links::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+nav[data-js] .links::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+nav[data-js] .links::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--ink) 24%, transparent);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+
+nav[data-js] .links::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+nav[data-js] .links::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 @media (hover: hover) {

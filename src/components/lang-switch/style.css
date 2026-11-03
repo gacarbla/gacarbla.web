@@ -160,10 +160,45 @@
   padding: 0;
   max-height: 16rem;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
 }
 
 :host(.lang-mobile) .list {
   max-height: 11rem;
+}
+
+/* Scrollbar propia del selector: fina, redondeada y del color de la web.
+   Custom selector scrollbar: thin, rounded and in the site palette. */
+@supports (-moz-appearance: none) {
+  .list {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--ink) 28%, transparent) transparent;
+  }
+}
+
+.list::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--ink) 24%, transparent);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+
+.list::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+.list::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 .opcion {
