@@ -32,7 +32,23 @@
     { "source": "/jardin", "destination": "/index.html" },
     { "source": "/es/jardin", "destination": "/index.html" },
     { "source": "/en/jardin", "destination": "/index.html" },
-    { "source": "/gl/jardin", "destination": "/index.html" }
+    { "source": "/gl/jardin", "destination": "/index.html" },
+    { "source": "/linde", "destination": "/index.html" },
+    { "source": "/es/linde", "destination": "/index.html" },
+    { "source": "/en/linde", "destination": "/index.html" },
+    { "source": "/gl/linde", "destination": "/index.html" },
+    { "source": "/cauce/3", "destination": "/index.html" },
+    { "source": "/es/cauce/3", "destination": "/index.html" },
+    { "source": "/en/cauce/3", "destination": "/index.html" },
+    { "source": "/gl/cauce/3", "destination": "/index.html" },
+    { "source": "/umbra", "destination": "/index.html" },
+    { "source": "/es/umbra", "destination": "/index.html" },
+    { "source": "/en/umbra", "destination": "/index.html" },
+    { "source": "/gl/umbra", "destination": "/index.html" },
+    { "source": "/relicario", "destination": "/index.html" },
+    { "source": "/es/relicario", "destination": "/index.html" },
+    { "source": "/en/relicario", "destination": "/index.html" },
+    { "source": "/gl/relicario", "destination": "/index.html" }
   ],
   "headers": [
     {

@@ -98,4 +98,48 @@ export const routes = [
       const m = await import("./pages/jardin/index.js");
       return { mount: (el: Element) => m.mountJardin(el) };
     }),
+  Routes.route("linde")
+    .at("/linde")
+    .layout("main", async () => {
+      const m = await import("./layouts/main/index.js");
+      return { mount: (el: Element) => m.mountMain(el) };
+    })
+    .none()
+    .page(async () => {
+      const m = await import("./pages/linde/index.js");
+      return { mount: (el: Element) => m.mountLinde(el) };
+    }),
+  Routes.route("cauce")
+    .at("/cauce/3")
+    .layout("main", async () => {
+      const m = await import("./layouts/main/index.js");
+      return { mount: (el: Element) => m.mountMain(el) };
+    })
+    .none()
+    .page(async () => {
+      const m = await import("./pages/cauce/index.js");
+      return { mount: (el: Element) => m.mountCauce(el) };
+    }),
+  Routes.route("umbra")
+    .at("/umbra")
+    .layout("main", async () => {
+      const m = await import("./layouts/main/index.js");
+      return { mount: (el: Element) => m.mountMain(el) };
+    })
+    .none()
+    .page(async () => {
+      const m = await import("./pages/umbra/index.js");
+      return { mount: (el: Element) => m.mountUmbra(el) };
+    }),
+  Routes.route("relicario")
+    .at("/relicario")
+    .layout("main", async () => {
+      const m = await import("./layouts/main/index.js");
+      return { mount: (el: Element) => m.mountMain(el) };
+    })
+    .none()
+    .page(async () => {
+      const m = await import("./pages/relicario/index.js");
+      return { mount: (el: Element) => m.mountRelicario(el) };
+    }),
 ] as const;

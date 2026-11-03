@@ -2,29 +2,40 @@
   <p class="meta">registro de mantenimiento · sin firmar</p>
   <ol class="poemas" data-ref="poemas"></ol>
 
-  <section class="mesa" data-ref="mesa1" hidden>
-    <p class="mesa-tit">cuatro respuestas, en el orden en que fueron escritas</p>
+  <section class="mesa" data-ref="mesa1">
+    <p class="mesa-tit">entradas 1–4 · verificación</p>
     <form data-ref="forma1">
-      <input data-n="1" type="text" autocomplete="off" spellcheck="false" aria-label="primera" />
-      <input data-n="2" type="text" autocomplete="off" spellcheck="false" aria-label="segunda" />
-      <input data-n="3" type="text" autocomplete="off" spellcheck="false" aria-label="tercera" />
-      <input data-n="4" type="text" autocomplete="off" spellcheck="false" aria-label="cuarta" />
+      <label class="campo"><span>1</span><input data-n="1" type="text" autocomplete="off" spellcheck="false" aria-label="primera entrada" /></label>
+      <label class="campo"><span>2</span><input data-n="2" type="text" autocomplete="off" spellcheck="false" aria-label="segunda entrada" /></label>
+      <label class="campo"><span>3</span><input data-n="3" type="text" autocomplete="off" spellcheck="false" aria-label="tercera entrada" /></label>
+      <label class="campo"><span>4</span><input data-n="4" type="text" autocomplete="off" spellcheck="false" aria-label="cuarta entrada" /></label>
       <button type="submit">abrir</button>
     </form>
     <p class="fallo" data-ref="fallo1" role="status"></p>
   </section>
 
   <section class="mesa" data-ref="mesa2" hidden>
-    <p class="mesa-tit">cuatro respuestas de la cinta</p>
+    <p class="mesa-tit">entradas 5–8 · verificación</p>
     <form data-ref="forma2">
-      <input data-n="5" type="text" autocomplete="off" spellcheck="false" aria-label="quinta" />
-      <input data-n="6" type="text" autocomplete="off" spellcheck="false" aria-label="sexta" />
-      <input data-n="7" type="text" autocomplete="off" spellcheck="false" aria-label="séptima" />
-      <input data-n="8" type="text" autocomplete="off" spellcheck="false" aria-label="octava" />
+      <label class="campo"><span>5</span><input data-n="5" type="text" autocomplete="off" spellcheck="false" aria-label="quinta entrada" /></label>
+      <label class="campo"><span>6</span><input data-n="6" type="text" autocomplete="off" spellcheck="false" aria-label="sexta entrada" /></label>
+      <label class="campo"><span>7</span><input data-n="7" type="text" autocomplete="off" spellcheck="false" aria-label="séptima entrada" /></label>
+      <label class="campo"><span>8</span><input data-n="8" type="text" autocomplete="off" spellcheck="false" aria-label="octava entrada" /></label>
       <button type="submit">abrir</button>
     </form>
     <p class="fallo" data-ref="fallo2" role="status"></p>
   </section>
 
   <article class="desenlace" data-ref="desenlace" hidden></article>
+
+  <section class="puerta" data-ref="puerta" hidden>
+    <p class="mesa-tit">la palabra que abre la puerta</p>
+    <form data-ref="formaPuerta">
+      <label class="campo campo-ancho"><span>palabra</span><input data-ref="palabra" type="text" autocomplete="off" spellcheck="false" aria-label="palabra de la puerta" /></label>
+      <button type="submit">abrir</button>
+    </form>
+    <p class="fallo" data-ref="falloPuerta" role="status"></p>
+  </section>
+
+  <x-no-encontrado data-ref="noEncontrado" hidden></x-no-encontrado>
 </div>

@@ -1,0 +1,41 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.no-encontrado {
+  min-height: 60vh;
+  display: grid;
+  place-content: center;
+  gap: 0.8rem;
+  text-align: center;
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+
+.codigo {
+  margin: 0;
+  font-size: clamp(4rem, 14vw, 8rem);
+  line-height: 0.85;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.texto {
+  margin: 0;
+  color: var(--muted);
+}
+
+.volver {
+  justify-self: center;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px dotted color-mix(in srgb, var(--ink) 35%, transparent);
+}
+
+.volver:hover,
+.volver:focus-visible {
+  color: var(--accent);
+}

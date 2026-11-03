@@ -1,5 +1,6 @@
 import { component, routeEvent, type SetupCtx } from "../../lib/rtw/index.js";
 import { i18n } from "../../lang/index.js";
+import { insigniaGanada } from "../../lib/fases.js";
 
 /**
  * Navegación principal. Marca el enlace de la ruta actual.
@@ -14,6 +15,17 @@ export const Navigation = component("x-navigation", import.meta.url, {
     const nav = shadow.querySelector("nav");
     const burger = shadow.querySelector("#burger") as HTMLButtonElement | null;
     nav?.setAttribute("data-js", "");
+    /**
+     * Insignia del archivo: solo aparece cuando la fase 3 se completa.
+     * Archive badge: only shown once phase 3 is completed.
+     */
+    const insignia = shadow.querySelector('[data-ref="insignia"]');
+    const pintarInsignia = (): void => {
+      insignia?.toggleAttribute("hidden", !insigniaGanada());
+    };
+    pintarInsignia();
+    window.addEventListener("gacarbla:insignia", pintarInsignia);
+    onCleanup(() => window.removeEventListener("gacarbla:insignia", pintarInsignia));
     /**
      * Mide la cabecera fija y la compensa en el body (sin saltos al
      * cargar la fuente o rotar). Con fallback CSS si falla.

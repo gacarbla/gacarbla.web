@@ -21,6 +21,17 @@ nav {
   color: inherit;
 }
 
+.insignia {
+  margin-left: 0.35rem;
+  color: var(--accent);
+  font-size: 0.85em;
+  vertical-align: 0.08em;
+}
+
+.insignia[hidden] {
+  display: none;
+}
+
 .links {
   display: flex;
   gap: 0.25rem;
