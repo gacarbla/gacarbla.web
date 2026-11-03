@@ -3,3 +3,4 @@ node_modules/
 .VSCodeCounter/
 # Salida de compilación: la publica CI en la rama web. / Build output: published by CI to the web branch.
 app/
+web/

@@ -32,4 +32,22 @@ if (missing.length > 0) {
   console.error(`Faltan salidas en app/ / Missing outputs in app/: ${missing.join(", ")}`);
   process.exit(1);
 }
+
+/**
+ * Comprueba el paquete estático de web/: portada, fallback SPA,
+ * entrada JS y recursos.
+ * Checks the web/ static bundle: cover, SPA fallback, JS entry, assets.
+ */
+const WEB = path.join(__dirname, "..", "web");
+const bundle = ["index.html", "404.html", path.join("app", "index.js")];
+for (const rel of bundle) {
+  if (!fs.existsSync(path.join(WEB, rel))) missing.push(`web/${rel}`);
+}
+if (fs.existsSync(path.join(__dirname, "..", "assets")) && !fs.existsSync(path.join(WEB, "assets"))) {
+  missing.push("web/assets");
+}
+if (missing.length > 0) {
+  console.error(`Paquete web incompleto / Incomplete web bundle: ${missing.join(", ")}`);
+  process.exit(1);
+}
 console.log("build ok: salidas completas / outputs complete");

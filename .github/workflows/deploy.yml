@@ -1,9 +1,11 @@
-name: Publicar app/ en la rama web
+name: Publicar web estática en la rama web
 
-# Cada push a main construye el proyecto y sube el contenido de app/
-# a la RAÍZ de la rama "web" (página estática lista para servir).
-# Each push to main builds the project and uploads the app/ contents
-# to the ROOT of the "web" branch (static site ready to serve).
+# Cada push a main construye el proyecto y sube el paquete web/
+# (index.html + 404.html de fallback SPA + app/ + assets) a la RAÍZ
+# de la rama "web" (página estática lista para servir en el dominio).
+# Each push to main builds the project and uploads the web/ bundle
+# (index.html + SPA-fallback 404.html + app/ + assets) to the ROOT of
+# the "web" branch (static site ready to serve on the domain).
 
 on:
   push:
@@ -40,6 +42,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: web
-          publish_dir: ./app
+          publish_dir: ./web
           force_orphan: true
           cname: gacarbla.es
