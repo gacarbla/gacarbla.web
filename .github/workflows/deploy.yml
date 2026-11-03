@@ -1,20 +1,45 @@
-name: Deploy app to GitHub Pages
+name: Publicar app/ en la rama web
+
+# Cada push a main construye el proyecto y sube el contenido de app/
+# a la RAÍZ de la rama "web" (página estática lista para servir).
+# Each push to main builds the project and uploads the app/ contents
+# to the ROOT of the "web" branch (static site ready to serve).
 
 on:
   push:
     branches: [ "main" ]
+  workflow_dispatch:
+
+concurrency:
+  group: publicar-web
+  cancel-in-progress: true
 
 jobs:
-  deploy:
+  publicar:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - name: Checkout code
+      - name: Descargar código / Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Instalar Node / Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias / Install dependencies
+        run: npm ci
+
+      - name: Construir / Build
+        run: npm run build
+
+      - name: Publicar en la rama web / Publish to the web branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: web
           publish_dir: ./app
+          force_orphan: true
+          cname: gacarbla.es
