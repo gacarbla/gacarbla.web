@@ -6,7 +6,8 @@
   "scripts": {
     "build": "node -e \"require('fs').rmSync('app',{recursive:true,force:true})\" && tsc -p tsconfig.json && node -e \"require('fs').cpSync('src','app',{recursive:true,filter:(s)=>!s.endsWith('.ts')})\" && node scripts/empaquetar-web.js && node scripts/check-build.js",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "dev": "npx -y serve@14.2.4 . -l 8081"
+    "dev": "npx -y serve@14.2.4 . -l 8081",
+    "archivo:sellar": "node scripts/sellar-archivo.js"
   },
   "keywords": [],
   "author": "",

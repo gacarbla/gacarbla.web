@@ -87,4 +87,15 @@ export const routes = [
       const m = await import("./pages/tres-en-raya/index.js");
       return { mount: (el: Element) => m.mountTres(el) };
     }),
+  Routes.route("archivo")
+    .at("/jardin")
+    .layout("main", async () => {
+      const m = await import("./layouts/main/index.js");
+      return { mount: (el: Element) => m.mountMain(el) };
+    })
+    .none()
+    .page(async () => {
+      const m = await import("./pages/jardin/index.js");
+      return { mount: (el: Element) => m.mountJardin(el) };
+    }),
 ] as const;

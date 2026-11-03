@@ -1,0 +1,4 @@
+/* El Archivo trae su propia tipografía y márgenes. / The Archive brings its own type and spacing. */
+:host {
+  display: block;
+}

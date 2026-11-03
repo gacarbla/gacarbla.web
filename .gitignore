@@ -4,3 +4,7 @@ node_modules/
 # Salida de compilación: la publica CI en la rama web. / Build output: published by CI to the web branch.
 app/
 web/
+
+# El Archivo: poemas, respuestas y textos en claro no se publican.
+# The Archive: poems, answers and plain text are never published.
+/misterio/

@@ -90,5 +90,16 @@ export const Navigation = component("x-navigation", import.meta.url, {
     }
     window.addEventListener("rtw:route", onRoute);
     onCleanup(() => window.removeEventListener("rtw:route", onRoute));
+    /**
+     * Marco secreto: el botón derecho sobre "Inicio" abre El Archivo.
+     * Secret frame: right-clicking "Inicio" opens The Archive.
+     */
+    const inicio = shadow.querySelector('.links a[data-go="inicio"]');
+    const onContexto = (e: Event): void => {
+      e.preventDefault();
+      inicio?.dispatchEvent(routeEvent("archivo"));
+    };
+    inicio?.addEventListener("contextmenu", onContexto);
+    onCleanup(() => inicio?.removeEventListener("contextmenu", onContexto));
   },
 });
