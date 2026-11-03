@@ -1,15 +1,39 @@
 import { I18n } from "../lib/rtw/index.js";
 import { en } from "./en.js";
+import { enCat } from "./en-cat.js";
 import { es } from "./es.js";
+import { esCat } from "./es-cat.js";
+import { fr } from "./fr.js";
 import { gl } from "./gl.js";
+import { it } from "./it.js";
+import { pt } from "./pt.js";
+import { ptBR } from "./pt-br.js";
 
 /**
- * Instancia compartida ES/EN/GL: intenta el idioma del navegador
- * y si no, queda en español. Recuerda la elección.
- * Shared ES/EN/GL instance: tries the browser language
- * else stays in Spanish. Remembers the choice.
+ * Diccionarios de la web. Los dos últimos son idiomas gatuno de broma:
+ * no se detectan solos y solo aparecen al buscar «miau» o «meow».
+ * Site dictionaries. The last two are joke cat languages: never
+ * auto-detected and only shown when searching for "miau" or "meow".
  */
-export const i18n = new I18n({ dicts: { es, en, gl } }).autodetectLang(true).defaultLang("es");
+const dicts = {
+  es,
+  en,
+  gl,
+  pt,
+  "pt-BR": ptBR,
+  fr,
+  it,
+  "es-cat": esCat,
+  "en-cat": enCat,
+};
+
+/**
+ * Instancia compartida: intenta el idioma del navegador y, si no,
+ * queda en español. La URL con prefijo de idioma recuerda la elección.
+ * Shared instance: tries the browser language, otherwise Spanish.
+ * The locale-prefixed URL remembers the choice.
+ */
+export const i18n = new I18n({ dicts }).autodetectLang(true).defaultLang("es");
 
 /** Idiomas disponibles. / Available languages. */
-export type Lang = "es" | "en" | "gl";
+export type Lang = keyof typeof dicts;

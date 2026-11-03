@@ -102,7 +102,11 @@ nav[data-js] {
   }
 
   .links {
-    padding: 0 1.4rem 0 0;
+    padding: 0;
+  }
+
+  .lang-desktop {
+    margin-right: 1.4rem;
   }
 }
 
@@ -117,10 +121,11 @@ nav[data-js] {
     inset: 0;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 0.6rem;
     padding: 5rem 1.4rem 2rem;
     background: var(--paper);
+    overflow-y: auto;
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
@@ -148,6 +153,18 @@ nav[data-js] {
   nav[data-js][data-open] .links a:nth-child(2) { transition-delay: 0.12s; }
   nav[data-js][data-open] .links a:nth-child(3) { transition-delay: 0.19s; }
 
+  nav[data-js] .links x-lang-switch {
+    margin-top: 0.8rem;
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  nav[data-js][data-open] .links x-lang-switch {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.26s;
+  }
+
   nav[data-js][data-open] #burger span:nth-child(1) {
     transform: translateY(7px) rotate(45deg);
   }
@@ -170,7 +187,8 @@ nav[data-js] {
     transition: opacity 0.28s ease, visibility 0.28s;
   }
 
-  nav[data-js] .links a {
+  nav[data-js] .links a,
+  nav[data-js] .links x-lang-switch {
     transition: opacity 0.25s ease, transform 0.25s ease;
   }
 }
@@ -178,7 +196,8 @@ nav[data-js] {
 @media (prefers-reduced-motion: reduce) {
   #burger span,
   nav[data-js] .links,
-  nav[data-js] .links a {
+  nav[data-js] .links a,
+  nav[data-js] .links x-lang-switch {
     transition: none;
   }
 }

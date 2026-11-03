@@ -107,4 +107,7 @@ export const en = {
   "tres.gana_o": "O wins!",
   "tres.empate": "Draw",
   "tres.empates": "Draws",
+  "lang.etiqueta": "Language",
+  "lang.buscar": "Search language",
+  "lang.vacio": "No results",
 } as const;

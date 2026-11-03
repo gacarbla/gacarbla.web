@@ -564,7 +564,8 @@ function rutaInicial(): string | null {
   const seg = location.pathname.split("/").filter(Boolean);
   // Quita el prefijo de locale si lo hay; el lookup decide el resto.
   // Drops the locale prefix when present; the lookup decides the rest.
-  const sinLocale = seg.length > 0 && ["es", "en", "gl"].includes(seg[0] as string) ? seg.slice(1) : seg;
+  const locales = ["es", "en", "gl", "pt", "pt-BR", "fr", "it", "es-cat", "en-cat"];
+  const sinLocale = seg.length > 0 && locales.includes(seg[0] as string) ? seg.slice(1) : seg;
   return RUTAS[`/${sinLocale.join("/")}`] ?? null;
 }
 

@@ -48,7 +48,19 @@
     { "source": "/relicario", "destination": "/index.html" },
     { "source": "/es/relicario", "destination": "/index.html" },
     { "source": "/en/relicario", "destination": "/index.html" },
-    { "source": "/gl/relicario", "destination": "/index.html" }
+    { "source": "/gl/relicario", "destination": "/index.html" },
+    { "source": "/pt", "destination": "/index.html" },
+    { "source": "/pt/**", "destination": "/index.html" },
+    { "source": "/pt-BR", "destination": "/index.html" },
+    { "source": "/pt-BR/**", "destination": "/index.html" },
+    { "source": "/fr", "destination": "/index.html" },
+    { "source": "/fr/**", "destination": "/index.html" },
+    { "source": "/it", "destination": "/index.html" },
+    { "source": "/it/**", "destination": "/index.html" },
+    { "source": "/es-cat", "destination": "/index.html" },
+    { "source": "/es-cat/**", "destination": "/index.html" },
+    { "source": "/en-cat", "destination": "/index.html" },
+    { "source": "/en-cat/**", "destination": "/index.html" }
   ],
   "headers": [
     {

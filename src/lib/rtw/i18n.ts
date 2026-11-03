@@ -163,8 +163,13 @@ export class I18n<const T extends Record<string, Record<string, string>>> {
    */
   private detectNav(): I18nLang<T> | null {
     try {
-      const nav = navigator.language.slice(0, 2).toLowerCase();
-      return this.languages.find((l) => l.toLowerCase() === nav || l.toLowerCase().startsWith(`${nav}-`)) ?? null;
+      const full = navigator.language.toLowerCase();
+      const base = full.split("-")[0] ?? "";
+      const exact = this.languages.find((l) => l.toLowerCase() === full);
+      if (exact) return exact;
+      const byBase = this.languages.find((l) => l.toLowerCase() === base);
+      if (byBase) return byBase;
+      return this.languages.find((l) => l.toLowerCase().startsWith(`${base}-`)) ?? null;
     } catch {
       return null;
     }

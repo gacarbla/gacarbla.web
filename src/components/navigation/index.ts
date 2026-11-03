@@ -82,6 +82,7 @@ export const Navigation = component("x-navigation", import.meta.url, {
      */
     const onRoute = (e: Event): void => {
       marcar((e as CustomEvent<string>).detail);
+      setOpen(false);
     };
     /**
      * Clic en sombra: se despacha rtw:go (compuesto, atraviesa al documento)
