@@ -111,7 +111,7 @@ const hashes = [1, 2, 3, 4, 5, 6, 7, 8].reduce((acc, n) => {
 }, {});
 
 const datos = {
-  version: 2,
+  version: 3,
   iteraciones: Number(a.iteraciones) || 200000,
   salt: saltB64,
   poemas: publicos,

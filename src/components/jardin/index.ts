@@ -1,7 +1,7 @@
 import { component, routeEvent, type SetupCtx } from "../../lib/rtw/index.js";
 import { abrirMesa, leerEstado, mesas, poemas, type Estado } from "../../lib/archivo.js";
 import { guardarPalabraFase2, verificarFase2 } from "../../lib/fases.js";
-import type { Poema } from "./datos.js";
+import { SALT, type Poema } from "./datos.js";
 
 /**
  * El Archivo: los poemas que el sitio no firmó. Se entra por el menú
@@ -150,10 +150,13 @@ export const Jardin = component("x-jardin", import.meta.url, {
       return art;
     };
 
+    /** Clave de sesión atada al sello: un resellado invalida los textos viejos. / Session key tied to the seal: resealing invalidates old texts. */
+    const claveMesa = (id: string): string => `gacarbla:mesa:${SALT}:${id}`;
+
     /** Texto guardado de una mesa. / Stored text of a table. */
     const textoMesa = (id: string): string | null => {
       try {
-        return sessionStorage.getItem(`gacarbla:mesa:${id}`);
+        return sessionStorage.getItem(claveMesa(id));
       } catch {
         return null;
       }
@@ -162,7 +165,7 @@ export const Jardin = component("x-jardin", import.meta.url, {
     /** Guarda el texto de una mesa. / Stores a table text. */
     const guardarTextoMesa = (id: string, texto: string): void => {
       try {
-        sessionStorage.setItem(`gacarbla:mesa:${id}`, texto);
+        sessionStorage.setItem(claveMesa(id), texto);
       } catch {
         /* sesión opcional / optional session */
       }

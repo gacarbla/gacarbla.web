@@ -11,7 +11,7 @@ import { claveDe, descifrar, huella, lp, normalizar } from "./cripto.js";
 /** Clave de guardado. / Save key. */
 const CLAVE = "gacarbla:archivo";
 /** Versión del formato. / Format version. */
-const VERSION = 2;
+const VERSION = 3;
 
 /** Guardado: solo lo resuelto, nunca los tokens. / Save: only what is solved, never tokens. */
 export interface Estado {
