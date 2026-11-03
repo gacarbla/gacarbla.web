@@ -33,8 +33,8 @@ $muted = [System.Drawing.ColorTranslator]::FromHtml("#a89e8a")
 $accent = [System.Drawing.ColorTranslator]::FromHtml("#e08a4c")
 $accent2 = [System.Drawing.ColorTranslator]::FromHtml("#b3541e")
 $line = [System.Drawing.ColorTranslator]::FromHtml("#2e2a24")
-$frameLine = [System.Drawing.ColorTranslator]::FromHtml("#3a342b")
-$panel = [System.Drawing.ColorTranslator]::FromHtml("#1d1913")
+$frameLine = [System.Drawing.ColorTranslator]::FromHtml("#e5ded2")
+$panel = [System.Drawing.ColorTranslator]::FromHtml("#faf8f4")
 
 # Fondo sobrio: solo un gradiente cálido.
 $bgRect = New-Object System.Drawing.Rectangle(0, 0, $w, $h)
