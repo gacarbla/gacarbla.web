@@ -4,10 +4,10 @@
 
 - Etiquetas **Open Graph** y **Twitter Card** en `index.html`: título, descripción, URL
   canónica, imagen absoluta, dimensiones, alt, locale y locales alternativos.
-- Tarjeta **1200×630** en `assets/og.png` (203 KB, por debajo del límite habitual de
+- Tarjeta **1200×630** en `assets/og.png` (161 KB, por debajo del límite habitual de
   WhatsApp).
 - Generador reproducible: `scripts/og-image.ps1` (PowerShell + System.Drawing).
-  Usa el retrato `assets/gacarbla.png` y la paleta de la web.
+  Usa el retrato enmarcado, la paleta y la tipografía de la web.
 - `404.html` es una copia de `index.html`, así que también lleva las etiquetas.
 
 ## Cloudflare
