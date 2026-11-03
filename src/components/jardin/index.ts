@@ -60,14 +60,30 @@ export const Jardin = component("x-jardin", import.meta.url, {
     /** Buffer del marco secreto. / Secret-frame buffer. */
     let buffer = "";
 
+    /** Texto con cursivas marcadas con asteriscos. / Text with asterisk-marked italics. */
+    const parrafoTexto = (texto: string): HTMLElement => {
+      const p = document.createElement("p");
+      const trozos = texto.split(/(\*[^*]+\*)/g);
+      for (const t of trozos) {
+        if (!t) continue;
+        if (t.startsWith("*") && t.endsWith("*") && t.length > 2) {
+          const em = document.createElement("em");
+          em.textContent = t.slice(1, -1);
+          p.appendChild(em);
+        } else {
+          p.appendChild(document.createTextNode(t));
+        }
+      }
+      return p;
+    };
+
     /** Crea un poema público. / Builds a public poem. */
     const fichaPoema = (n: number, titulo: string, texto: string, secreto?: string): HTMLElement => {
       const li = document.createElement("li");
       li.className = "poema";
       const h = document.createElement("h2");
       h.textContent = titulo;
-      const p = document.createElement("p");
-      p.textContent = texto;
+      const p = parrafoTexto(texto);
       li.append(h, p);
       if (secreto) li.appendChild(enlaceSecreto(secreto));
       if (n === poemas().length) p.classList.add("cursor");
