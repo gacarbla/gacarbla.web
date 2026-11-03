@@ -21,18 +21,6 @@ nav {
   color: inherit;
 }
 
-/* Sigilo del investigador: solo tras resolver el misterio. / Investigator sigil: only after solving the mystery. */
-.sigilo {
-  margin-left: 0.4rem;
-  color: var(--accent);
-  font-size: 0.75em;
-  vertical-align: super;
-}
-
-.sigilo[hidden] {
-  display: none;
-}
-
 .links {
   display: flex;
   gap: 0.25rem;

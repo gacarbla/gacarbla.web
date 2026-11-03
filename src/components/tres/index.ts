@@ -1,7 +1,6 @@
 import { component, type SetupCtx } from "../../lib/rtw/index.js";
 import { i18n } from "../../lang/index.js";
 import { jugadaNivel, lineaGanadora, libres, otra, type Casilla, type Marca } from "./tablero.js";
-import { emitirSello } from "../../lib/misterio.js";
 
 /**
  * Tres en raya: contra la máquina (3 niveles) o dos jugadores en el
@@ -157,19 +156,7 @@ export const Tres = component("x-tres", import.meta.url, {
         puntos.E++;
         avisar("tres.empate");
       }
-      // Sello del misterio: ganar a la máquina en normal. / Mystery seal: beat the machine on normal.
-      if (ganadora === "X" && modo === "ia" && nivel === 1) mostrarSello();
       pintar();
-    };
-
-    /**
-     * Emite y pinta el sello de la victoria. / Emits and paints the victory seal.
-     */
-    const mostrarSello = (): void => {
-      const sello = emitirSello("tres");
-      if (!sello) return;
-      mensajeEl!.textContent = `Sello: ${sello}`;
-      mensajeEl!.removeAttribute("data-i18n");
     };
 
     /**

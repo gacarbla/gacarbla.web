@@ -28,11 +28,7 @@
     { "source": "/gl/games", "destination": "/index.html" },
     { "source": "/gl/games/cubo", "destination": "/index.html" },
     { "source": "/gl/games/laberinto", "destination": "/index.html" },
-    { "source": "/gl/games/tres-en-raya", "destination": "/index.html" },
-    { "source": "/archivo", "destination": "/index.html" },
-    { "source": "/es/archivo", "destination": "/index.html" },
-    { "source": "/en/archivo", "destination": "/index.html" },
-    { "source": "/gl/archivo", "destination": "/index.html" }
+    { "source": "/gl/games/tres-en-raya", "destination": "/index.html" }
   ],
   "headers": [
     {

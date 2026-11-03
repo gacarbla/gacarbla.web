@@ -1,7 +1,6 @@
 import { component, type SetupCtx } from "../../lib/rtw/index.js";
 import { i18n } from "../../lang/index.js";
 import { generarMuros, colocarPunto, hayMuro, LADO, type Celda } from "./muros.js";
-import { emitirSello } from "../../lib/misterio.js";
 
 /**
  * Laberinto de paredes invisibles (1-4 jugadores hot-seat).
@@ -472,8 +471,6 @@ interface Refs {
   pasarBtn: HTMLButtonElement;
   /** Pantalla final. / Final screen. */
   finalEl: HTMLElement;
-  /** Sello del misterio al ganar. / Mystery seal on victory. */
-  selloOut: HTMLElement;
   /** Punto del ganador. / Winner dot. */
   ganadorPunto: HTMLElement;
   /** Botón revancha. / Rematch button. */
@@ -523,7 +520,6 @@ function recogerRefs(shadow: ShadowRoot): Refs | null {
     seguirN: q("seguirN"),
     pasarBtn: q("pasar"),
     finalEl: q("final"),
-    selloOut: q("selloOut"),
     ganadorPunto: q("ganadorPunto"),
     revanchaBtn: q("revancha"),
     nuevaBtn: q("nueva"),
@@ -564,7 +560,6 @@ export const Laberinto = component("x-laberinto", import.meta.url, {
       seguirN,
       pasarBtn,
       finalEl,
-      selloOut,
       ganadorPunto,
       revanchaBtn,
       nuevaBtn,
@@ -1233,17 +1228,6 @@ export const Laberinto = component("x-laberinto", import.meta.url, {
       }, 400);
     };
 
-    /**
-     * Pinta el sello emitido al ganar (prueba del misterio).
-     * Paints the seal emitted on victory (mystery proof).
-     */
-    const mostrarSello = (): void => {
-      const sello = emitirSello("laberinto");
-      if (!sello) return;
-      selloOut.textContent = `Sello: ${sello}`;
-      selloOut.toggleAttribute("hidden", false);
-    };
-
     /** Captura al pisar el punto: tanto, punto nuevo y a elegir, tirar o fin. / Capture on stepping on the dot: score, fresh dot, then choose, roll or end. */
     const capturar = (): void => {
       const j = jugs[turno] as Jug;
@@ -1253,7 +1237,6 @@ export const Laberinto = component("x-laberinto", import.meta.url, {
         irA("fin");
         pararReloj();
         avisar(null);
-        mostrarSello();
         pintar();
         return;
       }

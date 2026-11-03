@@ -1,10 +1,8 @@
-import { component, routeEvent, type SetupCtx } from "../../lib/rtw/index.js";
+import { component, type SetupCtx } from "../../lib/rtw/index.js";
 
 /**
- * Pie con año automático y autor por atributo `nombre`. Esconde la puerta
- * del misterio: la palabra "seek" del pie abre /archivo.
- * Footer with automatic year and `nombre`-attribute author. Hides the
- * mystery door: the footer word "seek" opens /archivo.
+ * Pie con año automático y autor por atributo `nombre`.
+ * Footer with automatic year and `nombre` attribute author.
  *
  * Uso en cualquier layout / Usage in any layout:
  *   import { Footer } from "../../components/footer/index.js";
@@ -12,7 +10,7 @@ import { component, routeEvent, type SetupCtx } from "../../lib/rtw/index.js";
  */
 export const Footer = component("x-footer", import.meta.url, {
   attrs: ["nombre"],
-  setup({ shadow, attr, onCleanup }: SetupCtx) {
+  setup({ shadow, attr }: SetupCtx) {
     const anio = shadow.querySelector(".anio");
     if (anio) anio.textContent = String(new Date().getFullYear());
     const nombre = attr("nombre");
@@ -20,16 +18,5 @@ export const Footer = component("x-footer", import.meta.url, {
       const autor = shadow.querySelector(".autor");
       if (autor) autor.textContent = nombre;
     }
-    /**
-     * La puerta del misterio navega por SPA (el enlace vive en sombra).
-     * The mystery door navigates through the SPA (link lives in shadow).
-     */
-    const seek = shadow.querySelector(".seek");
-    const onSeek = (e: Event): void => {
-      e.preventDefault();
-      seek?.dispatchEvent(routeEvent("archivo"));
-    };
-    seek?.addEventListener("click", onSeek);
-    onCleanup(() => seek?.removeEventListener("click", onSeek));
   },
 });

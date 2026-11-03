@@ -544,7 +544,6 @@ const RUTAS: Record<string, string> = {
   "/games/cubo": "cubo",
   "/games/laberinto": "laberinto",
   "/games/tres-en-raya": "tres-en-raya",
-  "/archivo": "archivo",
   "/experiencia": "experiencia",
   "/contacto": "contacto",
 };

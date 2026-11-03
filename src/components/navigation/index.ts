@@ -1,6 +1,5 @@
 import { component, routeEvent, type SetupCtx } from "../../lib/rtw/index.js";
 import { i18n } from "../../lang/index.js";
-import { leerEstado, resuelto } from "../../lib/misterio.js";
 
 /**
  * Navegación principal. Marca el enlace de la ruta actual.
@@ -91,18 +90,5 @@ export const Navigation = component("x-navigation", import.meta.url, {
     }
     window.addEventListener("rtw:route", onRoute);
     onCleanup(() => window.removeEventListener("rtw:route", onRoute));
-    /**
-     * Sigilo del misterio: aparece en el nav en todas las páginas una vez
-     * resuelto, y se actualiza al instante al cerrar el último caso.
-     * Mystery sigil: shows in the nav on every page once solved, and
-     * refreshes the moment the last case closes.
-     */
-    const sigilo = shadow.querySelector(".sigilo");
-    const pintarSigilo = (): void => {
-      if (sigilo) sigilo.toggleAttribute("hidden", !resuelto(leerEstado()));
-    };
-    pintarSigilo();
-    window.addEventListener("rtw:misterio", pintarSigilo);
-    onCleanup(() => window.removeEventListener("rtw:misterio", pintarSigilo));
   },
 });
