@@ -51,7 +51,7 @@ export const gl = {
   "games.completa": "Pantalla completa",
   "games.salir_completa": "Saír da pantalla completa",
   "games.lab_titulo": "Labirinto invisible",
-  "games.lab_texto": "Memoriza 25 muros en 10 segundos e caza 5 puntos ás cegas, por quendas.",
+  "games.lab_texto": "Memoriza 25 muros en 10 segundos e caza 5 puntos ás cegas, por quendas. Ninguén máis o sabe: seven.",
   "games.tres_titulo": "Tres en raia",
   "games.tres_texto": "O clásico de sempre: contra a máquina ou contra outra persoa.",
   "games.volver": "Volver ao inicio",

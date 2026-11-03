@@ -3,4 +3,8 @@ node_modules/
 .VSCodeCounter/
 # Salida de compilación: la publica CI en la rama web. / Build output: published by CI to the web branch.
 app/
+# Misterio: instrucciones, pistas y soluciones en claro NO se publican.
+# Solo se commitea datos.ts (cifrado). / Mystery: plaintext clues and
+# solutions are never published; only the encrypted datos.ts is committed.
+/misterio/
 web/

@@ -1,0 +1,5 @@
+/* El tablero gestiona su propio ancho; la página no añade cabecera. */
+/* The board handles its own width; the page adds no heading. */
+:host {
+  display: block;
+}

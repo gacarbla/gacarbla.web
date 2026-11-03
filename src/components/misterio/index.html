@@ -1,0 +1,19 @@
+<div class="archivo">
+  <p class="marca">ARCHIVO</p>
+  <p class="intro" data-ref="intro"></p>
+  <p class="progreso"><span data-ref="paso">0</span> / <span data-ref="total">7</span></p>
+  <div class="fragmentos" data-ref="fragmentos" hidden></div>
+
+  <form class="entrada" data-ref="forma" hidden>
+    <label class="etiqueta" for="codigo" data-ref="etiqueta">Código</label>
+    <div class="fila">
+      <input id="codigo" name="codigo" type="text" autocomplete="off" spellcheck="false" data-ref="campo" />
+      <button type="submit" data-ref="enviar">Abrir</button>
+    </div>
+    <p class="fallo" data-ref="fallo" role="status"></p>
+  </form>
+
+  <p class="sello-pista" data-ref="selloPista" hidden></p>
+  <p class="final" data-ref="final" hidden></p>
+  <p class="reinicio"><button type="button" class="olvidar" data-ref="olvidar">Olvidar el progreso</button></p>
+</div>

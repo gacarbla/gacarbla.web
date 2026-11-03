@@ -32,6 +32,20 @@
   margin-right: auto;
 }
 
+/* Nota cifrada del misterio. / Cipher note of the mystery. */
+.nota {
+  margin: 1.4rem auto 0;
+  font-family: ui-monospace, monospace;
+  font-size: 0.8rem;
+  color: var(--muted);
+  opacity: 0.55;
+  letter-spacing: 0.08em;
+}
+
+.nota code {
+  font-size: 0.95em;
+}
+
 .escribir {
   padding: 1rem 0 2rem;
   max-width: 34rem;

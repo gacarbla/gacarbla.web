@@ -1,7 +1,19 @@
 footer {
   padding: 2.5rem 1.2rem 3rem;
   text-align: center;
-  color: var(--muted, #6b6455);
-  border-top: 1px solid var(--line, #e5ded2);
-  font-size: 0.95rem;
+}
+
+/* Puerta del misterio: discreta pero legible. / Mystery door: discreet yet legible. */
+.seek {
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.45;
+  letter-spacing: 0.08em;
+  border-bottom: 1px dotted currentColor;
+}
+
+.seek:hover,
+.seek:focus-visible {
+  opacity: 1;
+  color: var(--accent);
 }
