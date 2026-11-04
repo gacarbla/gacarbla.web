@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="gl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GACARBLA — Desenvolvedor web</title>
+<meta name="description" content="Constrúo webs rápidas e coidadas con tecnoloxía propia, sen frameworks.">
+<meta name="author" content="Gabriel">
+<link rel="canonical" href="https://gacarbla.es/gl/">
+
+<!-- Open Graph: Discord, WhatsApp, Telegram, LinkedIn, etc. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GACARBLA">
+<meta property="og:title" content="GACARBLA — Desenvolvedor web">
+<meta property="og:description" content="Constrúo webs rápidas e coidadas con tecnoloxía propia, sen frameworks.">
+<meta property="og:url" content="https://gacarbla.es/gl/">
+<meta property="og:image" content="https://gacarbla.es/assets/og.png?v=4">
+<meta property="og:image:secure_url" content="https://gacarbla.es/assets/og.png?v=4">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="GACARBLA — Desenvolvedor web">
+<meta property="og:locale" content="gl_ES">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="pt_BR">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="it_IT">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GACARBLA — Desenvolvedor web">
+<meta name="twitter:description" content="Constrúo webs rápidas e coidadas con tecnoloxía propia, sen frameworks.">
+<meta name="twitter:image" content="https://gacarbla.es/assets/og.png?v=4">
+<meta name="twitter:image:alt" content="GACARBLA — Desenvolvedor web">
+
+<!-- Color de la interfaz del navegador / Browser UI color -->
+<meta name="theme-color" content="#14110c" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)">
+<meta name="color-scheme" content="light dark">
+
+<link rel="icon" href="/assets/favicon.png">
+<link rel="modulepreload" href="/app/index.js">
+<link rel="modulepreload" href="/app/lib/rtw/index.js">
+<link rel="preload" as="fetch" href="/app/layouts/main/index.html" crossorigin>
+<link rel="preload" as="fetch" href="/app/layouts/main/style.css" crossorigin>
+<link rel="preload" as="fetch" href="/app/pages/inicio/index.html" crossorigin>
+<link rel="preload" as="fetch" href="/app/pages/inicio/style.css" crossorigin>
+<link rel="preload" as="fetch" href="/app/components/navigation/index.html" crossorigin>
+<link rel="preload" as="fetch" href="/app/components/navigation/style.css" crossorigin>
+<link rel="preload" as="fetch" href="/app/components/footer/index.html" crossorigin>
+<link rel="preload" as="fetch" href="/app/components/footer/style.css" crossorigin>
+<link rel="preload" as="fetch" href="/app/components/juego/index.html" crossorigin>
+<link rel="preload" as="fetch" href="/app/components/juego/style.css" crossorigin>
+<link rel="preload" as="fetch" href="/app/components/lang-switch/index.html" crossorigin>
+<link rel="preload" as="fetch" href="/app/components/lang-switch/style.css" crossorigin>
+<style>
+/* CSS crítico inline: pinta la primera vista sin esperar al JS.
+   Copia mínima de src/layouts/main + componentes (ver esos ficheros). */
+:root{--paper:#faf8f4;--ink:#17150f;--muted:#6b6455;--line:#e5ded2;--accent:#b3541e;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--paper:#14110c;--ink:#f2ede3;--muted:#a89e8a;--line:#2e2a24;--accent:#e08a4c;--card:#1d1913}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6;padding-top:var(--header-h,76px)}
+h1,h2,h3{font-family:"Space Grotesk",system-ui,sans-serif;line-height:1.1;letter-spacing:-.02em}
+#contenido{max-width:68rem;width:100%;box-sizing:border-box;margin:0 auto;padding:0 1.2rem 5rem;flex:1;min-height:100vh;min-height:100dvh}
+page{display:block}
+nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:.9rem 1.4rem;border-bottom:1px solid var(--line)}
+nav .links{display:flex;gap:.25rem}
+#burger{display:none}
+.hero{padding:clamp(3rem,10vw,7rem) 0 clamp(2rem,6vw,4rem)}
+.eyebrow{font-family:ui-monospace,monospace;font-size:.85rem;text-transform:uppercase;letter-spacing:.2em;color:var(--accent)}
+.hero h1{font-size:clamp(2.8rem,8vw,5.5rem);margin:0 0 .5rem}
+.rol{font-size:clamp(1.2rem,3vw,1.7rem);font-weight:600}
+.lede{font-size:1.15rem;max-width:34rem;color:var(--muted)}
+.ctas{display:flex;gap:.8rem;flex-wrap:wrap}
+.btn{display:inline-block;padding:.8rem 1.8rem;border-radius:999px;background:var(--ink);color:var(--paper);text-decoration:none;font-weight:600}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;border-top:1px solid var(--line);padding-top:2rem}
+.stats dd{font-size:clamp(2rem,5vw,3rem);font-weight:700;color:var(--accent);margin:0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:1.2rem}
+.cards article{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:1.6rem}
+footer{padding:2.5rem 1.2rem 3rem;text-align:center}
+.langs{position:fixed;left:.8rem;bottom:.8rem;display:flex;gap:.4rem}
+a{color:var(--accent)}
+.rtw-view{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
+.rtw-view #contenido{flex:1}
+</style>
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="alternate" hreflang="es" href="https://gacarbla.es/es/">
+<link rel="alternate" hreflang="en" href="https://gacarbla.es/en/">
+<link rel="alternate" hreflang="gl" href="https://gacarbla.es/gl/">
+<link rel="alternate" hreflang="pt-PT" href="https://gacarbla.es/pt/">
+<link rel="alternate" hreflang="pt-BR" href="https://gacarbla.es/pt-BR/">
+<link rel="alternate" hreflang="fr" href="https://gacarbla.es/fr/">
+<link rel="alternate" hreflang="it" href="https://gacarbla.es/it/">
+<link rel="alternate" hreflang="x-default" href="https://gacarbla.es/es/">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://gacarbla.es/#person","name":"Gabriel","alternateName":"GACARBLA","url":"https://gacarbla.es/es/","image":"https://gacarbla.es/assets/gacarbla.png","jobTitle":"Desenvolvedor web","email":"gacarbla@gacarbla.es","sameAs":["https://github.com/gacarbla"],"knowsAbout":["TypeScript","HTML","CSS","React","Python","Rust","REST APIs","desarrollo web"],"address":{"@type":"PostalAddress","addressCountry":"ES"}},{"@type":"WebSite","@id":"https://gacarbla.es/#website","url":"https://gacarbla.es/","name":"GACARBLA","inLanguage":"es","publisher":{"@id":"https://gacarbla.es/#person"}},{"@type":"ImageObject","@id":"https://gacarbla.es/#ogimage","url":"https://gacarbla.es/assets/og.png?v=4","width":1200,"height":630,"caption":"GACARBLA — Desenvolvedor web"},{"@type":"ProfilePage","@id":"https://gacarbla.es/gl/#webpage","url":"https://gacarbla.es/gl/","name":"GACARBLA — Desenvolvedor web","description":"Constrúo webs rápidas e coidadas con tecnoloxía propia, sen frameworks.","isPartOf":{"@id":"https://gacarbla.es/#website"},"inLanguage":"gl","primaryImageOfPage":{"@id":"https://gacarbla.es/#ogimage"},"mainEntity":{"@id":"https://gacarbla.es/#person"}}]}</script>
+</head>
+<body>
+<app><div class="rtw-view">
+<nav>
+  <a class="brand" href="/gl/" data-go="inicio">GACARBLA</a>
+  <button id="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Menú"><span></span><span></span><span></span></button>
+  <div class="links" id="menu">
+    <a href="/gl/" data-go="inicio">Inicio</a>
+    <a href="/gl/experiencia/" data-go="experiencia">Experiencia</a>
+    <a href="/gl/contacto/" data-go="contacto">Contacto</a>
+  </div>
+</nav>
+<main id="contenido">
+<section class="hero">
+  <p class="eyebrow">Portfolio persoal</p>
+  <h1>GACARBLA</h1>
+</section>
+</main>
+<footer>
+  <nav aria-label="Menú">
+    <a href="/gl/experiencia/" data-go="experiencia">Experiencia</a>
+    <a href="/gl/contacto/" data-go="contacto">Contacto</a>
+    <a href="https://github.com/gacarbla" rel="me">GitHub</a>
+  </nav>
+  <small>© <span>GACARBLA</span> — <span>2026</span></small>
+</footer>
+<nav class="langs" aria-label="Idioma"><a href="/es/" hreflang="es" lang="es">ES</a><a href="/en/" hreflang="en" lang="en">EN</a><a href="/gl/" hreflang="gl" lang="gl">GL</a><a href="/pt/" hreflang="pt-PT" lang="pt-PT">PT</a><a href="/pt-BR/" hreflang="pt-BR" lang="pt-BR">BR</a><a href="/fr/" hreflang="fr" lang="fr">FR</a><a href="/it/" hreflang="it" lang="it">IT</a></nav>
+</div></app>
+<script type="module" src="/app/index.js"></script>
+</body>
+</html>

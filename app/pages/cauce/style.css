@@ -1,0 +1,4 @@
+/* La sección trae su propia tipografía y márgenes. / The section brings its own type and spacing. */
+:host {
+  display: block;
+}

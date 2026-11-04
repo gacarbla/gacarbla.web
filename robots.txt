@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /*jardin
+Disallow: /*linde
+Disallow: /*cauce
+Disallow: /*games
+Disallow: /*umbra
+Disallow: /*relicario
+Disallow: /es-cat
+Disallow: /en-cat
+Sitemap: https://gacarbla.es/sitemap.xml

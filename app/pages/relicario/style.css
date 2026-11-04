@@ -1,0 +1,4 @@
+/* La fase trae su propia tipografía y márgenes. / The phase brings its own type and spacing. */
+:host {
+  display: block;
+}

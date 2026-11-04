@@ -1,0 +1,27 @@
+:host {
+  display: block;
+}
+
+.seccion {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 4rem 1.4rem 6rem;
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+h1 {
+  margin: 0 0 1.4rem;
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+p {
+  margin: 0;
+  white-space: pre-line;
+  color: var(--ink);
+}

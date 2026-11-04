@@ -1,0 +1,258 @@
+:host {
+  display: inline-block;
+  position: relative;
+  font: inherit;
+}
+
+:host(.lang-desktop) {
+  display: none;
+}
+
+:host(.lang-mobile) {
+  display: block;
+  width: 100%;
+  max-width: 18rem;
+  position: static;
+}
+
+@media (min-width: 44rem) {
+  :host(.lang-desktop) {
+    display: inline-block;
+    position: relative;
+  }
+
+  :host(.lang-mobile) {
+    display: none;
+  }
+}
+
+.selector {
+  position: relative;
+  width: 100%;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 34px;
+  max-width: 12rem;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+:host(.lang-mobile) .trigger {
+  width: 100%;
+  max-width: none;
+  min-height: 44px;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.trigger:hover,
+.trigger:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+  outline: none;
+}
+
+.flag {
+  width: 21px;
+  height: 14px;
+  flex: none;
+  object-fit: cover;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 14%, transparent);
+}
+
+.nombre {
+  display: inline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.corto {
+  display: none;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+:host(.lang-desktop) .nombre {
+  display: none;
+}
+
+:host(.lang-desktop) .corto {
+  display: inline;
+}
+
+:host(.lang-mobile) .nombre {
+  display: inline;
+}
+
+:host(.lang-mobile) .corto {
+  display: none;
+}
+
+.chevron {
+  width: 0.4rem;
+  height: 0.4rem;
+  flex: none;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translateY(-1px);
+  opacity: 0.55;
+}
+
+.panel {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  z-index: 60;
+  width: 19rem;
+  max-width: min(19rem, 92vw);
+  padding: 0.45rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  box-shadow: 0 18px 45px color-mix(in srgb, var(--ink) 18%, transparent);
+}
+
+.panel[hidden] {
+  display: none;
+}
+
+:host(.lang-mobile) .panel {
+  position: static;
+  width: 100%;
+  max-width: none;
+  margin-top: 0.45rem;
+  box-shadow: none;
+}
+
+.search {
+  width: 100%;
+  min-height: 38px;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.search:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.list {
+  list-style: none;
+  margin: 0.35rem 0 0;
+  padding: 0;
+  max-height: 16rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+:host(.lang-mobile) .list {
+  max-height: 11rem;
+}
+
+/* Scrollbar propia del selector: fina, redondeada y del color de la web.
+   Custom selector scrollbar: thin, rounded and in the site palette. */
+@supports (-moz-appearance: none) {
+  .list {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--ink) 28%, transparent) transparent;
+  }
+}
+
+.list::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--ink) 24%, transparent);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+
+.list::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+.list::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.opcion {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 0.55rem;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.9rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.opcion:hover,
+.opcion:focus-visible {
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+  outline: none;
+}
+
+.opcion[aria-selected="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.opcion-nombre {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.opcion-corto {
+  margin-left: auto;
+  flex: none;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  opacity: 0.55;
+}
+
+.opcion[aria-selected="true"] .opcion-corto {
+  opacity: 0.85;
+}
+
+.empty {
+  margin: 0.65rem 0.55rem 0.45rem;
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+.empty[hidden] {
+  display: none;
+}

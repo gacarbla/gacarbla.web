@@ -1,0 +1,212 @@
+:host {
+  display: block;
+}
+
+.registro {
+  max-width: 38rem;
+  margin: 0 auto;
+  padding: 3rem 1.4rem 6rem;
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+.meta {
+  margin: 0 0 2.5rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+.poemas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 3rem;
+}
+
+.poema {
+  margin: 0;
+  position: relative;
+}
+
+.poema h2 {
+  margin: 0 0 0.9rem;
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0.8;
+}
+
+.poema p {
+  margin: 0;
+  white-space: pre-line;
+  color: var(--ink);
+}
+
+.poema a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted color-mix(in srgb, var(--ink) 30%, transparent);
+}
+
+.poema a:hover,
+.poema a:focus-visible {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.oculta {
+  color: color-mix(in srgb, var(--paper) 92%, var(--ink));
+  cursor: help;
+  outline: none;
+}
+
+.oculta:hover,
+.oculta:focus-visible,
+.oculta:active {
+  color: var(--accent);
+}
+
+.oculta::selection {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.cursor::after {
+  content: "▍";
+  animation: parpadeo 1.1s steps(1) infinite;
+  color: var(--accent);
+}
+
+@keyframes parpadeo {
+  50% {
+    opacity: 0;
+  }
+}
+
+.mesa,
+.puerta {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+
+.mesa-tit {
+  margin: 0 0 1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.mesa form,
+.puerta form {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.campo {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.campo span {
+  min-width: 1.1em;
+  font-size: 0.78rem;
+  opacity: 0.55;
+}
+
+.campo-ancho {
+  grid-column: 1 / -1;
+}
+
+.mesa input,
+.puerta input {
+  min-width: 0;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.5rem 0.7rem;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.mesa input:focus-visible,
+.puerta input:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.mesa button,
+.puerta button {
+  grid-column: 1 / -1;
+  min-height: 44px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font-family: inherit;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.mesa button:hover,
+.puerta button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.fallo {
+  margin: 0.8rem 0 0;
+  min-height: 1.3em;
+  font-size: 0.82rem;
+  color: var(--accent);
+}
+
+.desenlace {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+
+.desenlace h2 {
+  margin: 0 0 0.9rem;
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.desenlace p {
+  margin: 0 0 1.2rem;
+  white-space: pre-line;
+  color: var(--ink);
+}
+
+@media (max-width: 34rem) {
+  .mesa form,
+  .puerta form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor::after {
+    animation: none;
+  }
+}
