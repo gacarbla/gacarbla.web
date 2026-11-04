@@ -6,6 +6,7 @@ export const enCat = {
   "nav.inicio": "Homeow",
   "nav.experiencia": "Expurrience",
   "nav.contacto": "Contcat",
+  "nav.juegos": "Games for cats",
   "nav.menu": "Meownu",
   "inicio.eyebrow": "Purr-sonal portfolio",
   "inicio.titulo": "Meow, I'm Gabriel",

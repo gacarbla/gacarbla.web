@@ -60,7 +60,8 @@
     { "source": "/es-cat", "destination": "/index.html" },
     { "source": "/es-cat/**", "destination": "/index.html" },
     { "source": "/en-cat", "destination": "/index.html" },
-    { "source": "/en-cat/**", "destination": "/index.html" }
+    { "source": "/en-cat/**", "destination": "/index.html" },
+    { "source": "/**", "destination": "/index.html" }
   ],
   "headers": [
     {

@@ -117,6 +117,18 @@ function slash(path: string): string {
   return path.startsWith("/") ? path : `/${path}`;
 }
 
+/**
+ * Normaliza la barra final para comparar rutas (salvo la raíz).
+ * Normalizes the trailing slash for route matching (except the root).
+ * @param path - Ruta cruda. / Raw route.
+ * @returns Ruta sin barra final. / Route without trailing slash.
+ */
+function normalizarRuta(path: string): string {
+  const p = slash(path);
+  if (p === "/") return p;
+  return p.replace(/\/+$/, "") || "/";
+}
+
 /** Estrategia path: History API + popstate. / Path strategy: History API + popstate. */
 class PathStrategy implements RouteStrategy {
   readonly kind = "path" as const;
@@ -137,11 +149,13 @@ class PathStrategy implements RouteStrategy {
   current(): string {
     const p = location.pathname;
     const rel = this.base && p.startsWith(this.base) ? p.slice(this.base.length) : p;
-    return slash(rel || "/");
+    return normalizarRuta(slash(rel || "/"));
   }
 
   navigate(to: string, replace = false): void {
-    const url = this.base + slash(to);
+    const clean = normalizarRuta(slash(to));
+    const rel = clean === "/" ? "/" : `${clean}/`;
+    const url = this.base + rel;
     if (replace) history.replaceState(null, "", url);
     else history.pushState(null, "", url);
     this.emit();
@@ -783,8 +797,9 @@ export class Router<const N extends string = string> {
     const def = this.byName.get(name);
     if (!def) throw new Error(`Ruta desconocida / Unknown route: ${name}`);
     const p = slash(def.path);
-    if (!this.locale) return p;
-    return `/${this.locale.currentLang()}${p === "/" ? "" : p}`;
+    const withSlash = p === "/" ? "/" : `${p}/`;
+    if (!this.locale) return withSlash;
+    return `/${this.locale.currentLang()}${withSlash}`;
   }
 
   /**
@@ -852,7 +867,7 @@ export class Router<const N extends string = string> {
    */
   private desnudaDe(url: URL): string {
     const { path: bare } = this.splitLocale(slash(url.pathname));
-    return bare;
+    return normalizarRuta(bare);
   }
 
   /**
@@ -934,7 +949,7 @@ export class Router<const N extends string = string> {
       this.locale.useLang(lang);
       return false;
     }
-    this.strategy.navigate(`/${this.locale.currentLang()}${bare === "/" ? "" : bare}`, true);
+    this.strategy.navigate(`/${this.locale.currentLang()}${bare === "/" ? "/" : `${bare}/`}`, true);
     return true;
   }
 
@@ -982,7 +997,7 @@ export class Router<const N extends string = string> {
    */
   private async render(path: string): Promise<void> {
     const mine = ++this.token;
-    const clean = slash(path);
+    const clean = normalizarRuta(path);
     const { lang, bare, def } = this.parseRequest(clean);
     if (this.sincronizarLocale(lang, bare)) return;
     if (!def) return;

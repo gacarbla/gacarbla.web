@@ -6,6 +6,7 @@ export const ptBR = {
   "nav.inicio": "Início",
   "nav.experiencia": "Experiência",
   "nav.contacto": "Contato",
+  "nav.juegos": "Jogos",
   "nav.menu": "Menu",
   "inicio.eyebrow": "Portfólio pessoal",
   "inicio.titulo": "Olá, sou o Gabriel",

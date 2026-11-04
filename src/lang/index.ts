@@ -37,3 +37,25 @@ export const i18n = new I18n({ dicts }).autodetectLang(true).defaultLang("es");
 
 /** Idiomas disponibles. / Available languages. */
 export type Lang = keyof typeof dicts;
+
+/**
+ * Código BCP 47 para <html lang>. `pt` es portugués de Portugal.
+ * BCP 47 code for <html lang>. `pt` is European Portuguese.
+ */
+const HTML_LANG: Record<Lang, string> = {
+  es: "es",
+  en: "en",
+  gl: "gl",
+  pt: "pt-PT",
+  "pt-BR": "pt-BR",
+  fr: "fr",
+  it: "it",
+  "es-cat": "es",
+  "en-cat": "en",
+};
+
+if (typeof document !== "undefined") {
+  i18n.onLang((lang) => {
+    document.documentElement.lang = HTML_LANG[lang] ?? lang;
+  });
+}

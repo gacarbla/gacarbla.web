@@ -142,4 +142,15 @@ export const routes = [
       const m = await import("./pages/relicario/index.js");
       return { mount: (el: Element) => m.mountRelicario(el) };
     }),
+  Routes.route("no-encontrado")
+    .at("/404")
+    .layout("main", async () => {
+      const m = await import("./layouts/main/index.js");
+      return { mount: (el: Element) => m.mountMain(el) };
+    })
+    .none()
+    .page(async () => {
+      const m = await import("./pages/404/index.js");
+      return { mount: (el: Element) => m.mountNoEncontrado(el) };
+    }),
 ] as const;

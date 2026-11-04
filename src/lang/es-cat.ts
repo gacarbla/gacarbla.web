@@ -6,6 +6,7 @@ export const esCat = {
   "nav.inicio": "Miau (inicio)",
   "nav.experiencia": "Experiencia gatuna",
   "nav.contacto": "Contacto con humano",
+  "nav.juegos": "Juegos para gatos",
   "nav.menu": "Menú de bigotes",
   "inicio.eyebrow": "Portfolio gatuno",
   "inicio.titulo": "Miau, soy Gabriel",

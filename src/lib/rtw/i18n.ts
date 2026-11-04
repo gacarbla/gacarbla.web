@@ -183,6 +183,11 @@ export class I18n<const T extends Record<string, Record<string, string>>> {
    */
   private activate(lang: I18nLang<T>, origin: "stored" | "detected" | "default" | "manual"): void {
     this.origin = origin;
+    try {
+      document.documentElement.lang = lang;
+    } catch {
+      /* sin DOM no hay espejo / no mirror without DOM */
+    }
     this.lang.value = lang;
     if (typeof this.opts.persist === "string") {
       try {
@@ -190,11 +195,6 @@ export class I18n<const T extends Record<string, Record<string, string>>> {
       } catch {
         /* persistencia opcional / optional persistence */
       }
-    }
-    try {
-      document.documentElement.lang = lang;
-    } catch {
-      /* sin DOM no hay espejo / no mirror without DOM */
     }
   }
 

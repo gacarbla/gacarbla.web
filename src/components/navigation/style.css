@@ -154,6 +154,7 @@ nav[data-js] {
   nav[data-js][data-open] .links a:nth-child(1) { transition-delay: 0.05s; }
   nav[data-js][data-open] .links a:nth-child(2) { transition-delay: 0.12s; }
   nav[data-js][data-open] .links a:nth-child(3) { transition-delay: 0.19s; }
+  nav[data-js][data-open] .links a:nth-child(4) { transition-delay: 0.26s; }
 
   nav[data-js] .links x-lang-switch {
     margin-top: 0.8rem;
@@ -164,7 +165,7 @@ nav[data-js] {
   nav[data-js][data-open] .links x-lang-switch {
     opacity: 1;
     transform: none;
-    transition-delay: 0.26s;
+    transition-delay: 0.33s;
   }
 
   nav[data-js][data-open] #burger span:nth-child(1) {

@@ -1,16 +1,18 @@
 /**
  * Empaqueta la web estática lista para servir en web/:
- * index.html en la raíz (+ copia como 404.html para que el SPA
- * arranque también en rutas profundas), app/ tal cual y assets/.
+ * una página HTML por idioma/ruta con su head SEO, 404 real, robots,
+ * sitemap, app/ y assets/.
  * Packages the ready-to-serve static site into web/:
- * root index.html (+ a copy as 404.html so the SPA also boots
- * on deep routes), app/ as-is and assets/.
+ * one HTML per language/route with its SEO head, real 404, robots,
+ * sitemap, app/ and assets/.
  */
 const fs = require("fs");
 const path = require("path");
+const { buildSeo } = require("./seo-data.js");
 
 const ROOT = path.join(__dirname, "..");
 const WEB = path.join(ROOT, "web");
+const TEMPLATE = path.join(ROOT, "index.html");
 
 /**
  * Limpia y asegura un directorio. / Cleans and ensures a directory.
@@ -21,10 +23,21 @@ function limpiar(dir) {
 }
 
 limpiar(WEB);
-fs.copyFileSync(path.join(ROOT, "index.html"), path.join(WEB, "index.html"));
-fs.copyFileSync(path.join(ROOT, "index.html"), path.join(WEB, "404.html"));
+
+const template = fs.readFileSync(TEMPLATE, "utf8");
+const { pages, sitemap, robots } = buildSeo(template);
+
+for (const page of pages) {
+  const file = path.join(WEB, page.file);
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  fs.writeFileSync(file, page.html, "utf8");
+}
+
+fs.writeFileSync(path.join(WEB, "robots.txt"), robots, "utf8");
+fs.writeFileSync(path.join(WEB, "sitemap.xml"), sitemap, "utf8");
 fs.cpSync(path.join(ROOT, "app"), path.join(WEB, "app"), { recursive: true });
 if (fs.existsSync(path.join(ROOT, "assets"))) {
   fs.cpSync(path.join(ROOT, "assets"), path.join(WEB, "assets"), { recursive: true });
 }
-console.log("web ok: paquete estático listo / static bundle ready");
+
+console.log(`web ok: ${pages.length} páginas, sitemap y robots / ${pages.length} pages, sitemap and robots`);

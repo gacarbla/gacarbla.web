@@ -549,6 +549,7 @@ const RUTAS: Record<string, string> = {
   "/cauce/3": "cauce",
   "/umbra": "umbra",
   "/relicario": "relicario",
+  "/404": "no-encontrado",
   "/experiencia": "experiencia",
   "/contacto": "contacto",
 };

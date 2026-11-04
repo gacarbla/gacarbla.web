@@ -27,7 +27,8 @@ siga en la allowlist y que no se haya activado Under Attack Mode / Bot Fight Mod
 
 ## Rutas profundas
 
-La web es una SPA. Las rutas profundas (`/experiencia`, `/pt-BR`, etc.) usan el
-`404.html` de GitHub Pages y comparten las etiquetas de la portada. Para tarjetas
-distintas por ruta haría falta generar un HTML estático por ruta con sus propios
-`og:title`, `og:description` y `og:url`.
+El build genera un HTML estático por idioma/ruta con su propio `title`, description,
+canonical, hreflang, OG/Twitter y JSON-LD. Las rutas públicas devuelven 200; las
+desconocidas usan `404.html` con `noindex`; las secretas del juego y los idiomas
+gatuno quedan fuera del sitemap. El sitemap lista las 49 URLs públicas (7 idiomas ×
+7 rutas).

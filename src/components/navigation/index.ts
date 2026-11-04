@@ -68,6 +68,28 @@ export const Navigation = component("x-navigation", import.meta.url, {
     });
     const links = [...shadow.querySelectorAll(".links a, .brand")];
     /**
+     * Rutas de los enlaces del nav para href localizado y con barra final.
+     * Nav link routes for localized trailing-slash hrefs.
+     */
+    const rutasNav: Record<string, string> = {
+      inicio: "",
+      experiencia: "experiencia",
+      contacto: "contacto",
+      juegos: "games",
+    };
+    const actualizarHrefs = (): void => {
+      const base = `/${i18n.currentLang()}/`;
+      for (const a of links) {
+        const go = a.getAttribute("data-go") ?? "";
+        const ruta = rutasNav[go];
+        if (ruta === undefined) continue;
+        a.setAttribute("href", ruta ? `${base}${ruta}/` : base);
+      }
+    };
+    actualizarHrefs();
+    const stopHrefs = i18n.onLang(actualizarHrefs);
+    onCleanup(stopHrefs);
+    /**
      * Marca el enlace cuyo data-go coincide (los demás se apagan).
      * Highlights the link whose data-go matches (others turn off).
      */
