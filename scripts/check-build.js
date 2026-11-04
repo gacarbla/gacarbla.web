@@ -39,7 +39,6 @@ const bundle = [
   "es/index.html",
   "es/experiencia/index.html",
   "pt-BR/index.html",
-  "fr/games/cubo/index.html",
   "es-cat/index.html",
   path.join("app", "index.js"),
 ];

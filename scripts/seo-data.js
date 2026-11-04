@@ -58,10 +58,6 @@ const ROUTES = [
   { name: "inicio", slug: "", h1: "GACARBLA", titleKey: "inicio.rol", descKey: "inicio.texto", type: "ProfilePage" },
   { name: "experiencia", slug: "experiencia", h1Key: "experiencia.titulo", descKey: "experiencia.texto", type: "AboutPage" },
   { name: "contacto", slug: "contacto", h1Key: "contacto.titulo", descKey: "contacto.texto", type: "ContactPage" },
-  { name: "juegos", slug: "games", h1Key: "games.titulo", descKey: "games.texto", type: "CollectionPage" },
-  { name: "cubo", slug: "games/cubo", h1Key: "games.cubo_titulo", descKey: "games.cubo_texto", type: "WebPage", game: { genre: "Arcade", playMode: "SinglePlayer" } },
-  { name: "laberinto", slug: "games/laberinto", h1Key: "games.lab_titulo", descKey: "games.lab_texto", type: "WebPage", game: { genre: "Puzzle", playMode: "MultiPlayer" } },
-  { name: "tres-en-raya", slug: "games/tres-en-raya", h1Key: "games.tres_titulo", descKey: "games.tres_texto", type: "WebPage", game: { genre: "BoardGame", playMode: "MultiPlayer" } },
 ];
 
 const ROUTE_BY_NAME = new Map(ROUTES.map((r) => [r.name, r]));
@@ -132,7 +128,6 @@ function staticNav(locale) {
     <a href="${home}" data-go="inicio">${esc(d["nav.inicio"])}</a>
     <a href="${pagePath(locale, ROUTE_BY_NAME.get("experiencia"))}" data-go="experiencia">${esc(d["nav.experiencia"])}</a>
     <a href="${pagePath(locale, ROUTE_BY_NAME.get("contacto"))}" data-go="contacto">${esc(d["nav.contacto"])}</a>
-    <a href="${pagePath(locale, ROUTE_BY_NAME.get("juegos"))}" data-go="juegos">${esc(d["nav.juegos"])}</a>
   </div>
 </nav>`;
 }
@@ -143,7 +138,6 @@ function staticFooter(locale) {
   return `<footer>
   <nav aria-label="${esc(d["nav.menu"])}">
     <a href="${pagePath(locale, ROUTE_BY_NAME.get("experiencia"))}" data-go="experiencia">${esc(d["nav.experiencia"])}</a>
-    <a href="${pagePath(locale, ROUTE_BY_NAME.get("juegos"))}" data-go="juegos">${esc(d["nav.juegos"])}</a>
     <a href="${pagePath(locale, ROUTE_BY_NAME.get("contacto"))}" data-go="contacto">${esc(d["nav.contacto"])}</a>
     <a href="https://github.com/gacarbla" rel="me">GitHub</a>
   </nav>
@@ -164,7 +158,6 @@ function staticLangs(locale, route) {
 /** Contenido estático por ruta. / Static content per route. */
 function staticMain(locale, route, kind) {
   const d = locale.dict;
-  const p = (name) => pagePath(locale, ROUTE_BY_NAME.get(name));
 
   if (kind === "404") {
     return `<section class="hero">
@@ -179,20 +172,6 @@ function staticMain(locale, route, kind) {
     return `<section class="hero">
   <p class="eyebrow">${esc(d["inicio.eyebrow"])}</p>
   <h1>GACARBLA</h1>
-  <p class="rol">${esc(d["inicio.rol"])}</p>
-  <p class="lede">${esc(d["inicio.texto"])}</p>
-  <div class="ctas">
-    ${link(locale, ROUTE_BY_NAME.get("experiencia"), d["inicio.cta_exp"], "experiencia", "btn")}
-    ${link(locale, ROUTE_BY_NAME.get("contacto"), d["inicio.cta_contacto"], "contacto", "btn ghost")}
-  </div>
-</section>
-<section class="teaser">
-  <h2>${esc(d["inicio.teaser_titulo"])}</h2>
-  <div class="cards">
-    <article><h3>${esc(d["inicio.t1_titulo"])}</h3><p>${esc(d["inicio.t1_texto"])}</p></article>
-    <article><h3>${esc(d["inicio.t2_titulo"])}</h3><p>${esc(d["inicio.t2_texto"])}</p><p>${link(locale, ROUTE_BY_NAME.get("juegos"), d["games.jugar"], "juegos")}</p></article>
-    <article><h3>${esc(d["experiencia.titulo"])}</h3><p>${esc(d["experiencia.texto"])}</p><p>${link(locale, ROUTE_BY_NAME.get("experiencia"), d["inicio.ver_todo"], "experiencia")}</p></article>
-  </div>
 </section>`;
   }
 
@@ -219,27 +198,7 @@ function staticMain(locale, route, kind) {
 </section>`;
   }
 
-  if (route.name === "juegos") {
-    const tarjetas = ["cubo", "laberinto", "tres-en-raya"]
-      .map((name) => {
-        const game = ROUTE_BY_NAME.get(name);
-        return `<article><h3><a href="${p(name)}" data-go="${game.name}">${esc(d[game.h1Key])}</a></h3><p>${esc(d[game.descKey])}</p></article>`;
-      })
-      .join("");
-    return `<section class="hero">
-  <p class="eyebrow">${esc(d["games.eyebrow"])}</p>
-  <h1>${esc(d["games.titulo"])}</h1>
-  <p class="lede">${esc(d["games.texto"])}</p>
-</section>
-<div class="cards">${tarjetas}</div>`;
-  }
-
-  return `<section class="hero">
-  <p class="eyebrow">${esc(d["games.eyebrow"])}</p>
-  <h1>${esc(d[route.h1Key])}</h1>
-  <p class="lede">${esc(d[route.descKey])}</p>
-  <p>${link(locale, ROUTE_BY_NAME.get("juegos"), d["games.volver_lista"], "juegos", "btn")}</p>
-</section>`;
+  return "";
 }
 
 /** JSON-LD de la página. / Page JSON-LD. */
@@ -289,11 +248,7 @@ function jsonLd(locale, route, kind, url, title, description) {
     inLanguage: locale.htmlLang,
     primaryImageOfPage: { "@id": imageId },
   };
-  if (route.name === "inicio" || route.name === "experiencia" || route.name === "contacto") {
-    page.mainEntity = { "@id": personId };
-  }
-  if (route.name === "juegos") page.mainEntity = { "@id": `${url}#gameslist` };
-  if (route.game) page.mainEntity = { "@id": `${url}#game` };
+  page.mainEntity = { "@id": personId };
 
   const graph = [person, website, image, page];
 
@@ -306,52 +261,8 @@ function jsonLd(locale, route, kind, url, title, description) {
         item: `${ORIGIN}/${locale.code}/`,
       },
     ];
-    let position = 2;
-    if (route.slug.startsWith("games/")) {
-      items.push({
-        "@type": "ListItem",
-        position,
-        name: d["nav.juegos"],
-        item: `${ORIGIN}/${locale.code}/games/`,
-      });
-      position++;
-    }
-    items.push({ "@type": "ListItem", position, name: h1, item: url });
+    items.push({ "@type": "ListItem", position: 2, name: h1, item: url });
     graph.push({ "@type": "BreadcrumbList", "@id": `${url}#breadcrumb`, itemListElement: items });
-  }
-
-  if (route.name === "juegos") {
-    const games = ["cubo", "laberinto", "tres-en-raya"].map((name) => ROUTE_BY_NAME.get(name));
-    graph.push({
-      "@type": "ItemList",
-      "@id": `${url}#gameslist`,
-      name: d["games.titulo"],
-      numberOfItems: games.length,
-      itemListElement: games.map((game, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        url: pageUrl(locale, game),
-        name: d[game.h1Key],
-      })),
-    });
-  }
-
-  if (route.game) {
-    graph.push({
-      "@type": "VideoGame",
-      "@id": `${url}#game`,
-      name: d[route.h1Key],
-      description,
-      url,
-      genre: route.game.genre,
-      gamePlatform: "Web browser",
-      applicationCategory: "Game",
-      playMode: route.game.playMode,
-      isAccessibleForFree: true,
-      offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
-      author: { "@id": personId },
-      inLanguage: locale.htmlLang,
-    });
   }
 
   return JSON.stringify({ "@context": "https://schema.org", "@graph": graph }).replace(/</g, "\\u003c");
@@ -486,6 +397,7 @@ Allow: /
 Disallow: /*jardin
 Disallow: /*linde
 Disallow: /*cauce
+Disallow: /*games
 Disallow: /*umbra
 Disallow: /*relicario
 Disallow: /es-cat

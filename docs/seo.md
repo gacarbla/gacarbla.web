@@ -4,14 +4,14 @@
 
 `npm run build` crea en `web/`:
 
-- **65 páginas HTML** con head propio:
+- **29 páginas HTML** con head propio:
   - raíz `/` (canonical a `/es/`, `noindex,follow`);
   - `404.html` real (`noindex,nofollow`, sin canonical);
-  - **49 páginas públicas** = 7 idiomas × 7 rutas;
-  - **14 páginas gatuno** (`/es-cat`, `/en-cat` × 7 rutas, `noindex,follow`).
-- `sitemap.xml` con las **49 URLs públicas**, con barra final y `lastmod`.
-- `robots.txt` con `Sitemap` y `Disallow` para las rutas secretas del juego y los
-  idiomas gatuno.
+  - **21 páginas públicas** = 7 idiomas × 3 rutas (`inicio`, `experiencia`, `contacto`);
+  - **6 páginas gatuno** (`/es-cat`, `/en-cat` × 3 rutas, `noindex,follow`).
+- `sitemap.xml` con las **21 URLs públicas**, con barra final y `lastmod`.
+- `robots.txt` con `Sitemap` y `Disallow` para las rutas secretas del juego, la
+  subpágina oculta de juegos y los idiomas gatuno.
 - `app/` y `assets/`, incluidas las banderas y la tarjeta social.
 
 Cada página pública lleva:
@@ -23,18 +23,15 @@ Cada página pública lleva:
   `x-default` a la versión española.
 - Open Graph y Twitter Card propios.
 - `robots: index,follow,max-image-preview:large`.
-- JSON-LD: `Person`, `WebSite`, página (`ProfilePage`, `AboutPage`, `ContactPage`,
-  `CollectionPage`, `WebPage`), `BreadcrumbList` y `VideoGame`/`ItemList` en los juegos.
+- JSON-LD: `Person`, `WebSite`, página (`ProfilePage`, `AboutPage`, `ContactPage`)
+  y `BreadcrumbList`.
 - Contenido estático crawleable: nav, footer, enlaces internos y resumen de la página.
 
-## Rutas
-
-Las URLs canónicas usan prefijo de idioma y barra final:
+## Rutas públicas
 
 ```text
 /es/  /en/  /gl/  /pt/  /pt-BR/  /fr/  /it/
-/es/experiencia/  /es/contacto/  /es/games/
-/es/games/cubo/  /es/games/laberinto/  /es/games/tres-en-raya/
+/es/experiencia/  /es/contacto/  (y sus equivalentes por idioma)
 ```
 
 El router normaliza la barra final para casar rutas, y `pathOf()` genera enlaces
@@ -44,8 +41,16 @@ La raíz `/` redirige en cliente a `/es/`; su canonical es `/es/` y es `noindex`
 Para una redirección 301 real hace falta una regla de servidor (Cloudflare), no
 GitHub Pages.
 
+## Juegos: subpágina oculta
+
+`/games`, `/games/cubo`, `/games/laberinto` y `/games/tres-en-raya` no se enlazan
+desde el nav, el footer ni la home, no están en el sitemap y no tienen hreflang.
+`robots.txt` las excluye con `Disallow: /*games`. Se mantienen como reto: hay que
+descubrir la ruta; el fallback `404.html` lleva `noindex`.
+
 ## Fuera de índice
 
+- `/games` y sus juegos: ocultos y fuera de sitemap/hreflang.
 - `/jardin`, `/linde`, `/cauce/3`, `/umbra`, `/relicario`: secretas; `robots.txt`
   las excluye y el fallback sirve `404.html` con `noindex`.
 - `/es-cat/`, `/en-cat/`: existen y funcionan, pero van con `noindex` y fuera de
@@ -66,7 +71,7 @@ Con el servidor estático (sin `serve.json`, como GitHub Pages):
 curl -sI http://localhost:3000/es/experiencia/       # 200
 curl -sI http://localhost:3000/pt-BR/                # 200
 curl -sI http://localhost:3000/foo                   # 404
-curl -s  http://localhost:3000/sitemap.xml | grep -c '<loc>'   # 49
+curl -s  http://localhost:3000/sitemap.xml | grep -c '<loc>'   # 21
 curl -s  http://localhost:3000/robots.txt
 ```
 
@@ -78,9 +83,9 @@ sitemap, si el 404 no es `noindex` o si el canonical de `/es/` no es propio.
 
 1. Verificar `gacarbla.es`.
 2. Enviar `https://gacarbla.es/sitemap.xml`.
-3. Inspeccionar `/es/`, `/es/experiencia/`, `/pt-BR/games/cubo/`.
+3. Inspeccionar `/es/`, `/es/experiencia/` y `/pt-BR/experiencia/`.
 4. Confirmar 200, canonical autorreferente, hreflang recíproco y `noindex` en
-   `/es-cat/` y en las rutas del juego.
+   `/es-cat/` y en las rutas ocultas.
 5. Revisar “Página alternativa con etiqueta canónica” y “Duplicada” tras el despliegue.
 
 ## Cloudflare

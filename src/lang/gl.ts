@@ -6,7 +6,6 @@ export const gl = {
   "nav.inicio": "Inicio",
   "nav.experiencia": "Experiencia",
   "nav.contacto": "Contacto",
-  "nav.juegos": "Xogos",
   "nav.menu": "Menú",
   "inicio.eyebrow": "Portfolio persoal",
   "inicio.titulo": "Ola, son Gabriel",

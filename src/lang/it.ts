@@ -6,7 +6,6 @@ export const it = {
   "nav.inicio": "Home",
   "nav.experiencia": "Esperienza",
   "nav.contacto": "Contatti",
-  "nav.juegos": "Giochi",
   "nav.menu": "Menu",
   "inicio.eyebrow": "Portfolio personale",
   "inicio.titulo": "Ciao, sono Gabriel",

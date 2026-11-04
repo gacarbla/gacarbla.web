@@ -28,7 +28,7 @@ siga en la allowlist y que no se haya activado Under Attack Mode / Bot Fight Mod
 ## Rutas profundas
 
 El build genera un HTML estático por idioma/ruta con su propio `title`, description,
-canonical, hreflang, OG/Twitter y JSON-LD. Las rutas públicas devuelven 200; las
-desconocidas usan `404.html` con `noindex`; las secretas del juego y los idiomas
-gatuno quedan fuera del sitemap. El sitemap lista las 49 URLs públicas (7 idiomas ×
-7 rutas).
+canonical, hreflang, OG/Twitter y JSON-LD. Las rutas públicas (inicio, experiencia,
+contacto) devuelven 200; las desconocidas y las ocultas (juegos y fases secretas)
+usan `404.html` con `noindex`; los idiomas gatuno quedan fuera del sitemap. El
+sitemap lista las 21 URLs públicas (7 idiomas × 3 rutas).

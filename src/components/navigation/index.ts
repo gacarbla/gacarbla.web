@@ -75,7 +75,6 @@ export const Navigation = component("x-navigation", import.meta.url, {
       inicio: "",
       experiencia: "experiencia",
       contacto: "contacto",
-      juegos: "games",
     };
     const actualizarHrefs = (): void => {
       const base = `/${i18n.currentLang()}/`;
