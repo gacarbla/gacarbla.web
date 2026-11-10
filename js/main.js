@@ -1,76 +1,147 @@
 /**
- * GACARBLA — interacción del atlas.
- * Sincroniza el índice de mundos con la constelación, mueve el reloj
- * y añade un parallax mínimo. Todo es opcional: sin JS la página se lee igual.
+ * GACARBLA — recorrido por el cielo.
+ *
+ * El scroll decide qué mundo está en el centro de la pantalla; la
+ * constelación se desplaza hasta él como un objetivo y deja el resto
+ * en penumbra. Sin cursor, sin dependencias y sin bloquear el scroll.
  */
 
-const worlds = [...document.querySelectorAll(".worlds .world")];
-const nodes = [...document.querySelectorAll(".node[data-node]")];
-const edges = [...document.querySelectorAll(".edge[data-edge]")];
-const caption = document.getElementById("atlas-caption");
-const captionTitle = caption ? caption.querySelector("strong") : null;
-const captionMeta = caption ? caption.querySelector("span") : null;
+const svg = document.querySelector(".lens-svg");
+const cielo = svg ? svg.querySelector(".sky") : null;
+const capitulos = [...document.querySelectorAll(".chapter")];
+const aristas = [...document.querySelectorAll(".edge[data-edge]")];
+const marcas = [...document.querySelectorAll(".lens-ticks line[data-tick]")];
 
-/** Estado de reposo de la leyenda del mapa. */
-const REPOSO = { titulo: "Constelación", meta: "06 mundos · 01 en línea" };
+const nodos = new Map();
+for (const nodo of document.querySelectorAll(".node[data-node]")) {
+  nodos.set(nodo.dataset.node, {
+    x: Number(nodo.dataset.x),
+    y: Number(nodo.dataset.y),
+    el: nodo,
+  });
+}
+
+const CENTRO = 300;
+const ENFOQUE = 0.7;
+const reducido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 let activo = null;
+let objetivo = { x: CENTRO, y: CENTRO, zoom: 1.1 };
+let actual = { ...objetivo };
+let frame = 0;
 
 /**
- * Marca un mundo como activo (o ninguno con null).
- * @param {string | null} id - Identificador del mundo.
+ * Escribe la cámara en el grupo del cielo.
+ * (300, 300) es el centro de la lente en unidades del viewBox.
+ */
+function aplicar() {
+  if (!cielo) return;
+  cielo.setAttribute(
+    "transform",
+    `translate(${CENTRO} ${CENTRO}) scale(${actual.zoom.toFixed(4)}) translate(${(-actual.x).toFixed(2)} ${(-actual.y).toFixed(2)})`,
+  );
+}
+
+/** Acerca la cámara al objetivo con una easing corta. */
+function animar() {
+  const k = 0.12;
+  actual.x += (objetivo.x - actual.x) * k;
+  actual.y += (objetivo.y - actual.y) * k;
+  actual.zoom += (objetivo.zoom - actual.zoom) * k;
+  aplicar();
+
+  const cerca =
+    Math.abs(objetivo.x - actual.x) < 0.15 &&
+    Math.abs(objetivo.y - actual.y) < 0.15 &&
+    Math.abs(objetivo.zoom - actual.zoom) < 0.0005;
+
+  if (cerca) {
+    actual = { ...objetivo };
+    aplicar();
+    frame = 0;
+    return;
+  }
+  frame = requestAnimationFrame(animar);
+}
+
+function arrancar() {
+  if (reducido) {
+    actual = { ...objetivo };
+    aplicar();
+    return;
+  }
+  if (!frame) frame = requestAnimationFrame(animar);
+}
+
+/**
+ * Activa un mundo: capítulo, nodo, arista y marca de la lente.
+ * @param {string | null} id - Identificador del mundo, o null para el conjunto.
  */
 function activar(id) {
   if (id === activo) return;
   activo = id;
 
-  for (const elemento of worlds) {
-    elemento.classList.toggle("is-active", elemento.dataset.world === id);
+  for (const capitulo of capitulos) {
+    capitulo.classList.toggle("is-current", capitulo.dataset.world === id);
   }
-  for (const elemento of nodes) {
-    elemento.classList.toggle("is-active", elemento.dataset.node === id);
+  for (const [clave, nodo] of nodos) {
+    nodo.el.classList.toggle("is-active", clave === id);
   }
-  for (const elemento of edges) {
-    elemento.classList.toggle("is-active", elemento.dataset.edge === id);
+  for (const arista of aristas) {
+    arista.classList.toggle("is-active", arista.dataset.edge === id);
   }
+  for (const marca of marcas) {
+    marca.classList.toggle("is-active", marca.dataset.tick === id);
+  }
+  if (svg) svg.toggleAttribute("data-active", Boolean(id));
 
-  if (!captionTitle || !captionMeta) return;
-  const mundo = id ? worlds.find((elemento) => elemento.dataset.world === id) : null;
-  captionTitle.textContent = mundo ? mundo.dataset.title : REPOSO.titulo;
-  captionMeta.textContent = mundo ? mundo.dataset.meta : REPOSO.meta;
+  const nodo = id ? nodos.get(id) : null;
+  objetivo = nodo
+    ? {
+        x: CENTRO + (nodo.x - CENTRO) * ENFOQUE,
+        y: CENTRO + (nodo.y - CENTRO) * ENFOQUE,
+        zoom: 1.18,
+      }
+    : { x: CENTRO, y: CENTRO, zoom: 1.1 };
+  arrancar();
 }
 
-for (const mundo of worlds) {
-  const id = mundo.dataset.world;
-  mundo.addEventListener("pointerenter", () => activar(id));
-  mundo.addEventListener("pointerdown", () => activar(id));
-  mundo.addEventListener("focusin", () => activar(id));
-  mundo.addEventListener("focusout", (evento) => {
-    if (!mundo.contains(evento.relatedTarget)) activar(null);
+/** Elige el capítulo más cercano al centro de la ventana. */
+function medir() {
+  if (capitulos.length === 0) return;
+
+  const medio = window.innerHeight / 2;
+  let mejor = null;
+  let distancia = Infinity;
+
+  for (const capitulo of capitulos) {
+    const caja = capitulo.getBoundingClientRect();
+    const d = Math.abs(caja.top + caja.height / 2 - medio);
+    if (d < distancia) {
+      distancia = d;
+      mejor = capitulo;
+    }
+  }
+
+  const limite = window.innerHeight * 0.45;
+  activar(mejor && distancia < limite ? mejor.dataset.world : null);
+}
+
+let pendiente = false;
+function alDesplazar() {
+  if (pendiente) return;
+  pendiente = true;
+  requestAnimationFrame(() => {
+    medir();
+    pendiente = false;
   });
 }
 
-const lista = document.querySelector(".worlds");
-if (lista) {
-  lista.addEventListener("pointerleave", () => activar(null));
-}
-
-/* Parallax muy leve del mapa, solo con ratón y sin movimiento reducido. */
-const svg = document.querySelector(".atlas-svg");
-const panel = document.querySelector(".atlas-panel");
-const menosMovimiento = window.matchMedia("(prefers-reduced-motion: reduce)");
-const punteroFino = window.matchMedia("(hover: hover) and (pointer: fine)");
-
-if (svg && panel && punteroFino.matches && !menosMovimiento.matches) {
-  panel.addEventListener("pointermove", (evento) => {
-    const caja = panel.getBoundingClientRect();
-    const x = (evento.clientX - caja.left) / caja.width - 0.5;
-    const y = (evento.clientY - caja.top) / caja.height - 0.5;
-    svg.style.transform = `translate3d(${(x * 9).toFixed(2)}px, ${(y * 9).toFixed(2)}px, 0)`;
-  });
-  panel.addEventListener("pointerleave", () => {
-    svg.style.transform = "";
-  });
+if (capitulos.length > 0) {
+  aplicar();
+  medir();
+  window.addEventListener("scroll", alDesplazar, { passive: true });
+  window.addEventListener("resize", alDesplazar);
 }
 
 /* Reloj de Madrid, por si el visitante está en otra parte. */

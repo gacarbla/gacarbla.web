@@ -10,10 +10,10 @@ La web antigua (el portfolio) vive ahora en
 
 | Ruta | Qué es |
 | --- | --- |
-| `index.html` | Portada: entrada, índice de mundos y constelación en SVG. |
+| `index.html` | Portada: entrada y recorrido por los mundos, con la constelación en una lente fija. |
 | `404.html` | Página de error, mismo lenguaje visual. |
 | `css/main.css` | Hoja única: papel, tinta, tipografía, retícula y estados. |
-| `js/main.js` | Sincroniza el índice con el mapa, reloj de Madrid y parallax. Sin dependencias. |
+| `js/main.js` | Avanza la constelación con el scroll, marca el mundo activo y mueve el reloj de Madrid. Sin dependencias. |
 | `assets/fonts/` | Instrument Serif y JetBrains Mono autoalojadas, con sus licencias OFL. |
 | `assets/og.png` | Tarjeta social 1200 × 630. |
 | `design/og.html` | Composición fuente de la tarjeta social. |
@@ -41,10 +41,10 @@ construye ni publica nada.
 
 ## Añadir un mundo
 
-1. Añade la fila en `index.html` dentro de `.worlds`, con `data-world`, `data-title`
-   y `data-meta`.
-2. Añade su nodo y su arista en el SVG del atlas (`data-node` y `data-edge` con el
-   mismo identificador).
+1. Añade un `<section class="chapter">` en `index.html`, dentro de `.story`, con
+   `id`, `data-world`, su índice, nombre, descripción y metadatos.
+2. Añade su nodo y su arista en la lente (`data-node` y `data-edge` con el mismo
+   identificador) y, si quieres, su marca en `.lens-ticks`.
 3. Define su color en `css/main.css` (`--w-<id>` y `--w-<id>-mark`).
 4. Actualiza los contadores visibles («06 mundos · 01 en línea»).
 5. Regenera la tarjeta social si cambia el mapa:

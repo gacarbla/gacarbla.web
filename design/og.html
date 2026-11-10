@@ -10,9 +10,10 @@
 
 :root{
   --paper:#f3efe5;
+  --paper-soft:#eae4d6;
   --ink:#181410;
   --ink-soft:#403a31;
-  --muted:#7c7363;
+  --muted:#6f6759;
   --line:rgba(24,20,16,.14);
   --accent:#bd4a12;
   --serif:"Instrument Serif",Georgia,serif;
@@ -27,32 +28,34 @@ body{
   padding:56px 64px 48px;
   display:grid;
   grid-template-rows:auto 1fr auto;
-  gap:28px;
+  gap:24px;
 }
 .top{display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:13px;letter-spacing:.18em;text-transform:uppercase}
 .brand{display:inline-flex;align-items:center;gap:10px;font-weight:500;letter-spacing:.22em}
 .mark{width:9px;height:9px;background:var(--accent)}
 .coords{color:var(--muted);font-size:11px;letter-spacing:.16em}
 
-.mid{display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:center}
+.mid{display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center}
 .eyebrow{margin:0 0 18px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:9px}
 .dot{width:7px;height:7px;background:var(--accent)}
 h1{margin:0;font-family:var(--serif);font-weight:400;font-size:104px;line-height:.9;letter-spacing:-.03em}
 h1 em{font-style:italic}
 h1 .p{color:var(--accent)}
 
-.map{width:100%;max-width:470px;justify-self:end;color:var(--ink)}
+.lens{width:100%;max-width:440px;justify-self:end;color:var(--ink)}
+.lens-field{fill:var(--paper-soft);opacity:.35}
+.lens-edge{fill:none;stroke:var(--line);stroke-width:1}
+.rings circle{fill:none;stroke:var(--line);stroke-width:1}
+.edge{fill:none;stroke:var(--muted);stroke-width:1;opacity:.35}
+.node-dot{fill:var(--accent)}
+.node-label{font-family:var(--mono);font-size:12px;letter-spacing:.08em;fill:var(--muted)}
+.node-sub{font-family:var(--mono);font-size:10px;letter-spacing:.08em;fill:var(--muted)}
+.center-ring{fill:none;stroke:var(--line);stroke-width:1;stroke-dasharray:2 6}
+.center-mark{font-family:var(--serif);font-size:26px;fill:var(--ink-soft)}
+.tick{stroke:var(--muted);stroke-width:2;opacity:.45;stroke-linecap:round}
 
 .foot{display:flex;align-items:baseline;justify-content:space-between;border-top:1px solid var(--line);padding-top:18px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .foot strong{color:var(--ink);font-weight:400;letter-spacing:.16em}
-
-.atlas-rings circle{fill:none;stroke:var(--line);stroke-width:1}
-.edge{fill:none;stroke:var(--line);stroke-width:1}
-.node-dot{fill:var(--accent)}
-.node-label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;fill:var(--muted)}
-.node-sub{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;fill:var(--muted);opacity:.55}
-.center-ring{fill:none;stroke:var(--line);stroke-width:1;stroke-dasharray:2 6}
-.center-mark{font-family:var(--serif);font-size:23px;fill:var(--ink)}
 </style>
 </head>
 <body>
@@ -67,68 +70,81 @@ h1 .p{color:var(--accent)}
       <h1>Un autor.<br><em>Muchos mundos<span class="p">.</span></em></h1>
     </div>
 
-    <svg class="map" viewBox="0 0 440 440" aria-hidden="true">
+    <svg class="lens" viewBox="0 0 600 600" aria-hidden="true">
       <defs>
-        <pattern id="og-dots" width="20" height="20" patternUnits="userSpaceOnUse">
-          <circle cx="1" cy="1" r="1" fill="currentColor" opacity=".13"></circle>
+        <clipPath id="og-clip"><circle cx="300" cy="300" r="292"></circle></clipPath>
+        <pattern id="og-dots" width="18" height="18" patternUnits="userSpaceOnUse">
+          <circle cx="1" cy="1" r="1" fill="currentColor" opacity=".2"></circle>
         </pattern>
         <radialGradient id="og-fade" cx="50%" cy="50%" r="50%">
-          <stop offset="0.55" stop-color="#fff" stop-opacity="1"></stop>
+          <stop offset=".5" stop-color="#fff" stop-opacity="1"></stop>
           <stop offset="1" stop-color="#fff" stop-opacity="0"></stop>
         </radialGradient>
-        <mask id="og-mask"><rect width="440" height="440" fill="url(#og-fade)"></rect></mask>
+        <mask id="og-mask"><rect width="600" height="600" fill="url(#og-fade)"></rect></mask>
       </defs>
-      <rect width="440" height="440" fill="url(#og-dots)" mask="url(#og-mask)"></rect>
-      <g class="atlas-rings">
-        <circle cx="220" cy="220" r="118"></circle>
-        <circle cx="220" cy="220" r="176" pathLength="24" stroke-dasharray="1 1"></circle>
+
+      <circle class="lens-field" cx="300" cy="300" r="292"></circle>
+      <g clip-path="url(#og-clip)">
+        <rect width="600" height="600" fill="url(#og-dots)" mask="url(#og-mask)"></rect>
+        <g class="rings">
+          <circle cx="300" cy="300" r="150"></circle>
+          <circle cx="300" cy="300" r="225" pathLength="48" stroke-dasharray="1 1"></circle>
+        </g>
+        <g>
+          <path class="edge" d="M300 300 Q210 270 150 185"></path>
+          <path class="edge" d="M300 300 Q390 250 445 205"></path>
+          <path class="edge" d="M300 300 Q390 320 455 350"></path>
+          <path class="edge" d="M300 300 Q350 380 380 445"></path>
+          <path class="edge" d="M300 300 Q250 380 215 450"></path>
+          <path class="edge" d="M300 300 Q210 320 140 330"></path>
+          <path class="edge" d="M300 300 Q302 190 300 110"></path>
+        </g>
+        <g transform="translate(300 300)">
+          <circle class="center-ring" r="26"></circle>
+          <text class="center-mark" y="9" text-anchor="middle">G</text>
+        </g>
+
+        <g transform="translate(150 185)">
+          <circle class="node-dot" r="5" style="--accent:#bd4a12"></circle>
+          <text class="node-label" x="14" y="5">GAMES</text>
+          <text class="node-sub" x="14" y="18">01</text>
+        </g>
+        <g transform="translate(445 205)">
+          <circle class="node-dot" r="5" style="--accent:#a3213f"></circle>
+          <text class="node-label" x="14" y="5">PLAY</text>
+          <text class="node-sub" x="14" y="18">02</text>
+        </g>
+        <g transform="translate(455 350)">
+          <circle class="node-dot" r="5" style="--accent:#2b4fbf"></circle>
+          <text class="node-label" x="14" y="5">PORTFOLIO</text>
+          <text class="node-sub" x="14" y="18">03</text>
+        </g>
+        <g transform="translate(380 445)">
+          <circle class="node-dot" r="5" style="--accent:#16704f"></circle>
+          <text class="node-label" x="14" y="5">CHAT</text>
+          <text class="node-sub" x="14" y="18">04</text>
+        </g>
+        <g transform="translate(215 450)">
+          <circle class="node-dot" r="5" style="--accent:#6b3fa0"></circle>
+          <text class="node-label" x="14" y="5">EDU</text>
+          <text class="node-sub" x="14" y="18">05</text>
+        </g>
+        <g transform="translate(140 330)">
+          <circle class="node-dot" r="5" style="--accent:#0f6d78"></circle>
+          <text class="node-label" x="14" y="5">MYWEB</text>
+          <text class="node-sub" x="14" y="18">06</text>
+        </g>
+        <g transform="translate(300 110)">
+          <text class="center-mark" y="7" text-anchor="middle" fill="#6f6759">?</text>
+        </g>
       </g>
-      <g>
-        <path class="edge" d="M220 220 Q140 180 84 100"></path>
-        <path class="edge" d="M220 220 Q300 170 352 132"></path>
-        <path class="edge" d="M220 220 Q310 235 372 262"></path>
-        <path class="edge" d="M220 220 Q270 300 292 356"></path>
-        <path class="edge" d="M220 220 Q180 300 130 352"></path>
-        <path class="edge" d="M220 220 Q130 235 60 232"></path>
-        <path class="edge" d="M220 220 Q225 130 220 46"></path>
-      </g>
-      <g>
-        <circle class="center-ring" cx="220" cy="220" r="30"></circle>
-        <text class="center-mark" x="220" y="228" text-anchor="middle">G</text>
-      </g>
-      <g style="--accent:#bd4a12" transform="translate(84 100)">
-        <circle class="node-dot" r="4.5" style="--accent:#bd4a12"></circle>
-        <text class="node-label" x="15" y="4">GAMES</text>
-        <text class="node-sub" x="15" y="17">01</text>
-      </g>
-      <g transform="translate(352 132)">
-        <circle class="node-dot" r="4.5" style="--accent:#a3213f"></circle>
-        <text class="node-label" x="-15" y="4" text-anchor="end">PLAY</text>
-        <text class="node-sub" x="-15" y="17" text-anchor="end">02</text>
-      </g>
-      <g transform="translate(372 262)">
-        <circle class="node-dot" r="4.5" style="--accent:#2b4fbf"></circle>
-        <text class="node-label" x="-15" y="4" text-anchor="end">PORTFOLIO</text>
-        <text class="node-sub" x="-15" y="17" text-anchor="end">03</text>
-      </g>
-      <g transform="translate(292 356)">
-        <circle class="node-dot" r="4.5" style="--accent:#16704f"></circle>
-        <text class="node-label" x="-15" y="4" text-anchor="end">CHAT</text>
-        <text class="node-sub" x="-15" y="17" text-anchor="end">04</text>
-      </g>
-      <g transform="translate(130 352)">
-        <circle class="node-dot" r="4.5" style="--accent:#6b3fa0"></circle>
-        <text class="node-label" x="15" y="4">EDU</text>
-        <text class="node-sub" x="15" y="17">05</text>
-      </g>
-      <g transform="translate(60 232)">
-        <circle class="node-dot" r="4.5" style="--accent:#0f6d78"></circle>
-        <text class="node-label" x="15" y="4">MYWEB</text>
-        <text class="node-sub" x="15" y="17">06</text>
-      </g>
-      <g transform="translate(220 46)">
-        <text class="center-mark" y="6" text-anchor="middle" fill="#7c7363">?</text>
-      </g>
+      <circle class="lens-edge" cx="300" cy="300" r="292"></circle>
+      <line class="tick" transform="rotate(0 300 300)" x1="300" y1="1" x2="300" y2="15"></line>
+      <line class="tick" transform="rotate(60 300 300)" x1="300" y1="1" x2="300" y2="15"></line>
+      <line class="tick" transform="rotate(120 300 300)" x1="300" y1="1" x2="300" y2="15"></line>
+      <line class="tick" transform="rotate(180 300 300)" x1="300" y1="1" x2="300" y2="15"></line>
+      <line class="tick" transform="rotate(240 300 300)" x1="300" y1="1" x2="300" y2="15"></line>
+      <line class="tick" transform="rotate(300 300 300)" x1="300" y1="1" x2="300" y2="15"></line>
     </svg>
   </div>
 
