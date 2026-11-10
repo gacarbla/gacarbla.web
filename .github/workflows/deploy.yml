@@ -1,0 +1,63 @@
+name: Publicar web
+
+# Cada push a main construye el sitio y publica web/ en la raíz de la rama
+# "web", que es la que sirve GitHub Pages en gacarbla.es.
+# Every push to main builds the site and publishes web/ to the root of the
+# "web" branch, which is what GitHub Pages serves on gacarbla.es.
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+concurrency:
+  group: publicar-web
+  cancel-in-progress: true
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Descargar código / Checkout code
+        uses: actions/checkout@v4
+
+      # Mientras el proyecto no tenga package.json + lock, no hay nada que
+      # construir: se omite el despliegue y el sitio actual sigue en pie.
+      # Until the project has package.json + lock there is nothing to build:
+      # the deployment is skipped and the current site stays up.
+      - name: Comprobar proyecto / Check project
+        id: proyecto
+        run: |
+          if [ -f package.json ] && [ -f package-lock.json ]; then
+            echo "listo=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "listo=false" >> "$GITHUB_OUTPUT"
+            echo "Sin package.json y package-lock.json: no se publica nada."
+          fi
+
+      - name: Instalar Node / Setup Node
+        if: steps.proyecto.outputs.listo == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias / Install dependencies
+        if: steps.proyecto.outputs.listo == 'true'
+        run: npm ci
+
+      - name: Construir / Build
+        if: steps.proyecto.outputs.listo == 'true'
+        run: npm run build
+
+      - name: Publicar en la rama web / Publish to the web branch
+        if: steps.proyecto.outputs.listo == 'true'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: web
+          publish_dir: ./web
+          force_orphan: true
+          cname: gacarbla.es
