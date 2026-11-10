@@ -28,6 +28,7 @@ const reducido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 let activo = null;
 let objetivo = { x: CENTRO, y: CENTRO, zoom: 1.1 };
 let actual = { ...objetivo };
+let deriva = 0;
 let frame = 0;
 
 /**
@@ -38,7 +39,7 @@ function aplicar() {
   if (!cielo) return;
   cielo.setAttribute(
     "transform",
-    `translate(${CENTRO} ${CENTRO}) scale(${actual.zoom.toFixed(4)}) translate(${(-actual.x).toFixed(2)} ${(-actual.y).toFixed(2)})`,
+    `translate(${CENTRO} ${CENTRO}) scale(${actual.zoom.toFixed(4)}) translate(${(-actual.x).toFixed(2)} ${(-actual.y + deriva).toFixed(2)})`,
   );
 }
 
@@ -112,6 +113,7 @@ function medir() {
 
   const medio = window.innerHeight / 2;
   let mejor = null;
+  let cajaMejor = null;
   let distancia = Infinity;
 
   for (const capitulo of capitulos) {
@@ -120,11 +122,23 @@ function medir() {
     if (d < distancia) {
       distancia = d;
       mejor = capitulo;
+      cajaMejor = caja;
     }
   }
 
   const limite = window.innerHeight * 0.45;
-  activar(mejor && distancia < limite ? mejor.dataset.world : null);
+  const enFoco = Boolean(mejor && cajaMejor && distancia < limite);
+
+  /* Deriva mínima: el cielo acompaña al scroll dentro del capítulo. */
+  if (enFoco && cajaMejor && !reducido) {
+    const desfase = (medio - (cajaMejor.top + cajaMejor.height / 2)) / window.innerHeight;
+    deriva = desfase * 22;
+  } else {
+    deriva = 0;
+  }
+
+  activar(enFoco && mejor ? mejor.dataset.world : null);
+  aplicar();
 }
 
 let pendiente = false;
