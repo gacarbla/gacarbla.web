@@ -1,0 +1,13 @@
+{
+  "name": "gacarbla-web",
+  "version": "2.0.0",
+  "private": true,
+  "description": "El portal de GACARBLA: un autor, muchos mundos.",
+  "homepage": "https://gacarbla.es/",
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "dev": "node scripts/dev.js",
+    "preview": "node scripts/dev.js --web"
+  }
+}
