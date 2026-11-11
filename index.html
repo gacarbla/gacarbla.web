@@ -2,265 +2,112 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GACARBLA — Un autor, muchos mundos</title>
-<meta name="description" content="Portfolio, juegos, chat, recursos educativos y herramientas web. Proyectos propios, rápidos y sin ruido, cada uno en su subdominio.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GACARBLA — Portfolio</title>
+<meta name="description" content="Portfolio de Gabriel (GACARBLA).">
 <meta name="author" content="Gabriel — GACARBLA">
 <link rel="canonical" href="https://gacarbla.es/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="GACARBLA">
-<meta property="og:title" content="GACARBLA — Un autor, muchos mundos">
-<meta property="og:description" content="Portfolio, juegos, chat, recursos educativos y herramientas web. Proyectos propios, rápidos y sin ruido.">
+<meta property="og:title" content="GACARBLA — Portfolio">
+<meta property="og:description" content="Portfolio de Gabriel (GACARBLA).">
 <meta property="og:url" content="https://gacarbla.es/">
-<meta property="og:image" content="https://gacarbla.es/assets/og.png">
+<meta property="og:image" content="https://gacarbla.es/assets/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="GACARBLA — Un autor, muchos mundos">
+<meta property="og:image:alt" content="GACARBLA — Portfolio">
 <meta property="og:locale" content="es_ES">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="GACARBLA — Un autor, muchos mundos">
-<meta name="twitter:description" content="Portfolio, juegos, chat, recursos educativos y herramientas web. Proyectos propios, rápidos y sin ruido.">
-<meta name="twitter:image" content="https://gacarbla.es/assets/og.png">
+<meta name="twitter:title" content="GACARBLA — Portfolio">
+<meta name="twitter:description" content="Portfolio de Gabriel (GACARBLA).">
+<meta name="twitter:image" content="https://gacarbla.es/assets/og.jpg">
 
-<meta name="theme-color" content="#f3efe5" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#15120e" media="(prefers-color-scheme: dark)">
-<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#04050a">
+<meta name="color-scheme" content="dark">
 <meta name="robots" content="index,follow,max-image-preview:large">
 
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-<link rel="preload" href="/assets/fonts/instrument-serif.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/instrument-serif-italic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/sora.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/geist-mono.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/css/main.css">
 
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://gacarbla.es/#website","url":"https://gacarbla.es/","name":"GACARBLA","description":"Un autor, muchos mundos. Portfolio, juegos, chat, recursos educativos y herramientas web.","inLanguage":"es","publisher":{"@id":"https://gacarbla.es/#person"}},{"@type":"Person","@id":"https://gacarbla.es/#person","name":"Gabriel","alternateName":"GACARBLA","url":"https://gacarbla.es/","email":"gacarbla@gacarbla.es","sameAs":["https://github.com/gacarbla","https://portfolio.gacarbla.es/"]}]}
+{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://gacarbla.es/#website","url":"https://gacarbla.es/","name":"GACARBLA","inLanguage":"es","publisher":{"@id":"https://gacarbla.es/#person"}},{"@type":"Person","@id":"https://gacarbla.es/#person","name":"Gabriel","alternateName":"GACARBLA","url":"https://gacarbla.es/","email":"gacarbla@gacarbla.es","sameAs":["https://github.com/gacarbla","https://portfolio.gacarbla.es/"]}]}
 </script>
 </head>
-<body>
-<a class="skip" href="#recorrido">Saltar al recorrido</a>
+<body data-stage="0">
+<canvas id="scene" aria-hidden="true"></canvas>
+<div class="vignette" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
 
-<header class="topbar shell">
-  <a class="brand" href="/" aria-label="GACARBLA, inicio">
-    <span class="brand-mark" aria-hidden="true"></span>
-    GACARBLA
-  </a>
-  <div class="topbar-meta">
-    <span class="clock"><span class="clock-city">Madrid</span> <time id="reloj" datetime="">--:--</time></span>
-    <a class="topbar-link" href="https://github.com/gacarbla" rel="me noopener">GitHub <span aria-hidden="true">↗</span></a>
-    <a class="topbar-link" href="mailto:gacarbla@gacarbla.es">Email</a>
-  </div>
-</header>
+<div class="hud">
+  <header class="hud-top">
+    <a class="brand" href="/" aria-label="GACARBLA, inicio">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-text">GACARBLA</span>
+    </a>
+    <p class="system"><span class="system-dot" aria-hidden="true"></span>Sistema 01</p>
+  </header>
 
-<main class="main shell" id="recorrido">
-  <div class="story">
-    <section class="hero" aria-labelledby="titulo">
-      <div class="hero-inner">
-        <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>Índice de mundos <span class="eyebrow-sep">/</span> 2026</p>
-        <h1 id="titulo">Un autor.<br><em>Muchos mundos<span class="acento">.</span></em></h1>
-        <p class="lede">Diseño y programo webs, juegos y herramientas. Cada proyecto vive en su propio subdominio, con su carácter y una misma regla: rápido, honesto y sin depender de nadie.</p>
-        <p class="tally"><span class="pulse" aria-hidden="true"></span>06 mundos · 01 en línea · sin anuncios</p>
-        <p class="cue"><span class="cue-line" aria-hidden="true"></span>Desliza para recorrer el cielo</p>
+  <div class="hud-bottom">
+    <section class="project" aria-labelledby="project-title">
+      <p class="project-kicker"><span class="project-dot" aria-hidden="true"></span>Proyecto</p>
+      <h1 class="project-title" id="project-title">Portfolio</h1>
+      <div class="project-detail" inert>
+        <div class="project-detail-inner">
+          <p class="project-domain">portfolio.gacarbla.es</p>
+          <a class="project-cta" href="https://portfolio.gacarbla.es/">
+            Entrar
+            <span class="project-cta-icon" aria-hidden="true">↗</span>
+          </a>
+        </div>
       </div>
+      <p class="sr-only">GACARBLA. Sistema personal. Proyecto: Portfolio, en portfolio.gacarbla.es.</p>
     </section>
 
-    <section class="chapter" id="games" data-world="games">
-      <p class="chapter-index"><span class="chapter-dot" aria-hidden="true"></span>01 / 06</p>
-      <h2 class="chapter-name">Games</h2>
-      <p class="chapter-desc">Juegos propios, hechos desde cero. Sin anuncios, sin monedas y sin trucos.</p>
-      <dl class="chapter-meta">
-        <div><dt>Dominio</dt><dd>games.gacarbla.es</dd></div>
-        <div><dt>Estado</dt><dd>Próximamente</dd></div>
-      </dl>
-    </section>
+    <nav class="rail" aria-label="Etapas del sistema">
+      <button class="rail-step is-active" type="button" data-stage-go="0" aria-current="step">
+        <span class="rail-line" aria-hidden="true"></span>
+        <span class="rail-num">01</span>
+        <span class="rail-name">Sistema</span>
+      </button>
+      <button class="rail-step" type="button" data-stage-go="1">
+        <span class="rail-line" aria-hidden="true"></span>
+        <span class="rail-num">02</span>
+        <span class="rail-name">Personal</span>
+      </button>
+      <button class="rail-step" type="button" data-stage-go="2">
+        <span class="rail-line" aria-hidden="true"></span>
+        <span class="rail-num">03</span>
+        <span class="rail-name">Portfolio</span>
+      </button>
+    </nav>
 
-    <section class="chapter" id="play" data-world="play">
-      <p class="chapter-index"><span class="chapter-dot" aria-hidden="true"></span>02 / 06</p>
-      <h2 class="chapter-name">Play</h2>
-      <p class="chapter-desc">Un juego grande. El proyecto que me está llevando más tiempo y más cariño.</p>
-      <dl class="chapter-meta">
-        <div><dt>Dominio</dt><dd>play.gacarbla.es</dd></div>
-        <div><dt>Estado</dt><dd>Próximamente</dd></div>
-      </dl>
-    </section>
-
-    <section class="chapter is-live" id="portfolio" data-world="portfolio">
-      <p class="chapter-index"><span class="chapter-dot" aria-hidden="true"></span>03 / 06</p>
-      <h2 class="chapter-name">Portfolio</h2>
-      <p class="chapter-desc">Quién soy, qué he construido y cómo lo he hecho.</p>
-      <dl class="chapter-meta">
-        <div><dt>Dominio</dt><dd>portfolio.gacarbla.es</dd></div>
-        <div><dt>Estado</dt><dd><span class="state-live"><span class="state-dot" aria-hidden="true"></span>En línea</span></dd></div>
-      </dl>
-      <p class="chapter-cta"><a class="btn" href="https://portfolio.gacarbla.es/">Entrar <span aria-hidden="true">↗</span></a></p>
-    </section>
-
-    <section class="chapter" id="chat" data-world="chat">
-      <p class="chapter-index"><span class="chapter-dot" aria-hidden="true"></span>04 / 06</p>
-      <h2 class="chapter-name">Chat</h2>
-      <p class="chapter-desc">Conversaciones en grupo a mi manera: rápidas, privadas y sin ruido.</p>
-      <dl class="chapter-meta">
-        <div><dt>Dominio</dt><dd>chat.gacarbla.es</dd></div>
-        <div><dt>Estado</dt><dd>Próximamente</dd></div>
-      </dl>
-    </section>
-
-    <section class="chapter" id="edu" data-world="edu">
-      <p class="chapter-index"><span class="chapter-dot" aria-hidden="true"></span>05 / 06</p>
-      <h2 class="chapter-name">Edu</h2>
-      <p class="chapter-desc">Un portal para crear y compartir recursos educativos entre quienes enseñan.</p>
-      <dl class="chapter-meta">
-        <div><dt>Dominio</dt><dd>edu.gacarbla.es</dd></div>
-        <div><dt>Estado</dt><dd>Próximamente</dd></div>
-      </dl>
-    </section>
-
-    <section class="chapter" id="myweb" data-world="myweb">
-      <p class="chapter-index"><span class="chapter-dot" aria-hidden="true"></span>06 / 06</p>
-      <h2 class="chapter-name">MyWeb</h2>
-      <p class="chapter-desc">Tu propia web, gratis y sin saber programar. Para siempre.</p>
-      <dl class="chapter-meta">
-        <div><dt>Dominio</dt><dd>myweb.gacarbla.es</dd></div>
-        <div><dt>Estado</dt><dd>Próximamente</dd></div>
-      </dl>
-    </section>
-
-    <section class="chapter chapter-ghost" id="mas" data-world="mas">
-      <p class="chapter-index"><span class="chapter-dot" aria-hidden="true"></span>Y más</p>
-      <h2 class="chapter-name"><em>Y mucho más</em></h2>
-      <p class="chapter-desc">Lo siguiente todavía no tiene nombre ni fecha. Si tienes una idea, este es el momento.</p>
-      <p class="chapter-cta"><a class="btn btn-ghost" href="mailto:gacarbla@gacarbla.es">gacarbla@gacarbla.es <span aria-hidden="true">↗</span></a></p>
-    </section>
-
-    <section class="outro" aria-label="Cierre">
-      <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>Fin del mapa</p>
-      <p class="outro-text">Lo que venga después se construye igual: a mano, sin prisa y sin ruido.</p>
-      <p class="outro-link"><a href="#">Volver al principio <span aria-hidden="true">↑</span></a></p>
-    </section>
-  </div>
-
-  <div class="lens-stage" aria-hidden="true">
-    <div class="lens">
-      <svg class="lens-svg" viewBox="0 0 600 600" role="presentation" focusable="false">
-        <defs>
-          <clipPath id="lens-clip">
-            <circle cx="300" cy="300" r="292"></circle>
-          </clipPath>
-          <pattern id="lens-dots" width="18" height="18" patternUnits="userSpaceOnUse">
-            <circle cx="1" cy="1" r="1" fill="currentColor" opacity=".2"></circle>
-          </pattern>
-          <radialGradient id="lens-fade" cx="50%" cy="50%" r="50%">
-            <stop offset="0.5" stop-color="#fff" stop-opacity="1"></stop>
-            <stop offset="1" stop-color="#fff" stop-opacity="0"></stop>
-          </radialGradient>
-          <mask id="lens-mask">
-            <rect width="600" height="600" fill="url(#lens-fade)"></rect>
-          </mask>
-          <radialGradient id="lens-glow">
-            <stop offset="0" stop-color="currentColor" stop-opacity=".05"></stop>
-            <stop offset="1" stop-color="currentColor" stop-opacity="0"></stop>
-          </radialGradient>
-        </defs>
-
-        <circle class="lens-field" cx="300" cy="300" r="292"></circle>
-        <g clip-path="url(#lens-clip)">
-          <rect width="600" height="600" fill="url(#lens-dots)" mask="url(#lens-mask)"></rect>
-          <circle cx="300" cy="300" r="250" fill="url(#lens-glow)"></circle>
-
-          <g class="lens-rings">
-            <circle cx="300" cy="300" r="150"></circle>
-            <circle class="lens-dashes" cx="300" cy="300" r="225" pathLength="48" stroke-dasharray="1 1"></circle>
-          </g>
-
-          <g class="sky">
-            <g class="edges">
-              <path class="edge" data-edge="games" d="M300 300 Q210 270 150 185" pathLength="100"></path>
-              <path class="edge" data-edge="play" d="M300 300 Q390 250 445 205" pathLength="100"></path>
-              <path class="edge" data-edge="portfolio" d="M300 300 Q390 320 455 350" pathLength="100"></path>
-              <path class="edge" data-edge="chat" d="M300 300 Q350 380 380 445" pathLength="100"></path>
-              <path class="edge" data-edge="edu" d="M300 300 Q250 380 215 450" pathLength="100"></path>
-              <path class="edge" data-edge="myweb" d="M300 300 Q210 320 140 330" pathLength="100"></path>
-              <path class="edge" data-edge="mas" d="M300 300 Q302 190 300 110" pathLength="100"></path>
-            </g>
-
-            <g class="lens-center" transform="translate(300 300)">
-              <circle class="center-ring" r="26"></circle>
-              <text class="center-mark" y="8" text-anchor="middle">G</text>
-            </g>
-
-            <g class="nodes">
-              <g class="node" data-node="games" data-x="150" data-y="185" transform="translate(150 185)">
-                <circle class="node-halo" r="13"></circle>
-                <circle class="node-dot" r="4.5"></circle>
-                <text class="node-label" x="13" y="4">GAMES</text>
-                <text class="node-sub" x="13" y="16">01</text>
-              </g>
-              <g class="node" data-node="play" data-x="445" data-y="205" transform="translate(445 205)">
-                <circle class="node-halo" r="13"></circle>
-                <circle class="node-dot" r="4.5"></circle>
-                <text class="node-label" x="13" y="4">PLAY</text>
-                <text class="node-sub" x="13" y="16">02</text>
-              </g>
-              <g class="node" data-node="portfolio" data-x="455" data-y="350" transform="translate(455 350)">
-                <circle class="node-halo" r="13"></circle>
-                <circle class="node-dot" r="4.5"></circle>
-                <text class="node-label" x="13" y="4">PORTFOLIO</text>
-                <text class="node-sub" x="13" y="16">03</text>
-              </g>
-              <g class="node" data-node="chat" data-x="380" data-y="445" transform="translate(380 445)">
-                <circle class="node-halo" r="13"></circle>
-                <circle class="node-dot" r="4.5"></circle>
-                <text class="node-label" x="13" y="4">CHAT</text>
-                <text class="node-sub" x="13" y="16">04</text>
-              </g>
-              <g class="node" data-node="edu" data-x="215" data-y="450" transform="translate(215 450)">
-                <circle class="node-halo" r="13"></circle>
-                <circle class="node-dot" r="4.5"></circle>
-                <text class="node-label" x="13" y="4">EDU</text>
-                <text class="node-sub" x="13" y="16">05</text>
-              </g>
-              <g class="node" data-node="myweb" data-x="140" data-y="330" transform="translate(140 330)">
-                <circle class="node-halo" r="13"></circle>
-                <circle class="node-dot" r="4.5"></circle>
-                <text class="node-label" x="13" y="4">MYWEB</text>
-                <text class="node-sub" x="13" y="16">06</text>
-              </g>
-              <g class="node node-ghost" data-node="mas" data-x="300" data-y="110" transform="translate(300 110)">
-                <circle class="node-halo" r="13"></circle>
-                <text class="node-mark" y="6" text-anchor="middle">?</text>
-              </g>
-            </g>
-          </g>
-        </g>
-
-        <circle class="lens-edge" cx="300" cy="300" r="292"></circle>
-        <g class="lens-ticks">
-          <line data-tick="games" transform="rotate(0 300 300)" x1="300" y1="1" x2="300" y2="15"></line>
-          <line data-tick="play" transform="rotate(60 300 300)" x1="300" y1="1" x2="300" y2="15"></line>
-          <line data-tick="portfolio" transform="rotate(120 300 300)" x1="300" y1="1" x2="300" y2="15"></line>
-          <line data-tick="chat" transform="rotate(180 300 300)" x1="300" y1="1" x2="300" y2="15"></line>
-          <line data-tick="edu" transform="rotate(240 300 300)" x1="300" y1="1" x2="300" y2="15"></line>
-          <line data-tick="myweb" transform="rotate(300 300 300)" x1="300" y1="1" x2="300" y2="15"></line>
-        </g>
-      </svg>
+    <div class="hint" aria-hidden="true">
+      <span class="mouse"><span class="mouse-wheel"></span></span>
+      <span class="hint-label">
+        <span class="hint-down">Desliza</span>
+        <span class="hint-up">Sube</span>
+      </span>
     </div>
   </div>
-</main>
+</div>
 
-<footer class="footer shell">
-  <div class="footer-brand">
-    <span class="brand-mark" aria-hidden="true"></span>
-    <span>© <span data-year>2026</span> GACARBLA</span>
+<div class="webgl-error">
+  <p class="webgl-title">GACARBLA</p>
+  <p class="webgl-text">Este navegador no puede dibujar la escena.</p>
+  <a class="webgl-link" href="https://portfolio.gacarbla.es/">Ir al portfolio <span aria-hidden="true">↗</span></a>
+</div>
+
+<noscript>
+  <div class="webgl-error is-visible">
+    <p class="webgl-title">GACARBLA</p>
+    <p class="webgl-text">La escena necesita JavaScript.</p>
+    <a class="webgl-link" href="https://portfolio.gacarbla.es/">Ir al portfolio <span aria-hidden="true">↗</span></a>
   </div>
-  <p class="footer-note">Instrument Serif + JetBrains Mono · Sin frameworks · Sin cookies</p>
-  <nav class="footer-links" aria-label="Contacto">
-    <a href="mailto:gacarbla@gacarbla.es">gacarbla@gacarbla.es</a>
-    <a href="https://github.com/gacarbla" rel="me noopener">GitHub <span aria-hidden="true">↗</span></a>
-  </nav>
-</footer>
+</noscript>
 
-<script type="module" src="/js/main.js"></script>
+<script type="module" src="/js/app.js"></script>
 </body>
 </html>

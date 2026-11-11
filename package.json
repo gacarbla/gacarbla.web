@@ -1,13 +1,19 @@
 {
   "name": "gacarbla-web",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
-  "description": "El portal de GACARBLA: un autor, muchos mundos.",
+  "description": "GACARBLA — sistema 01. Escena 3D para el portfolio.",
   "homepage": "https://gacarbla.es/",
   "license": "UNLICENSED",
   "scripts": {
     "build": "node scripts/build.js",
     "dev": "node scripts/dev.js",
-    "preview": "node scripts/dev.js --web"
+    "preview": "node scripts/dev.js --preview"
+  },
+  "dependencies": {
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
   }
 }
