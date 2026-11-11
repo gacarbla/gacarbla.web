@@ -4,6 +4,7 @@ import { createStars } from "./backdrop.js";
 import { createSystem } from "./system.js";
 import { initHud } from "./hud.js";
 import { initInput } from "./input.js";
+import { PLANETAS } from "./data.js";
 
 const canvas = document.querySelector("#scene");
 const reducido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -48,11 +49,10 @@ function arrancar() {
     0.1,
     500,
   );
-  camara.position.set(0, 4.2, 12.6);
 
   const uTime = { value: 0 };
 
-  const sistema = createSystem({ scene: escena, quality: calidad });
+  const sistema = createSystem({ scene: escena });
 
   const estrellas = createStars({
     count: calidad.stars,
@@ -69,8 +69,8 @@ function arrancar() {
     const aspecto = window.innerWidth / window.innerHeight;
     const vertical = aspecto < 0.85;
     const giro = vertical ? 0.95 : 0;
-    baseY = vertical ? 5.4 : 4.2;
-    camara.position.set(0, baseY, vertical ? 18.5 : 12.6);
+    baseY = vertical ? 6.0 : 5.0;
+    camara.position.set(0, baseY, vertical ? 20.5 : 15.5);
     camara.up.set(Math.sin(giro), Math.cos(giro), 0);
     objetivoCamara.set(0, vertical ? 1.0 : 0, 0);
     camara.lookAt(objetivoCamara);
@@ -80,40 +80,73 @@ function arrancar() {
   const etiquetas = {
     star: document.querySelector('[data-label="star"]'),
     planet: document.querySelector('[data-label="planet"]'),
+    planetText: document.querySelector('[data-label="planet"] [data-label-text]'),
     satellite: document.querySelector('[data-label="satellite"]'),
+    satelliteText: document.querySelector('[data-label="satellite"] [data-label-text]'),
   };
 
-  const MODOS = ["system", "planet", "project"];
-  let modo = "system";
+  const PARADAS = [-1, ...PLANETAS.map((_, i) => i)];
+  let parada = -1;
   let bloqueo = 0;
 
   const hud = initHud({
-    onMode: (nuevo) => cambiarModo(nuevo),
+    onSystem: () => irA(-1),
+    onPlanet: (i) => irA(i),
+    onProject: (id) => abrirProyecto(id),
   });
 
-  function cambiarModo(nuevo) {
-    if (!MODOS.includes(nuevo) || nuevo === modo) return;
-    modo = nuevo;
-    document.body.dataset.mode = modo;
+  function etiquetar(i) {
+    const datos = PLANETAS[i];
+    if (!datos) return;
+    if (etiquetas.planet) etiquetas.planet.style.color = datos.color;
+    if (etiquetas.planetText) etiquetas.planetText.textContent = datos.nombre;
+    const proyecto = datos.proyectos[0];
+    if (proyecto) {
+      if (etiquetas.satellite) etiquetas.satellite.style.color = proyecto.color;
+      if (etiquetas.satelliteText) etiquetas.satelliteText.textContent = proyecto.nombre;
+    }
+  }
+
+  function irA(indice) {
+    parada = indice;
+    const modo = indice < 0 ? "system" : "planet";
+    sistema.setProject(false);
     sistema.setMode(modo);
-    sistema.setProject(modo === "project");
-    hud.setMode(modo);
-    bloqueo = performance.now() + 780;
+    sistema.setSelection(indice);
+    hud.setStop(indice);
+    if (indice >= 0) etiquetar(indice);
+    bloqueo = performance.now() + 820;
+  }
+
+  function abrirProyecto(id) {
+    if (parada < 0) return;
+    const datos = PLANETAS[parada];
+    const proyecto = datos?.proyectos.find((p) => p.id === id);
+    if (!proyecto) return;
+    sistema.setProject(true);
+    sistema.setMode("project");
+    hud.setProject(proyecto);
+    etiquetar(parada);
+    bloqueo = performance.now() + 420;
+  }
+
+  function mover(direccion) {
+    if (performance.now() < bloqueo) return;
+    const actual = PARADAS.indexOf(parada);
+    const siguiente = PARADAS[(actual + direccion + PARADAS.length) % PARADAS.length];
+    irA(siguiente);
   }
 
   initInput({
-    next: () => {
-      if (modo === "system") cambiarModo("planet");
-    },
-    prev: () => {
-      if (modo === "project") cambiarModo("planet");
-      else if (modo === "planet") cambiarModo("system");
-    },
+    next: () => mover(1),
+    prev: () => mover(-1),
     isLocked: () => performance.now() < bloqueo,
   });
 
-  hud.setMode("system");
-  document.body.dataset.mode = "system";
+  sistema.setMode("system");
+  sistema.setSelection(-1);
+  hud.setStop(-1);
+  etiquetar(0);
 
   const proyectado = new THREE.Vector3();
 
@@ -151,7 +184,6 @@ function arrancar() {
 
     sistema.update(dt, uTime.value, camara);
 
-    // Vaivén mínimo de cámara: la escena nunca está del todo quieta.
     if (!reducido) {
       camara.position.y = baseY + Math.sin(uTime.value * 0.25) * 0.05;
       camara.position.x = Math.sin(uTime.value * 0.18) * 0.04;

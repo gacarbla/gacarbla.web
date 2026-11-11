@@ -139,7 +139,7 @@ body[data-mode="system"] .label-planet { opacity: 0.24; }
 body[data-mode="system"] .label-satellite { opacity: 0; }
 body[data-mode="planet"] .label-star { opacity: 0.32; }
 body[data-mode="planet"] .label-planet { opacity: 1; }
-body[data-mode="planet"] .label-satellite { opacity: 0.35; }
+body[data-mode="planet"] .label-satellite { opacity: 0; }
 body[data-mode="project"] .label-star { opacity: 0.2; }
 body[data-mode="project"] .label-planet { opacity: 0; }
 body[data-mode="project"] .label-satellite { opacity: 1; }
@@ -425,6 +425,30 @@ body[data-mode="planet"] .view-project {
   font-size: 0.68rem;
   letter-spacing: 0.02em;
   color: var(--muted);
+}
+
+.panel-state {
+  margin: 0.75rem 0 0;
+  font-family: var(--mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--project);
+}
+.panel-state.is-live {
+  color: #45c08c;
+}
+
+.panel-pending {
+  margin: 1.3rem 0 0;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+[hidden] {
+  display: none !important;
 }
 
 .panel-cta {
