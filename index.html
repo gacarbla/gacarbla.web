@@ -36,8 +36,16 @@
 {"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://gacarbla.es/#website","url":"https://gacarbla.es/","name":"GACARBLA","inLanguage":"es","publisher":{"@id":"https://gacarbla.es/#person"}},{"@type":"Person","@id":"https://gacarbla.es/#person","name":"Gabriel","alternateName":"GACARBLA","url":"https://gacarbla.es/","email":"gacarbla@gacarbla.es","sameAs":["https://github.com/gacarbla","https://portfolio.gacarbla.es/"]}]}
 </script>
 </head>
-<body data-stage="0">
-<canvas id="scene" aria-hidden="true"></canvas>
+<body data-mode="system">
+<div class="stage">
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="labels" aria-hidden="true">
+    <p class="label label-star" data-label="star"><span class="label-dot"></span>GACARBLA</p>
+    <p class="label label-planet" data-label="planet"><span class="label-dot"></span>Personal</p>
+    <p class="label label-satellite" data-label="satellite"><span class="label-dot"></span>Portfolio</p>
+  </div>
+</div>
+
 <div class="vignette" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
 
@@ -47,50 +55,67 @@
       <span class="brand-mark" aria-hidden="true"></span>
       <span class="brand-text">GACARBLA</span>
     </a>
-    <p class="system"><span class="system-dot" aria-hidden="true"></span>Sistema 01</p>
+    <p class="system"><span class="system-dot" aria-hidden="true"></span>Núcleo · GACARBLA</p>
   </header>
 
-  <div class="hud-bottom">
-    <section class="project" aria-labelledby="project-title">
-      <p class="project-kicker"><span class="project-dot" aria-hidden="true"></span>Proyecto</p>
-      <h1 class="project-title" id="project-title">Portfolio</h1>
-      <div class="project-detail" inert>
-        <div class="project-detail-inner">
-          <p class="project-domain">portfolio.gacarbla.es</p>
-          <a class="project-cta" href="https://portfolio.gacarbla.es/">
-            Entrar
-            <span class="project-cta-icon" aria-hidden="true">↗</span>
-          </a>
-        </div>
-      </div>
-      <p class="sr-only">GACARBLA. Sistema personal. Proyecto: Portfolio, en portfolio.gacarbla.es.</p>
-    </section>
+  <aside class="panel" aria-live="polite">
+    <div class="panel-frame">
+      <section class="view view-planet" data-panel="planet">
+        <p class="kicker"><span class="kicker-dot" aria-hidden="true"></span>Planeta · 01</p>
+        <h1 class="panel-title">Personal</h1>
+        <p class="panel-sub">01 proyecto en órbita</p>
+        <ul class="projects">
+          <li>
+            <button class="project" type="button" data-project="portfolio">
+              <span class="project-swatch" aria-hidden="true"></span>
+              <span class="project-name">Portfolio</span>
+              <span class="project-state">En línea</span>
+              <span class="project-arrow" aria-hidden="true">↗</span>
+            </button>
+          </li>
+        </ul>
+      </section>
 
-    <nav class="rail" aria-label="Etapas del sistema">
-      <button class="rail-step is-active" type="button" data-stage-go="0" aria-current="step">
-        <span class="rail-line" aria-hidden="true"></span>
-        <span class="rail-num">01</span>
-        <span class="rail-name">Sistema</span>
-      </button>
-      <button class="rail-step" type="button" data-stage-go="1">
-        <span class="rail-line" aria-hidden="true"></span>
-        <span class="rail-num">02</span>
-        <span class="rail-name">Personal</span>
-      </button>
-      <button class="rail-step" type="button" data-stage-go="2">
-        <span class="rail-line" aria-hidden="true"></span>
-        <span class="rail-num">03</span>
-        <span class="rail-name">Portfolio</span>
-      </button>
-    </nav>
-
-    <div class="hint" aria-hidden="true">
-      <span class="mouse"><span class="mouse-wheel"></span></span>
-      <span class="hint-label">
-        <span class="hint-down">Desliza</span>
-        <span class="hint-up">Sube</span>
-      </span>
+      <section class="view view-project" data-panel="project">
+        <p class="kicker">
+          <button class="crumb" type="button" data-mode-go="planet">Personal</button>
+          <span class="kicker-sep">/</span>
+          <span>Proyecto</span>
+        </p>
+        <h2 class="panel-title">Portfolio</h2>
+        <p class="panel-domain">portfolio.gacarbla.es</p>
+        <a class="panel-cta" href="https://portfolio.gacarbla.es/">
+          Entrar
+          <span class="panel-cta-icon" aria-hidden="true">↗</span>
+        </a>
+      </section>
     </div>
+  </aside>
+
+  <nav class="rail" aria-label="Navegación del sistema">
+    <button class="rail-step is-active" type="button" data-mode-go="system" aria-current="step">
+      <span class="rail-line" aria-hidden="true"></span>
+      <span class="rail-num">01</span>
+      <span class="rail-name">Sistema</span>
+    </button>
+    <button class="rail-step" type="button" data-mode-go="planet">
+      <span class="rail-line" aria-hidden="true"></span>
+      <span class="rail-num">02</span>
+      <span class="rail-name">Personal</span>
+    </button>
+    <button class="rail-step" type="button" data-mode-go="project">
+      <span class="rail-line" aria-hidden="true"></span>
+      <span class="rail-num">03</span>
+      <span class="rail-name">Portfolio</span>
+    </button>
+  </nav>
+
+  <div class="hint" aria-hidden="true">
+    <span class="mouse"><span class="mouse-wheel"></span></span>
+    <span class="hint-label">
+      <span class="hint-down">Desliza</span>
+      <span class="hint-up">Sube</span>
+    </span>
   </div>
 </div>
 

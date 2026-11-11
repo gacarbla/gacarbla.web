@@ -1,8 +1,8 @@
 /**
- * Navegación por gestos. No hay scroll real: el wheel y el swipe se
- * acumulan con tolerancia y disparan un único cambio de etapa.
+ * Navegación por gestos. No hay scroll real: la rueda y el swipe se
+ * acumulan con tolerancia y disparan un único cambio de modo.
  */
-export function initInput({ next, prev, goTo, isLocked }) {
+export function initInput({ next, prev, isLocked }) {
   const UMBRAL_RUEDA = 48;
   const UMBRAL_SWIPE = 42;
   const ESPERA = 170;
@@ -76,17 +76,6 @@ export function initInput({ next, prev, goTo, isLocked }) {
     } else if (tecla === "ArrowUp" || tecla === "ArrowLeft" || tecla === "PageUp") {
       event.preventDefault();
       mover(-1);
-    } else if (tecla === "Home") {
-      event.preventDefault();
-      goTo(0);
-    } else if (tecla === "End") {
-      event.preventDefault();
-      goTo(2);
     }
-  });
-
-  // Los botones de la barra de etapas se enganchan desde la HUD.
-  document.querySelectorAll("[data-stage-go]").forEach((boton) => {
-    boton.addEventListener("click", () => goTo(Number(boton.dataset.stageGo)));
   });
 }
