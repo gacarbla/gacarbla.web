@@ -26,6 +26,8 @@ export function createSystem({ scene }) {
   grupo.add(luz);
   grupo.add(new THREE.AmbientLight(0x2f4f8a, 2.7));
 
+  const pickables = [];
+
   const mundos = PLANETAS.map((datos, i) => {
     const plano = new THREE.Group();
     plano.rotation.x = datos.inclinacion;
@@ -46,6 +48,14 @@ export function createSystem({ scene }) {
       new THREE.MeshStandardMaterial({ color: datos.color, roughness: 0.62, metalness: 0.02 }),
     );
     ancla.add(planeta);
+
+    const zonaPlaneta = new THREE.Mesh(
+      new THREE.SphereGeometry(datos.tamano * 2.4, 16, 12),
+      new THREE.MeshBasicMaterial({ visible: false }),
+    );
+    zonaPlaneta.userData = { tipo: "planeta", indice: i };
+    ancla.add(zonaPlaneta);
+    pickables.push(zonaPlaneta);
 
     const halo = new THREE.Mesh(
       new THREE.SphereGeometry(datos.tamano * 1.5, 48, 32),
@@ -71,6 +81,14 @@ export function createSystem({ scene }) {
       );
       luna.position.set(radio, 0, 0);
       pivoteLuna.add(luna);
+
+      const zonaLuna = new THREE.Mesh(
+        new THREE.SphereGeometry((0.09 + j * 0.012) * 2.8, 12, 8),
+        new THREE.MeshBasicMaterial({ visible: false }),
+      );
+      zonaLuna.userData = { tipo: "proyecto", indice: i, proyecto: proyecto.id };
+      luna.add(zonaLuna);
+      pickables.push(zonaLuna);
 
       const haloLuna = new THREE.Mesh(
         new THREE.SphereGeometry((0.09 + j * 0.012) * 1.9, 24, 18),
@@ -114,6 +132,7 @@ export function createSystem({ scene }) {
   let proyectoActivo = null;
 
   return {
+    pickables,
     setMode(nuevo) {
       modo = nuevo;
     },

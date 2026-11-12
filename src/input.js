@@ -1,81 +1,96 @@
 /**
- * Navegación por gestos. No hay scroll real: la rueda y el swipe se
- * acumulan con tolerancia y disparan un único cambio de modo.
+ * Controles: botón izquierdo rota, botón derecho desplaza, rueda o pellizco
+ * acerca. Un clic izquierdo sin arrastre selecciona un cuerpo.
  */
-export function initInput({ next, prev, isLocked }) {
-  const UMBRAL_RUEDA = 48;
-  const UMBRAL_SWIPE = 42;
-  const ESPERA = 170;
+export function initControls({ onRotate, onPan, onZoom, onClick }) {
+  const canvas = document.querySelector("#scene");
+  if (!canvas) return;
 
-  let acumulado = 0;
-  let temporizador = 0;
-  let inicioY = null;
+  const punteros = new Map();
+  let boton = -1;
+  let arrastrando = false;
+  let recorrido = 0;
+  let ultimoX = 0;
+  let ultimoY = 0;
+  let inicio = 0;
+  let pinza = 0;
 
-  const mover = (direccion) => {
-    if (isLocked()) return;
-    if (direccion > 0) next();
-    else prev();
+  const distanciaPinza = () => {
+    const [a, b] = [...punteros.values()];
+    return Math.hypot(a.x - b.x, a.y - b.y);
   };
+
+  canvas.addEventListener("contextmenu", (evento) => evento.preventDefault());
+
+  canvas.addEventListener("pointerdown", (evento) => {
+    if (evento.button !== 0 && evento.button !== 2) return;
+    canvas.setPointerCapture(evento.pointerId);
+    punteros.set(evento.pointerId, { x: evento.clientX, y: evento.clientY });
+
+    if (punteros.size === 1) {
+      boton = evento.button;
+      arrastrando = true;
+      recorrido = 0;
+      ultimoX = evento.clientX;
+      ultimoY = evento.clientY;
+      inicio = performance.now();
+      canvas.classList.add("is-dragging");
+    } else if (punteros.size === 2) {
+      arrastrando = false;
+      pinza = distanciaPinza();
+    }
+  });
+
+  canvas.addEventListener("pointermove", (evento) => {
+    if (!punteros.has(evento.pointerId)) return;
+    const anterior = punteros.get(evento.pointerId);
+    punteros.set(evento.pointerId, { x: evento.clientX, y: evento.clientY });
+
+    if (punteros.size === 1 && arrastrando) {
+      const dx = evento.clientX - anterior.x;
+      const dy = evento.clientY - anterior.y;
+      recorrido += Math.abs(dx) + Math.abs(dy);
+      if (recorrido > 3) {
+        if (boton === 2) onPan(dx, dy);
+        else onRotate(dx, dy);
+      }
+      ultimoX = evento.clientX;
+      ultimoY = evento.clientY;
+    } else if (punteros.size === 2) {
+      const actual = distanciaPinza();
+      if (pinza > 0) onZoom(pinza - actual);
+      pinza = actual;
+    }
+  });
+
+  const soltar = (evento) => {
+    if (!punteros.has(evento.pointerId)) return;
+    const fueClic =
+      punteros.size === 1 &&
+      boton === 0 &&
+      recorrido < 6 &&
+      performance.now() - inicio < 450;
+
+    punteros.delete(evento.pointerId);
+    pinza = 0;
+
+    if (punteros.size === 0) {
+      arrastrando = false;
+      boton = -1;
+      canvas.classList.remove("is-dragging");
+      if (fueClic) onClick(ultimoX, ultimoY);
+    }
+  };
+
+  canvas.addEventListener("pointerup", soltar);
+  canvas.addEventListener("pointercancel", soltar);
 
   window.addEventListener(
     "wheel",
-    (event) => {
-      event.preventDefault();
-      if (isLocked()) return;
-      if (Math.abs(event.deltaY) < 1.5) return;
-
-      acumulado += event.deltaY;
-      window.clearTimeout(temporizador);
-      temporizador = window.setTimeout(() => {
-        acumulado = 0;
-      }, ESPERA);
-
-      if (Math.abs(acumulado) >= UMBRAL_RUEDA) {
-        const direccion = Math.sign(acumulado);
-        acumulado = 0;
-        mover(direccion);
-      }
+    (evento) => {
+      evento.preventDefault();
+      onZoom(evento.deltaY);
     },
     { passive: false },
   );
-
-  window.addEventListener(
-    "touchstart",
-    (event) => {
-      if (event.touches.length !== 1) return;
-      inicioY = event.touches[0].clientY;
-    },
-    { passive: true },
-  );
-
-  window.addEventListener(
-    "touchmove",
-    (event) => {
-      if (event.touches.length === 1) event.preventDefault();
-    },
-    { passive: false },
-  );
-
-  window.addEventListener(
-    "touchend",
-    (event) => {
-      if (inicioY === null) return;
-      const fin = event.changedTouches[0]?.clientY ?? inicioY;
-      const delta = inicioY - fin;
-      inicioY = null;
-      if (Math.abs(delta) >= UMBRAL_SWIPE) mover(Math.sign(delta));
-    },
-    { passive: true },
-  );
-
-  window.addEventListener("keydown", (event) => {
-    const tecla = event.key;
-    if (tecla === "ArrowDown" || tecla === "ArrowRight" || tecla === "PageDown") {
-      event.preventDefault();
-      mover(1);
-    } else if (tecla === "ArrowUp" || tecla === "ArrowLeft" || tecla === "PageUp") {
-      event.preventDefault();
-      mover(-1);
-    }
-  });
 }

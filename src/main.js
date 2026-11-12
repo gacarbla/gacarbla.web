@@ -3,11 +3,11 @@ import * as THREE from "three";
 import { createStars } from "./backdrop.js";
 import { createSystem } from "./system.js";
 import { initHud } from "./hud.js";
-import { initInput } from "./input.js";
+import { initControls } from "./input.js";
+import { createOrbitCamera } from "./camera.js";
 import { PLANETAS } from "./data.js";
 
 const canvas = document.querySelector("#scene");
-const reducido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const tactil = window.matchMedia("(pointer: coarse)").matches;
 const movil = tactil || window.innerWidth < 860;
 
@@ -44,11 +44,12 @@ function arrancar() {
   escena.background = new THREE.Color("#04050a");
 
   const camara = new THREE.PerspectiveCamera(
-    42,
+    movil ? 50 : 42,
     window.innerWidth / window.innerHeight,
     0.1,
     500,
   );
+  camara.up.set(0, 1, 0);
 
   const uTime = { value: 0 };
 
@@ -61,28 +62,12 @@ function arrancar() {
   });
   escena.add(estrellas.points);
 
-  const objetivoCamara = new THREE.Vector3(0, 0, 0);
-  const basePos = new THREE.Vector3(0, 6.2, 22);
-  const baseTarget = new THREE.Vector3(0, 0, 0);
-  const deseadaPos = new THREE.Vector3();
-  const deseadaTarget = new THREE.Vector3();
-  const tmpPlaneta = new THREE.Vector3();
-  let baseY = 6.2;
-
-  /** En vertical, la escena se inclina y se aleja para caber a lo alto. */
-  function orientar() {
-    const aspecto = window.innerWidth / window.innerHeight;
-    const vertical = aspecto < 0.85;
-    const giro = vertical ? 0.95 : 0;
-    baseY = vertical ? 7.8 : 6.2;
-    basePos.set(0, baseY, vertical ? 28 : 22);
-    baseTarget.set(0, vertical ? 1.0 : 0, 0);
-    camara.up.set(Math.sin(giro), Math.cos(giro), 0);
-    camara.position.copy(basePos);
-    objetivoCamara.copy(baseTarget);
-    camara.lookAt(objetivoCamara);
-  }
-  orientar();
+  const controlCamara = createOrbitCamera(camara, {
+    systemRadius: movil ? 50 : 23,
+    focusRadius: movil ? 16 : 13.5,
+    phi: 1.27,
+  });
+  controlCamara.update(0.016, null);
 
   const etiquetas = {
     star: document.querySelector('[data-label="star"]'),
@@ -92,69 +77,93 @@ function arrancar() {
     satelliteText: document.querySelector('[data-label="satellite"] [data-label-text]'),
   };
 
-  const PARADAS = [-1, ...PLANETAS.map((_, i) => i)];
+  const raycaster = new THREE.Raycaster();
+  const ndc = new THREE.Vector2();
+  const tmpPlaneta = new THREE.Vector3();
+
   let parada = -1;
-  let bloqueo = 0;
 
   const hud = initHud({
-    onSystem: () => irA(-1),
-    onPlanet: (i) => irA(i),
+    onSystem: () => deseleccionar(),
+    onPlanet: (i) => seleccionar(i),
     onProject: (id) => abrirProyecto(id),
   });
 
-  function etiquetar(i) {
-    const datos = PLANETAS[i];
+  function etiquetarPlaneta(indice) {
+    const datos = PLANETAS[indice];
     if (!datos) return;
     if (etiquetas.planet) etiquetas.planet.style.color = datos.color;
     if (etiquetas.planetText) etiquetas.planetText.textContent = datos.nombre;
-    const proyecto = datos.proyectos[0];
-    if (proyecto) {
-      if (etiquetas.satellite) etiquetas.satellite.style.color = proyecto.color;
-      if (etiquetas.satelliteText) etiquetas.satelliteText.textContent = proyecto.nombre;
-    }
+    etiquetarProyecto(datos.proyectos[0]);
   }
 
-  function irA(indice) {
-    parada = indice;
-    const modo = indice < 0 ? "system" : "planet";
-    sistema.setProject(null);
-    sistema.setMode(modo);
-    sistema.setSelection(indice);
-    hud.setStop(indice);
-    if (indice >= 0) etiquetar(indice);
-    bloqueo = performance.now() + 820;
-  }
-
-  function abrirProyecto(id) {
-    if (parada < 0) return;
-    const datos = PLANETAS[parada];
-    const proyecto = datos?.proyectos.find((p) => p.id === id);
+  function etiquetarProyecto(proyecto) {
     if (!proyecto) return;
-    sistema.setProject(id);
-    sistema.setMode("project");
-    hud.setProject(proyecto);
     if (etiquetas.satellite) etiquetas.satellite.style.color = proyecto.color;
     if (etiquetas.satelliteText) etiquetas.satelliteText.textContent = proyecto.nombre;
-    bloqueo = performance.now() + 420;
   }
 
-  function mover(direccion) {
-    if (performance.now() < bloqueo) return;
-    const actual = PARADAS.indexOf(parada);
-    const siguiente = PARADAS[(actual + direccion + PARADAS.length) % PARADAS.length];
-    irA(siguiente);
+  function seleccionar(indice) {
+    if (indice < 0 || indice >= PLANETAS.length) return;
+    parada = indice;
+    sistema.setSelection(indice);
+    sistema.setProject(null);
+    sistema.setMode("planet");
+    hud.setStop(indice);
+    controlCamara.setFocus(true);
+    etiquetarPlaneta(indice);
   }
 
-  initInput({
-    next: () => mover(1),
-    prev: () => mover(-1),
-    isLocked: () => performance.now() < bloqueo,
+  function abrirProyecto(id, indice = parada) {
+    if (indice < 0 || indice >= PLANETAS.length) return;
+    const proyecto = PLANETAS[indice].proyectos.find((p) => p.id === id);
+    if (!proyecto) return;
+    parada = indice;
+    sistema.setSelection(indice);
+    sistema.setProject(id);
+    sistema.setMode("project");
+    hud.setStop(indice);
+    hud.setProject(proyecto);
+    controlCamara.setFocus(true);
+    etiquetarPlaneta(indice);
+    etiquetarProyecto(proyecto);
+  }
+
+  function deseleccionar() {
+    parada = -1;
+    sistema.setSelection(-1);
+    sistema.setProject(null);
+    sistema.setMode("system");
+    hud.setStop(-1);
+    controlCamara.setFocus(false);
+  }
+
+  initControls({
+    onRotate: (dx, dy) => controlCamara.rotate(dx, dy),
+    onPan: (dx, dy) => controlCamara.pan(dx, dy),
+    onZoom: (delta) => controlCamara.zoom(delta),
+    onClick: (x, y) => {
+      const rect = canvas.getBoundingClientRect();
+      ndc.set(
+        ((x - rect.left) / rect.width) * 2 - 1,
+        -((y - rect.top) / rect.height) * 2 + 1,
+      );
+      raycaster.setFromCamera(ndc, camara);
+      const impactos = raycaster.intersectObjects(sistema.pickables, false);
+      if (impactos.length === 0) {
+        deseleccionar();
+        return;
+      }
+      const datos = impactos[0].object.userData;
+      if (datos.tipo === "planeta") seleccionar(datos.indice);
+      else if (datos.tipo === "proyecto") abrirProyecto(datos.proyecto, datos.indice);
+    },
   });
 
   sistema.setMode("system");
   sistema.setSelection(-1);
   hud.setStop(-1);
-  etiquetar(0);
+  etiquetarPlaneta(0);
 
   const proyectado = new THREE.Vector3();
 
@@ -177,7 +186,6 @@ function arrancar() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     camara.aspect = window.innerWidth / window.innerHeight;
     camara.updateProjectionMatrix();
-    orientar();
     estrellas.material.uniforms.uPixelRatio.value = calidad.dpr;
   }
 
@@ -191,22 +199,8 @@ function arrancar() {
     uTime.value += dt;
 
     sistema.update(dt, uTime.value, camara);
-
-    // La cámara acompaña al planeta seleccionado; el planeta nunca se detiene.
-    const zoom = parada >= 0 ? (movil ? 0.9 : 0.86) : 1;
-    deseadaPos.copy(basePos).multiplyScalar(zoom);
-    deseadaTarget.copy(baseTarget).multiplyScalar(zoom);
-    if (parada >= 0) {
-      sistema.planetPosition(parada, tmpPlaneta);
-      deseadaPos.addScaledVector(tmpPlaneta, 0.55);
-      deseadaTarget.addScaledVector(tmpPlaneta, 0.55);
-    }
-    if (!reducido) deseadaPos.y += Math.sin(uTime.value * 0.25) * 0.05;
-
-    const suavizado = 1 - Math.exp(-dt * 2.2);
-    camara.position.lerp(deseadaPos, suavizado);
-    objetivoCamara.lerp(deseadaTarget, suavizado);
-    camara.lookAt(objetivoCamara);
+    const foco = parada >= 0 ? sistema.planetPosition(parada, tmpPlaneta) : null;
+    controlCamara.update(dt, foco);
 
     const posiciones = sistema.labels();
     colocarEtiqueta(etiquetas.star, posiciones.star);

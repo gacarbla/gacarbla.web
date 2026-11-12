@@ -95,6 +95,14 @@ body[data-mode="project"] .stage {
   width: 100%;
   height: 100%;
   display: block;
+  cursor: grab;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#scene.is-dragging {
+  cursor: grabbing;
 }
 
 .labels {
@@ -548,11 +556,12 @@ body[data-mode="planet"] .view-project {
 
 .hint {
   position: fixed;
-  right: clamp(1.1rem, 2.4vw, 2.2rem);
+  left: clamp(1.1rem, 2.4vw, 2.2rem);
   bottom: clamp(1.2rem, 2.4vw, 2.2rem);
   display: flex;
-  align-items: center;
-  gap: 0.65rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
   font-family: var(--mono);
   font-size: 0.52rem;
   letter-spacing: 0.24em;
@@ -560,59 +569,17 @@ body[data-mode="planet"] .view-project {
   color: var(--muted);
 }
 
-.mouse {
-  position: relative;
-  width: 15px;
-  height: 23px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  flex: none;
-  transition: transform 0.8s var(--ease);
-}
-.mouse-wheel {
-  position: absolute;
-  left: 50%;
-  top: 5px;
-  width: 1px;
-  height: 5px;
-  border-radius: 1px;
-  background: var(--accent);
-  transform: translateX(-50%);
-  animation: wheel 2.4s var(--ease) infinite;
-}
-@keyframes wheel {
-  0% { opacity: 0; transform: translate(-50%, -1px); }
-  25% { opacity: 1; }
-  75% { opacity: 0; transform: translate(-50%, 8px); }
-  100% { opacity: 0; transform: translate(-50%, 8px); }
+.hint-mobile {
+  display: none;
 }
 
-.hint.is-up .mouse {
-  transform: rotate(180deg);
-}
-
-.hint-label {
-  position: relative;
-  display: inline-block;
-  min-width: 4.4em;
-}
-.hint-label span {
-  display: block;
-  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
-}
-.hint-up {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transform: translateY(4px);
-}
-.hint.is-up .hint-down {
-  opacity: 0;
-  transform: translateY(-4px);
-}
-.hint.is-up .hint-up {
-  opacity: 1;
-  transform: none;
+@media (pointer: coarse) {
+  .hint-desktop {
+    display: none;
+  }
+  .hint-mobile {
+    display: inline;
+  }
 }
 
 /* ------------------------------------------------------------
@@ -861,7 +828,27 @@ body.sin-webgl .hud {
   }
 
   .hint {
+    display: flex;
+    left: 50%;
+    right: auto;
+    bottom: max(1.1rem, env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+    font-size: 0.46rem;
+    letter-spacing: 0.16em;
+    transition: opacity 0.4s var(--ease);
+  }
+  .hint-desktop {
     display: none;
+  }
+  .hint-mobile {
+    display: inline;
+  }
+  body[data-mode="planet"] .hint,
+  body[data-mode="project"] .hint {
+    opacity: 0;
   }
 
   .brand-text {

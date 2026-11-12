@@ -16,25 +16,25 @@ De dentro a fuera:
 
 ## Cómo funciona
 
-La página ocupa la pantalla y no tiene scroll nativo. El gesto avanza por cinco
-paradas en ciclo:
+La página ocupa la pantalla y no tiene scroll nativo. Los planetas y los
+satélites **nunca dejan de moverse**: lo que se mueve es la cámara.
 
-```
-Sistema → Core → Personal → Herramientas → Pasatiempos → Sistema
-```
+| Gesto | Acción |
+| --- | --- |
+| Clic izquierdo sobre un cuerpo | Lo selecciona (planeta o satélite). |
+| Clic izquierdo en vacío | Vuelve a la vista del sistema. |
+| Arrastrar con izquierdo | Rota la cámara alrededor del objetivo. |
+| Arrastrar con derecho | Desplaza la cámara por el espacio. |
+| Rueda o pellizco | Acerca o aleja. |
 
-Al llegar a un planeta, su órbita se resalta y **el planeta sigue su traslación**.
-La cámara se desplaza y se acerca para seguirlo; nunca se detiene el planeta, se
-mueve la cámara. El escenario se aparta y aparece el panel con los proyectos que
-orbitan ese planeta.
+Al seleccionar un planeta, su órbita se resalta y la cámara se desplaza y se
+acerca para seguirlo con amortiguación, mientras el planeta continúa su
+traslación. El escenario se aparta y aparece el panel con los proyectos que
+orbitan ese planeta. Seleccionar un satélite abre la ficha de su proyecto,
+ilumina el satélite y conserva la misma cámara. La barra inferior repite la
+selección para teclado y táctil.
 
-Elegir un proyecto ilumina su satélite y transforma el panel en su ficha,
-ajustando la altura. La cámara no viaja al satélite: la información vive en el
-panel. Los proyectos sin publicar muestran «Próximamente» y no ofrecen enlace.
-
-Rueda, swipe, flechas, `PageUp`/`PageDown` y la barra inferior cambian de parada.
-El gesto se acumula con tolerancia y queda bloqueado mientras dura la transición.
-
+Los proyectos sin publicar muestran «Próximamente» y no ofrecen enlace.
 Planetas y satélites usan **colores sólidos** y la luz de la estrella. No hay
 texturas, ni anillos, ni galaxia decorativa.
 
@@ -45,12 +45,13 @@ texturas, ni anillos, ni galaxia decorativa.
 | `index.html` | Lienzo, HUD, panel y etiquetas. |
 | `404.html` | Error con el mismo lenguaje visual. |
 | `css/main.css` | Interfaz, panel, etiquetas y adaptación móvil. |
-| `src/main.js` | Renderer, cámara, paradas, etiquetas y bucle. |
+| `src/main.js` | Renderer, selección por rayo, etiquetas y bucle. |
 | `src/data.js` | Planetas, órbitas, tamaños, velocidades y proyectos. |
-| `src/system.js` | Estrella, planetas, satélites, órbitas, luces y selección. |
+| `src/system.js` | Estrella, planetas, satélites, órbitas, luces y zonas de clic. |
 | `src/backdrop.js` | Campo de estrellas. |
 | `src/materials.js` | Shaders de la estrella, los halos y las partículas. |
-| `src/input.js` | Rueda, táctil y teclado con umbral de tolerancia. |
+| `src/camera.js` | Cámara orbital: rotación, desplazamiento, zoom y seguimiento. |
+| `src/input.js` | Puntero y táctil: izquierdo rota, derecho desplaza, rueda y pellizco acercan. |
 | `src/hud.js` | Panel dinámico, etapas, alturas y foco. |
 | `scripts/build.js` | Empaqueta con esbuild, genera `web/` y valida. |
 | `scripts/dev.js` | Servidor local con recompilación al vuelo. |
@@ -75,10 +76,11 @@ alguna referencia local.
 
 ## Adaptación y accesibilidad
 
-- En vertical la cámara se aleja, se inclina y encuadra el sistema a lo alto; el
-  panel pasa a la parte inferior y la barra de etapas, a la superior.
+- En vertical la cámara se aleja y encuadra el sistema; el panel pasa a la
+  parte inferior y la barra de etapas, a la superior. El texto de ayuda cambia a
+  «Arrastra · Pellizca · Toca» y se oculta al entrar en un planeta.
 - Menos estrellas y menos `devicePixelRatio` en móvil.
-- `prefers-reduced-motion` desactiva el vaivén de cámara.
+- `prefers-reduced-motion` acorta las transiciones de la interfaz.
 - El HUD es HTML real; las vistas ocultas quedan `inert` y el foco no se pierde
   por elementos invisibles. Si no hay WebGL, aparece un respaldo con los enlaces.
 
