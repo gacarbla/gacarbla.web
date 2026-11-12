@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GACARBLA — Portfolio</title>
+<meta name="description" content="Portfolio, CV, API y juegos de Gabriel (GACARBLA).">
+<meta name="author" content="Gabriel — GACARBLA">
+<link rel="canonical" href="https://gacarbla.es/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GACARBLA">
+<meta property="og:title" content="GACARBLA — Portfolio">
+<meta property="og:description" content="Portfolio, CV, API y juegos de Gabriel (GACARBLA).">
+<meta property="og:url" content="https://gacarbla.es/">
+<meta property="og:image" content="https://gacarbla.es/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="GACARBLA — Portfolio">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GACARBLA — Portfolio">
+<meta name="twitter:description" content="Portfolio, CV, API y juegos de Gabriel (GACARBLA).">
+<meta name="twitter:image" content="https://gacarbla.es/assets/og.jpg">
+
+<meta name="theme-color" content="#04050a">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="index,follow,max-image-preview:large">
+
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/fonts/sora.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/geist-mono.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/main.css">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://gacarbla.es/#website","url":"https://gacarbla.es/","name":"GACARBLA","inLanguage":"es","publisher":{"@id":"https://gacarbla.es/#person"}},{"@type":"Person","@id":"https://gacarbla.es/#person","name":"Gabriel","alternateName":"GACARBLA","url":"https://gacarbla.es/","email":"gacarbla@gacarbla.es","sameAs":["https://github.com/gacarbla","https://portfolio.gacarbla.es/"]}]}
+</script>
+</head>
+<body data-mode="system">
+<div class="stage">
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="labels" aria-hidden="true">
+    <p class="label label-star" data-label="star"><span class="label-dot"></span><span data-label-text>GACARBLA</span></p>
+    <p class="label label-planet" data-label="planet"><span class="label-dot"></span><span data-label-text>Core</span></p>
+    <p class="label label-satellite" data-label="satellite"><span class="label-dot"></span><span data-label-text>API</span></p>
+  </div>
+</div>
+
+<div class="vignette" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="hud" role="main">
+  <h1 class="sr-only">GACARBLA — Portfolio</h1>
+
+  <div class="hud-top">
+    <a class="brand" href="/" aria-label="GACARBLA, inicio">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-text">GACARBLA</span>
+    </a>
+    <p class="system"><span class="system-dot" aria-hidden="true"></span>Núcleo · GACARBLA</p>
+  </div>
+
+  <aside class="panel" aria-live="polite">
+    <div class="panel-frame">
+      <section class="view view-planet" data-panel="planet">
+        <p class="kicker"><span class="kicker-dot" data-planet-dot aria-hidden="true"></span><span data-planet-kicker>Planeta · 01</span></p>
+        <h2 class="panel-title" data-planet-name>Core</h2>
+        <p class="panel-sub" data-planet-sub>01 proyecto en órbita</p>
+        <ul class="projects" data-projects>
+          <li>
+            <button class="project" type="button" data-project="api">
+              <span class="project-swatch" style="background:#7ef0c4;box-shadow:0 0 12px #7ef0c4" aria-hidden="true"></span>
+              <span class="project-name">API</span>
+              <span class="project-state">En línea</span>
+              <span class="project-arrow" aria-hidden="true">↗</span>
+            </button>
+          </li>
+        </ul>
+      </section>
+
+      <section class="view view-project" data-panel="project">
+        <p class="kicker">
+          <button class="crumb" type="button" data-crumb>Core</button>
+          <span class="kicker-sep">/</span>
+          <span>Proyecto</span>
+        </p>
+        <h2 class="panel-title" data-project-name>API</h2>
+        <p class="panel-domain" data-project-domain>api.gacarbla.es/docs</p>
+        <p class="panel-state" data-project-state>En línea</p>
+        <a class="panel-cta" data-project-cta href="https://api.gacarbla.es/docs">
+          Entrar
+          <span class="panel-cta-icon" aria-hidden="true">↗</span>
+        </a>
+        <p class="panel-pending" data-project-pending hidden>Aún no está abierta.</p>
+      </section>
+    </div>
+  </aside>
+
+  <nav class="rail" aria-label="Navegación del sistema">
+    <button class="rail-step is-active" type="button" data-mode-go="system" aria-current="step">
+      <span class="rail-line" aria-hidden="true"></span>
+      <span class="rail-num">01</span>
+      <span class="rail-name">Sistema</span>
+    </button>
+    <button class="rail-step" type="button" data-planet-go="0">
+      <span class="rail-line" aria-hidden="true"></span>
+      <span class="rail-num">02</span>
+      <span class="rail-name">Core</span>
+    </button>
+    <button class="rail-step" type="button" data-planet-go="1">
+      <span class="rail-line" aria-hidden="true"></span>
+      <span class="rail-num">03</span>
+      <span class="rail-name">Personal</span>
+    </button>
+    <button class="rail-step" type="button" data-planet-go="2">
+      <span class="rail-line" aria-hidden="true"></span>
+      <span class="rail-num">04</span>
+      <span class="rail-name">Herramientas</span>
+    </button>
+    <button class="rail-step" type="button" data-planet-go="3">
+      <span class="rail-line" aria-hidden="true"></span>
+      <span class="rail-num">05</span>
+      <span class="rail-name">Pasatiempos</span>
+    </button>
+  </nav>
+
+  <div class="hint" aria-hidden="true">
+    <span class="hint-desktop">Izq. orbitar · Der. desplazar</span>
+    <span class="hint-desktop">Rueda acercar · Clic seleccionar</span>
+    <span class="hint-mobile">Arrastra · Pellizca · Toca</span>
+  </div>
+</div>
+
+<div class="webgl-error">
+  <p class="webgl-title">GACARBLA</p>
+  <p class="webgl-text">Este navegador no puede dibujar la escena.</p>
+  <a class="webgl-link" href="https://api.gacarbla.es/docs">API <span aria-hidden="true">↗</span></a>
+  <a class="webgl-link" href="https://cv.gacarbla.es/">CV <span aria-hidden="true">↗</span></a>
+  <a class="webgl-link" href="https://portfolio.gacarbla.es/">Portfolio <span aria-hidden="true">↗</span></a>
+  <a class="webgl-link" href="https://games.gacarbla.es/">Games <span aria-hidden="true">↗</span></a>
+</div>
+
+<noscript>
+  <div class="webgl-error is-visible">
+    <p class="webgl-title">GACARBLA</p>
+    <p class="webgl-text">La escena necesita JavaScript.</p>
+    <a class="webgl-link" href="https://api.gacarbla.es/docs">API <span aria-hidden="true">↗</span></a>
+    <a class="webgl-link" href="https://cv.gacarbla.es/">CV <span aria-hidden="true">↗</span></a>
+    <a class="webgl-link" href="https://portfolio.gacarbla.es/">Portfolio <span aria-hidden="true">↗</span></a>
+    <a class="webgl-link" href="https://games.gacarbla.es/">Games <span aria-hidden="true">↗</span></a>
+  </div>
+</noscript>
+
+<script type="module" src="/js/app.js"></script>
+</body>
+</html>
