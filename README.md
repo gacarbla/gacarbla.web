@@ -1,34 +1,42 @@
 # gacarbla.web
 
-El sistema de **GACARBLA**. Una escena orbital en 3D: una estrella central y tres
-planetas, uno por rama de trabajo, con sus proyectos orbitando como satélites.
+El sistema de **GACARBLA**. Una escena orbital en 3D con una estrella central y
+cuatro planetas, uno por rama de trabajo, cada uno con su órbita, tamaño,
+rotación, traslación e inclinación. Los proyectos son satélites que orbitan su
+planeta.
 
-- **Personal** → Portfolio (`portfolio.gacarbla.es`).
-- **API** → API (`api.gacarbla.es`, en preparación).
-- **Games** → Games (`games.gacarbla.es`).
+De dentro a fuera:
+
+| Planeta | Órbita | Tamaño | Giro | Traslación | Proyectos |
+| --- | --- | --- | --- | --- | --- |
+| **Core** | 3.0 | 0.62 | 0.35 | 0.16 | API (`api.gacarbla.es/docs`) |
+| **Personal** | 4.8 | 0.90 | 0.12 | 0.11 | CV (`cv.gacarbla.es`), Portfolio (`portfolio.gacarbla.es`) |
+| **Herramientas** | 6.6 | 0.78 | 0.20 | 0.08 | MyWeb (`myweb.gacarbla.es`, próximamente) |
+| **Pasatiempos** | 8.4 | 1.00 | 0.08 | 0.06 | Games (`games.gacarbla.es`), Play (`play.gacarbla.es`, próximamente) |
 
 ## Cómo funciona
 
-La página ocupa la pantalla y no tiene scroll nativo. El gesto rota el sistema
-entre cuatro paradas, en ciclo:
+La página ocupa la pantalla y no tiene scroll nativo. El gesto avanza por cinco
+paradas en ciclo:
 
 ```
-Sistema → Personal → API → Games → Sistema
+Sistema → Core → Personal → Herramientas → Pasatiempos → Sistema
 ```
 
-Al llegar a un planeta, este se coloca en la bahía (a la derecha de la estrella),
-el escenario se aparta y aparece su panel con los proyectos que lo orbitan.
+Al llegar a un planeta, su órbita se resalta y el planeta se desplaza por ella
+hasta la bahía (a la derecha de la estrella). Los demás siguen su traslación a su
+propia velocidad. El escenario se aparta y aparece el panel con los proyectos que
+orbitan ese planeta.
 
-Elegir un proyecto ilumina su satélite y transforma el panel en la ficha del
-proyecto, ajustando la altura. La cámara no viaja al satélite: la información vive
-en el panel.
+Elegir un proyecto ilumina su satélite y transforma el panel en su ficha,
+ajustando la altura. La cámara no viaja al satélite: la información vive en el
+panel. Los proyectos sin publicar muestran «Próximamente» y no ofrecen enlace.
 
 Rueda, swipe, flechas, `PageUp`/`PageDown` y la barra inferior cambian de parada.
 El gesto se acumula con tolerancia y queda bloqueado mientras dura la transición.
 
-Los planetas y satélites usan **colores sólidos** y la luz de la estrella. No hay
-texturas, ni anillos, ni galaxia decorativa: solo órbitas, cielo de fondo y los
-cuerpos del sistema.
+Planetas y satélites usan **colores sólidos** y la luz de la estrella. No hay
+texturas, ni anillos, ni galaxia decorativa.
 
 ## Estructura
 
@@ -38,7 +46,7 @@ cuerpos del sistema.
 | `404.html` | Error con el mismo lenguaje visual. |
 | `css/main.css` | Interfaz, panel, etiquetas y adaptación móvil. |
 | `src/main.js` | Renderer, cámara, paradas, etiquetas y bucle. |
-| `src/data.js` | Planetas, proyectos, colores, dominios y enlaces. |
+| `src/data.js` | Planetas, órbitas, tamaños, velocidades y proyectos. |
 | `src/system.js` | Estrella, planetas, satélites, órbitas, luces y selección. |
 | `src/backdrop.js` | Campo de estrellas. |
 | `src/materials.js` | Shaders de la estrella, los halos y las partículas. |
@@ -49,8 +57,8 @@ cuerpos del sistema.
 | `assets/` | Fuentes (Sora y Geist Mono, OFL), favicon y tarjeta social. |
 
 Para añadir una rama basta con añadir una entrada en `src/data.js` y un paso en la
-barra de `index.html`. El sistema reparte los planetas en la órbita y crea sus
-satélites a partir de los proyectos.
+barra de `index.html`. El sistema crea la órbita, el planeta y sus satélites a
+partir de los datos.
 
 ## Comandos
 

@@ -69,8 +69,8 @@ function arrancar() {
     const aspecto = window.innerWidth / window.innerHeight;
     const vertical = aspecto < 0.85;
     const giro = vertical ? 0.95 : 0;
-    baseY = vertical ? 6.0 : 5.0;
-    camara.position.set(0, baseY, vertical ? 20.5 : 15.5);
+    baseY = vertical ? 7.8 : 6.2;
+    camara.position.set(0, baseY, vertical ? 28 : 22);
     camara.up.set(Math.sin(giro), Math.cos(giro), 0);
     objetivoCamara.set(0, vertical ? 1.0 : 0, 0);
     camara.lookAt(objetivoCamara);
@@ -110,7 +110,7 @@ function arrancar() {
   function irA(indice) {
     parada = indice;
     const modo = indice < 0 ? "system" : "planet";
-    sistema.setProject(false);
+    sistema.setProject(null);
     sistema.setMode(modo);
     sistema.setSelection(indice);
     hud.setStop(indice);
@@ -123,10 +123,11 @@ function arrancar() {
     const datos = PLANETAS[parada];
     const proyecto = datos?.proyectos.find((p) => p.id === id);
     if (!proyecto) return;
-    sistema.setProject(true);
+    sistema.setProject(id);
     sistema.setMode("project");
     hud.setProject(proyecto);
-    etiquetar(parada);
+    if (etiquetas.satellite) etiquetas.satellite.style.color = proyecto.color;
+    if (etiquetas.satelliteText) etiquetas.satelliteText.textContent = proyecto.nombre;
     bloqueo = performance.now() + 420;
   }
 
