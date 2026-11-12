@@ -86,7 +86,7 @@ a {
 
 body[data-mode="planet"] .stage,
 body[data-mode="project"] .stage {
-  transform: translateX(4.5%);
+  transform: translateX(8%);
 }
 
 #scene {

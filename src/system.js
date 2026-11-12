@@ -2,7 +2,6 @@ import * as THREE from "three";
 import { glowMaterial, starMaterial, haloMaterial } from "./materials.js";
 import { PLANETAS } from "./data.js";
 
-const BAHIA = 0.6;
 const ANGULOS_INICIALES = [0.9, 2.6, 4.3, 5.5];
 
 /**
@@ -60,21 +59,21 @@ export function createSystem({ scene }) {
       planoLuna.rotation.z = j * 0.5;
       ancla.add(planoLuna);
 
-      const radio = 1.35 + j * 0.55 + datos.tamano * 0.35;
+      const radio = 0.7 + j * 0.28 + datos.tamano * 0.3;
       planoLuna.add(crearOrbita(radio, proyecto.color, 0.14));
 
       const pivoteLuna = new THREE.Group();
       planoLuna.add(pivoteLuna);
 
       const luna = new THREE.Mesh(
-        new THREE.SphereGeometry(0.2 + j * 0.02, 40, 28),
+        new THREE.SphereGeometry(0.09 + j * 0.012, 32, 24),
         new THREE.MeshStandardMaterial({ color: proyecto.color, roughness: 0.5, metalness: 0.02 }),
       );
       luna.position.set(radio, 0, 0);
       pivoteLuna.add(luna);
 
       const haloLuna = new THREE.Mesh(
-        new THREE.SphereGeometry((0.2 + j * 0.02) * 1.9, 32, 24),
+        new THREE.SphereGeometry((0.09 + j * 0.012) * 1.9, 24, 18),
         glowMaterial(proyecto.color, 0),
       );
       luna.add(haloLuna);
@@ -85,7 +84,7 @@ export function createSystem({ scene }) {
         luna,
         haloLuna,
         haloActual: 0,
-        velocidad: 0.35 + j * 0.15,
+        velocidad: 0.45 + j * 0.2,
         angulo: j * 2.1,
       };
     });
@@ -124,6 +123,9 @@ export function createSystem({ scene }) {
     setProject(id) {
       proyectoActivo = id;
     },
+    planetPosition(indice, target = new THREE.Vector3()) {
+      return mundos[indice].ancla.getWorldPosition(target);
+    },
     labels() {
       const mundoActual = mundos[Math.max(0, seleccion)];
       mundoActual.ancla.getWorldPosition(mundo);
@@ -148,16 +150,8 @@ export function createSystem({ scene }) {
       mundos.forEach((mundoActual, i) => {
         const enfocado = modo !== "system" && i === seleccion;
 
-        // Traslación: el enfocado se detiene en la bahía; el resto sigue.
-        if (enfocado) {
-          const diferencia = Math.atan2(
-            Math.sin(BAHIA - mundoActual.angulo),
-            Math.cos(BAHIA - mundoActual.angulo),
-          );
-          mundoActual.angulo += diferencia * Math.min(1, dt * 2.4);
-        } else {
-          mundoActual.angulo += dt * mundoActual.datos.traslacion;
-        }
+        // Traslación continua: ningún planeta se detiene.
+        mundoActual.angulo += dt * mundoActual.datos.traslacion;
         mundoActual.pivote.rotation.y = mundoActual.angulo;
 
         // Rotación propia y órbita resaltada.

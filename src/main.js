@@ -62,7 +62,12 @@ function arrancar() {
   escena.add(estrellas.points);
 
   const objetivoCamara = new THREE.Vector3(0, 0, 0);
-  let baseY = 4.2;
+  const basePos = new THREE.Vector3(0, 6.2, 22);
+  const baseTarget = new THREE.Vector3(0, 0, 0);
+  const deseadaPos = new THREE.Vector3();
+  const deseadaTarget = new THREE.Vector3();
+  const tmpPlaneta = new THREE.Vector3();
+  let baseY = 6.2;
 
   /** En vertical, la escena se inclina y se aleja para caber a lo alto. */
   function orientar() {
@@ -70,9 +75,11 @@ function arrancar() {
     const vertical = aspecto < 0.85;
     const giro = vertical ? 0.95 : 0;
     baseY = vertical ? 7.8 : 6.2;
-    camara.position.set(0, baseY, vertical ? 28 : 22);
+    basePos.set(0, baseY, vertical ? 28 : 22);
+    baseTarget.set(0, vertical ? 1.0 : 0, 0);
     camara.up.set(Math.sin(giro), Math.cos(giro), 0);
-    objetivoCamara.set(0, vertical ? 1.0 : 0, 0);
+    camara.position.copy(basePos);
+    objetivoCamara.copy(baseTarget);
     camara.lookAt(objetivoCamara);
   }
   orientar();
@@ -185,10 +192,20 @@ function arrancar() {
 
     sistema.update(dt, uTime.value, camara);
 
-    if (!reducido) {
-      camara.position.y = baseY + Math.sin(uTime.value * 0.25) * 0.05;
-      camara.position.x = Math.sin(uTime.value * 0.18) * 0.04;
+    // La cámara acompaña al planeta seleccionado; el planeta nunca se detiene.
+    const zoom = parada >= 0 ? (movil ? 0.9 : 0.86) : 1;
+    deseadaPos.copy(basePos).multiplyScalar(zoom);
+    deseadaTarget.copy(baseTarget).multiplyScalar(zoom);
+    if (parada >= 0) {
+      sistema.planetPosition(parada, tmpPlaneta);
+      deseadaPos.addScaledVector(tmpPlaneta, 0.55);
+      deseadaTarget.addScaledVector(tmpPlaneta, 0.55);
     }
+    if (!reducido) deseadaPos.y += Math.sin(uTime.value * 0.25) * 0.05;
+
+    const suavizado = 1 - Math.exp(-dt * 2.2);
+    camara.position.lerp(deseadaPos, suavizado);
+    objetivoCamara.lerp(deseadaTarget, suavizado);
     camara.lookAt(objetivoCamara);
 
     const posiciones = sistema.labels();

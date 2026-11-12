@@ -9,10 +9,10 @@ De dentro a fuera:
 
 | Planeta | Órbita | Tamaño | Giro | Traslación | Proyectos |
 | --- | --- | --- | --- | --- | --- |
-| **Core** | 3.0 | 0.62 | 0.35 | 0.16 | API (`api.gacarbla.es/docs`) |
-| **Personal** | 4.8 | 0.90 | 0.12 | 0.11 | CV (`cv.gacarbla.es`), Portfolio (`portfolio.gacarbla.es`) |
-| **Herramientas** | 6.6 | 0.78 | 0.20 | 0.08 | MyWeb (`myweb.gacarbla.es`, próximamente) |
-| **Pasatiempos** | 8.4 | 1.00 | 0.08 | 0.06 | Games (`games.gacarbla.es`), Play (`play.gacarbla.es`, próximamente) |
+| **Core** | 3.0 | 0.32 | 0.35 | 0.16 | API (`api.gacarbla.es/docs`) |
+| **Personal** | 4.8 | 0.45 | 0.12 | 0.11 | CV (`cv.gacarbla.es`), Portfolio (`portfolio.gacarbla.es`) |
+| **Herramientas** | 6.6 | 0.38 | 0.20 | 0.08 | MyWeb (`myweb.gacarbla.es`, próximamente) |
+| **Pasatiempos** | 8.4 | 0.50 | 0.08 | 0.06 | Games (`games.gacarbla.es`), Play (`play.gacarbla.es`, próximamente) |
 
 ## Cómo funciona
 
@@ -23,9 +23,9 @@ paradas en ciclo:
 Sistema → Core → Personal → Herramientas → Pasatiempos → Sistema
 ```
 
-Al llegar a un planeta, su órbita se resalta y el planeta se desplaza por ella
-hasta la bahía (a la derecha de la estrella). Los demás siguen su traslación a su
-propia velocidad. El escenario se aparta y aparece el panel con los proyectos que
+Al llegar a un planeta, su órbita se resalta y **el planeta sigue su traslación**.
+La cámara se desplaza y se acerca para seguirlo; nunca se detiene el planeta, se
+mueve la cámara. El escenario se aparta y aparece el panel con los proyectos que
 orbitan ese planeta.
 
 Elegir un proyecto ilumina su satélite y transforma el panel en su ficha,
